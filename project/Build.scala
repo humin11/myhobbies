@@ -10,12 +10,14 @@ object ApplicationBuild extends Build {
   val appDependencies = Seq(
     // Add your project dependencies here,
     jdbc,
-    anorm
+    anorm,
+    "org.mindrot" % "jbcrypt" % "0.3m"
   )
 
 
   val main = play.Project(appName, appVersion, appDependencies).settings(
-    // Add your own project settings here      
+    // Add your own project settings here  
+      resolvers += "jbcrypt repo" at "http://mvnrepository.com/"
   )
 
 }

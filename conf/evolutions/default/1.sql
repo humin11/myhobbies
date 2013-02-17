@@ -7,6 +7,7 @@ create table user (
   email                      	varchar(255) not null,
   username                      varchar(255) not null,
   password                      varchar(255) not null,
+  permission					varchar(255) not null,
   isinit						tinyint,
   status						tinyint,
   create_at						timestamp,
