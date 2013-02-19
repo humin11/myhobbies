@@ -28,6 +28,8 @@ public class TUser extends Model {
 	@Constraints.Required
 	public String password;
 	
+	public String permission;
+	
 	public Boolean isinit;
 	
 	public Boolean status;
