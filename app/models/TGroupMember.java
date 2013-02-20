@@ -6,9 +6,9 @@ import java.util.List;
 
 public class TGroupMember extends Model {
 
-    public Long groupId;
+    public Long group_id;
 
-    public Long userId;
+    public Long user_id;
 
     public String remark;
 

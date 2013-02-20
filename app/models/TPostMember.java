@@ -9,8 +9,8 @@ public class TPostMember extends Model {
     //e.g. Person,Group,Communities
     public String type;
 
-    public Long groupId;
+    public Long group_id;
 
-    public Long userId;
+    public Long user_id;
 
 }

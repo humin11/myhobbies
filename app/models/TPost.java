@@ -22,7 +22,7 @@ public class TPost extends Model {
     @Constraints.Required
     public String content;
 
-    public Long creatorId;
+    public Long creator_id;
 
     public String creator;
 
