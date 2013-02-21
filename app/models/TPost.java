@@ -20,7 +20,7 @@ public class TPost extends Model {
     public String content;
 
     @OneToOne
-    public TUser author;
+    public TPerson author;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;
@@ -43,10 +43,10 @@ public class TPost extends Model {
     @OneToMany(mappedBy = "post")
     public Set<TParticipation> participations;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "post")
     public Set<TComment> comments;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "parent")
     public Set<TPost> reshares;
 
     public Set<TLike> likes;

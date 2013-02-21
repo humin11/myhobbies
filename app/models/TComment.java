@@ -21,7 +21,7 @@ public class TComment extends Model {
     public String content;
 
     @OneToOne
-    public TUser author;
+    public TPerson author;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;
@@ -35,7 +35,7 @@ public class TComment extends Model {
     public Long likes;
 
     @ManyToOne
-    public TPost owner;
+    public TPost post;
 
     public static Finder<Long,TComment> find = new Finder<Long, TComment>(Long.class,TComment.class);
 
