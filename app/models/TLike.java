@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="like")
+@Table(name="likes")
 public class TLike extends Model {
 
     @Id

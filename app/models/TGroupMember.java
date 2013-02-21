@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import java.util.List;
 
 @Entity
-@Table(name="group_member")
+@Table(name="groups_member")
 public class TGroupMember extends Model {
 
     @ManyToOne
