@@ -18,7 +18,7 @@ public class TPhoto extends Model {
     public TPost post;
 
     @ManyToOne
-    public TPerson author;
+    public TUser author;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;

@@ -17,8 +17,11 @@ public class TLike extends Model {
     @ManyToOne
     public TPost post;
 
+    @ManyToOne
+    public TComment comment;
+
     @OneToOne
-    public TPerson author;
+    public TUser author;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;

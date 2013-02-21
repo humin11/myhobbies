@@ -17,7 +17,7 @@ public class TGroup extends Model {
     public Long id;
 
     @ManyToOne
-    public TPerson author;
+    public TUser author;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;

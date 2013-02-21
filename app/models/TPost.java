@@ -20,7 +20,7 @@ public class TPost extends Model {
     public String content;
 
     @ManyToOne
-    public TPerson author;
+    public TUser author;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;
@@ -31,7 +31,6 @@ public class TPost extends Model {
     @OneToOne
     public TPost parent;
 
-    //e.g. Public,Friend,FriendRelation,CustomGroup
     public String status;
 
     public Boolean shareable;

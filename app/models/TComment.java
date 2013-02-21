@@ -7,7 +7,7 @@ import play.db.ebean.Model;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="comment")
@@ -21,7 +21,7 @@ public class TComment extends Model {
     public String content;
 
     @ManyToOne
-    public TPerson author;
+    public TUser author;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;
@@ -32,7 +32,8 @@ public class TComment extends Model {
     //e.g. modified or not
     public String type;
 
-    public Long likes;
+    @OneToMany(mappedBy = "comment")
+    public Set<TLike> likes;
 
     @ManyToOne
     public TPost post;

@@ -16,7 +16,7 @@ public class TGroupMember extends Model {
     public TGroup group;
 
     @OneToOne
-    public TPerson person;
+    public TUser user;
 
     public String remark;
 
