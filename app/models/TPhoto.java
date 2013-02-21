@@ -14,9 +14,10 @@ public class TPhoto extends Model {
     @GeneratedValue
     public Long id;
 
+    @ManyToOne
     public TPost post;
 
-    @OneToOne
+    @ManyToOne
     public TPerson author;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")

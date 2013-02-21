@@ -1,9 +1,11 @@
 package models;
 
+import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -14,14 +16,14 @@ public class TGroup extends Model {
     @GeneratedValue
     public Long id;
 
-    @OneToOne
-    public TPerson owner;
+    @ManyToOne
+    public TPerson author;
+
+    @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
+    public Date create_at;
 
     @Constraints.Required
     public String name;
-
-    //e.g. Friend,Custom,Others
-    public String type;
 
     @OneToMany(mappedBy = "group")
     public Set<TGroupMember> members;

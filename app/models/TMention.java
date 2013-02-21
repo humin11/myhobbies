@@ -14,7 +14,7 @@ public class TMention extends Model {
     @ManyToOne
     public TPost post;
 
-    @OneToOne
+    @ManyToOne
     public TPerson person;
 
 }

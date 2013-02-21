@@ -19,10 +19,10 @@ public class TParticipation extends Model {
     //e.g. Person,Group,Communities
     public String type;
 
-    @OneToOne
+    @ManyToOne
     public TGroup group;
 
-    @OneToOne
+    @ManyToOne
     public TPerson person;
 
     @OneToOne

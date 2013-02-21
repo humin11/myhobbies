@@ -19,7 +19,7 @@ public class TPost extends Model {
     @Constraints.Required
     public String content;
 
-    @OneToOne
+    @ManyToOne
     public TPerson author;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
