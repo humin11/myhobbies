@@ -21,7 +21,7 @@ public class TComment extends Model {
     public String content;
 
     @OneToOne
-    public TUser creator;
+    public TUser author;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;
@@ -29,8 +29,10 @@ public class TComment extends Model {
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date modify_at;
 
-    @OneToOne
-    public TUser reply_to;
+    //e.g. modified or not
+    public String type;
+
+    public Long likes;
 
     @ManyToOne
     public TPost owner;

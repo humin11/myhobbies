@@ -6,8 +6,6 @@ import play.db.ebean.Model;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,7 +20,7 @@ public class TPost extends Model {
     public String content;
 
     @OneToOne
-    public TUser creator;
+    public TUser author;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;
@@ -40,18 +38,24 @@ public class TPost extends Model {
     //e.g. Public,Friend,FriendRelation,CustomGroup
     public String status;
 
-    //allow add comment or not
-    public Boolean locked;
+    public Boolean shareable;
 
-    public Boolean hasPhoto;
+    public Boolean commentable;
 
-    public Long likes;
+    public Boolean likeable;
+
+    @OneToMany(mappedBy = "post")
+    public Set<TParticipation> participations;
 
     @OneToMany(mappedBy = "owner")
     public Set<TComment> comments;
 
-    @OneToMany(mappedBy = "post")
-    public Set<TPostMember> members;
+    @OneToMany(mappedBy = "owner")
+    public Set<TPost> reshares;
+
+    public Set<TLike> likes;
+
+    public Set<TPhoto> photos;
 
     public static Finder<Long,TPost> find = new Finder<Long, TPost>(Long.class,TPost.class);
 

@@ -2,10 +2,10 @@ package models;
 
 import play.db.ebean.Model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
+@Entity
+@Table(name="person")
 public class TPerson extends Model {
 
     @Id
