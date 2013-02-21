@@ -1,5 +1,6 @@
 package models;
 
+import models.base.Shareable;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -9,8 +10,8 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
-@Table(name="group")
-public class TGroup extends Model {
+@Table(name="aspect")
+public class TAspect extends Model implements Shareable{
 
     @Id
     @GeneratedValue
@@ -25,6 +26,13 @@ public class TGroup extends Model {
     @Constraints.Required
     public String name;
 
-    @OneToMany(mappedBy = "group")
-    public Set<TGroupMember> members;
+    @OneToMany(mappedBy = "aspect")
+    public Set<TAspectMember> members;
+
+    @OneToMany(mappedBy = "share_to")
+    public Set<TParticipation> participations;
+
+    public static Finder<Long,TAspect> find = new Finder<Long, TAspect>(Long.class,TAspect.class);
+
+
 }
