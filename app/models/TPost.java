@@ -28,12 +28,8 @@ public class TPost extends Model {
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date modify_at;
 
-    //e.g. Own,Forward
-    public String type;
-
-    //forward from
     @OneToOne
-    public TPost owner;
+    public TPost parent;
 
     //e.g. Public,Friend,FriendRelation,CustomGroup
     public String status;
