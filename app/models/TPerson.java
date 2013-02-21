@@ -2,9 +2,10 @@ package models;
 
 import play.db.ebean.Model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
+@Table(name="person")
 public class TPerson extends Model {
 
     @Id
@@ -25,6 +26,7 @@ public class TPerson extends Model {
 
     public Float weight;
 
-    public Long userId;
+    @OneToOne
+    public TUser user;
 
 }

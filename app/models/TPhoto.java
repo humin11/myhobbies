@@ -1,20 +1,21 @@
 package models;
 
 import play.data.format.Formats;
-import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
 
 @Entity
-@Table(name="group")
-public class TGroup extends Model {
+@Table(name="photo")
+public class TPhoto extends Model {
 
     @Id
     @GeneratedValue
     public Long id;
+
+    @ManyToOne
+    public TPost post;
 
     @ManyToOne
     public TUser author;
@@ -22,9 +23,18 @@ public class TGroup extends Model {
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;
 
-    @Constraints.Required
+    public String small;
+
+    public String medium;
+
+    public String large;
+
     public String name;
 
-    @OneToMany(mappedBy = "group")
-    public Set<TGroupMember> members;
+    public String photo_path;
+
+    public String photo_name;
+
+
+
 }

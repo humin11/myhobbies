@@ -2,10 +2,7 @@ package models;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import play.db.ebean.Model;
 import play.data.validation.*;
@@ -45,9 +42,22 @@ public class TUser extends Model {
 	
 	@Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
 	public Date unlocked_at;
+
+    @OneToOne
+    public TPerson person;
 	
 	public static Finder<Long, TUser> find = new Finder<Long, TUser>(Long.class, TUser.class);
-	
-	
+
+    public static TUser findByEmail(String email) {
+        return find.where().eq("email", email).findUnique();
+    }
+
+    public static TUser authenticate(String email, String password) {
+        return find.where()
+                .eq("email", email)
+                .eq("password", password)
+                .findUnique();
+    }
+
 }
 
