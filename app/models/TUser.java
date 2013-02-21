@@ -1,16 +1,19 @@
 package models;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
+import models.base.Shareable;
 import play.db.ebean.Model;
 import play.data.validation.*;
 import play.data.format.*;
 
 @Entity
 @Table(name="user")
-public class TUser extends Model {
+public class TUser extends Model implements Shareable{
 	
 	@Id
 	@GeneratedValue
@@ -45,6 +48,15 @@ public class TUser extends Model {
 
     @OneToOne
     public TPerson person;
+
+    @OneToMany(mappedBy = "share_to")
+    public Set<TParticipation> participations;
+
+    @OneToMany(mappedBy = "author")
+    public Set<TPost> posts;
+
+    @OneToMany(mappedBy = "author")
+    public Set<TComment> comments;
 	
 	public static Finder<Long, TUser> find = new Finder<Long, TUser>(Long.class, TUser.class);
 
@@ -57,6 +69,22 @@ public class TUser extends Model {
                 .eq("email", email)
                 .eq("password", password)
                 .findUnique();
+    }
+
+    public static void sharePost(List<Shareable> shareList,TPost post,TUser user){
+        Date now = new Date();
+        for(Shareable shareable : shareList){
+            TParticipation participation = new TParticipation();
+            participation.author = user;
+            participation.create_at = now;
+            participation.share_to = shareable;
+            if(shareable instanceof TAspect){
+                participation.type = "aspect";
+            }else if(shareable instanceof TUser){
+                participation.type = "user";
+            }
+            participation.save();
+        }
     }
 
 }

@@ -1,7 +1,274 @@
 @(message: String)
 
 @main(Messages("court")) {
-    
-    @(message)
-    
+
+<div class="span8 listing-js">
+
+	<!-- page title with dropdown -->
+	<h1>Latest Listings</h1>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span7 dropdown-results">
+				<p>Showing 1 - 8 of 255 results</p>
+			</div>
+			<div class="span5">
+				<select id="sort" name="sort">
+					<option value="pmrank">Sort by Popularity</option>
+					<option value="price">Sort by Price: Low to High</option>
+					<option value="-price">Sort by Price: High to Low</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<!-- end page title -->
+
+	<!--start list-->
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span4">
+				<a href="property.html"><img src="img/demo/houses/house1.jpg"
+					alt="123 McLevin Avn, Scarborough ON" /></a> <span
+					class="sticker sticker-hot">Hot</span>
+			</div>
+			<div class="span8">
+				<a href="property.html" class="prop-title">123 McLevin Avn,
+					Scarborough ON</a>
+				<p class="size">Bedrooms: 2 ¥ Bathrooms: 1 ¥ Parking 2</p>
+				<p class="price">$159,000</p>
+				<p class="description">Maecenas nec odio et ante tincidunt
+					tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam
+					quis ante.</p>
+				<!-- Short List Btns -->
+				<ul class="list-btns">
+					<li><a href="javascript:void(0);" id="property_1"
+						class="add-to-list-js"
+						data-shortlist="<img src='img/demo/houses/house1.jpg' alt='123 McLevin Avn, Scarborough ON'>
+													  <div><a href='javascript:void(0);' id='property_1'>123 McLevin Avn, Scarborough ON</a>$259,000</div>">
+							<i class="icon-plus-sign"></i>Short List
+					</a></li>
+					<li><a href="property.html"><i class="icon-info-sign"></i>View
+							Details</a></li>
+				</ul>
+				<!-- end short list -->
+			</div>
+		</div>
+	</div>
+	<!--end list-->
+
+	<!--start list-->
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span4">
+				<a href="property.html"><img src="img/demo/houses/house2.jpg"
+					alt="Placeholder Image" /></a> <span class="sticker sticker-sold">SOLD</span>
+			</div>
+			<div class="span8">
+				<a href="property.html" class="prop-title">43 Heros Avn, GTA ON</a>
+				<p class="size">Bedrooms: 3 ¥ Bathrooms: 2 ¥ Parking 2</p>
+				<p class="price">$405,000</p>
+				<p class="description">Maecenas nec odio et ante tincidunt
+					tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam
+					quis ante.</p>
+				<!-- Short List Btns -->
+				<ul class="list-btns">
+					<li><a href="javascript:void(0);" id="property_2"
+						class="add-to-list-js"
+						data-shortlist="<img src='img/demo/houses/house2.jpg' alt='Placeholder Image'>
+													  <div><a href='javascript:void(0);' id='property_2'>43 Heros Avn, GTA ON</a>$405,000</div>">
+							<i class="icon-plus-sign"></i>Short List
+					</a></li>
+					<li><a href="property.html"><i class="icon-info-sign"></i>View
+							Details</a></li>
+				</ul>
+				<!-- end short list -->
+			</div>
+		</div>
+	</div>
+	<!--end list-->
+
+	<!--start list-->
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span4">
+				<a href="property.html"><img src="img/demo/houses/house3.jpg"
+					alt="Placeholder Image" /></a>
+			</div>
+			<div class="span8">
+				<a href="property.html" class="prop-title">Costorica Palace,
+					Toronto ON</a>
+				<p class="size">Bedrooms: 5 ¥ Bathrooms: 2 ¥ Parking 2</p>
+				<p class="price">$675,000</p>
+				<p class="description">Maecenas nec odio et ante tincidunt
+					tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam
+					quis ante.</p>
+				<!-- Short List Btns -->
+				<ul class="list-btns">
+					<li><a href="javascript:void(0);" id="property_3"
+						class="add-to-list-js"
+						data-shortlist="<img src='img/demo/houses/house3.jpg' alt='Placeholder Image'>
+													  <div><a href='javascript:void(0);' id='property_3'>Costorica Palace, Toronto ON</a>$675,000</div>">
+							<i class="icon-plus-sign"></i>Short List
+					</a></li>
+					<li><a href="property.html"><i class="icon-info-sign"></i>View
+							Details</a></li>
+				</ul>
+				<!-- end short list -->
+			</div>
+		</div>
+	</div>
+	<!--end list-->
+
+	<!--start list-->
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span4">
+				<a href="property.html"><img src="img/demo/houses/house4.jpg"
+					alt="Placeholder Image" /></a>
+			</div>
+			<div class="span8">
+				<a href="property.html" class="prop-title">Grizzly Rd, Toronto
+					ON</a>
+				<p class="size">Bedrooms: 3 ¥ Bathrooms: 2 ¥ Parking 2</p>
+				<p class="price">$300,000</p>
+				<p class="description">Maecenas nec odio et ante tincidunt
+					tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam
+					quis ante.</p>
+				<!-- Short List Btns -->
+				<ul class="list-btns">
+					<li><a href="javascript:void(0);" id="property_4"
+						class="add-to-list-js"
+						data-shortlist="<img src='img/demo/houses/house4.jpg' alt='Placeholder Image'>
+													  <div><a href='javascript:void(0);' id='property_4'>Grizzly Rd, Toronto ON</a>$300,000</div>">
+							<i class="icon-plus-sign"></i>Short List
+					</a></li>
+					<li><a href="property.html"><i class="icon-info-sign"></i>View
+							Details</a></li>
+				</ul>
+				<!-- end short list -->
+			</div>
+		</div>
+	</div>
+	<!--end list-->
+
+	<!--start list-->
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span4">
+				<a href="property.html"><img src="img/demo/houses/house5.jpg"
+					alt="P66 Covenant Street, Scarborough ON" /></a>
+			</div>
+			<div class="span8">
+				<a href="property.html" class="prop-title">66 Covenant Street,
+					Scarborough ON</a>
+				<p class="size">Bedrooms: 1 ¥ Bathrooms: 1 ¥ Parking 1</p>
+				<p class="price">$149,500</p>
+				<p class="description">Maecenas nec odio et ante tincidunt
+					tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam
+					quis ante.</p>
+				<!-- Short List Btns -->
+				<ul class="list-btns">
+					<li><a href="javascript:void(0);" id="property_5"
+						class="add-to-list-js"
+						data-shortlist="<img src='img/demo/houses/house5.jpg' alt='66 Covenant Street, Scarborough ON'>
+													  <div><a href='javascript:void(0);' id='property_5'>66 Covenant Street, Scarborough ON</a>$149,500</div>">
+							<i class="icon-plus-sign"></i>Short List
+					</a></li>
+					<li><a href="property.html"><i class="icon-info-sign"></i>View
+							Details</a></li>
+				</ul>
+				<!-- end short list -->
+			</div>
+		</div>
+	</div>
+	<!--end list-->
+
+	<!--start list-->
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span4">
+				<a href="property.html"><img src="img/demo/houses/house6.jpg"
+					alt="87 Brimly South, Toronto ON" /></a>
+			</div>
+			<div class="span8">
+				<a href="property.html" class="prop-title">87 Brimly South,
+					Toronto ON</a>
+				<p class="size">Bedrooms: 3 ¥ Bathrooms: 2 ¥ Parking 1</p>
+				<p class="price">$359,999</p>
+				<p class="description">Maecenas nec odio et ante tincidunt
+					tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam
+					quis ante.</p>
+				<!-- Short List Btns -->
+				<ul class="list-btns">
+					<li><a href="javascript:void(0);" id="property_6"
+						class="add-to-list-js"
+						data-shortlist="<img src='img/demo/houses/house6.jpg' alt='87 Brimly South, Toronto ON'>
+													  <div><a href='javascript:void(0);' id='property_6'>87 Brimly South, Toronto ON</a>$359,999</div>">
+							<i class="icon-plus-sign"></i>Short List
+					</a></li>
+					<li><a href="property.html"><i class="icon-info-sign"></i>View
+							Details</a></li>
+				</ul>
+				<!-- end short list -->
+			</div>
+		</div>
+	</div>
+	<!--end list-->
+
+	<!--start list-->
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span4">
+				<a href="property.html"><img src="img/demo/houses/house7.jpg"
+					alt="Placeholder Image" /></a>
+			</div>
+			<div class="span8">
+				<a href="property.html" class="prop-title">450 Jorh Avn, Toronto
+					ON</a>
+				<p class="size">Bedrooms: 3 ¥ Bathrooms: 2 ¥ Parking 2</p>
+				<p class="price">$399,000</p>
+				<p class="description">Maecenas nec odio et ante tincidunt
+					tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam
+					quis ante.</p>
+				<!-- Short List Btns -->
+				<ul class="list-btns">
+					<li><a href="javascript:void(0);" id="property_7"
+						class="add-to-list-js"
+						data-shortlist="<img src='img/demo/houses/house7.jpg' alt='Placeholder Image'>
+													  <div><a href='javascript:void(0);' id='property_7'>450 Jorh Avn, Toronto ON</a>$399,000</div>">
+							<i class="icon-plus-sign"></i>Short List
+					</a></li>
+					<li><a href="property.html"><i class="icon-info-sign"></i>View
+							Details</a></li>
+				</ul>
+				<!-- end short list -->
+			</div>
+		</div>
+	</div>
+	<!--end list-->
+
+	<!-- start paging -->
+	<div class="container-fluid">
+		<div class="row-fluid" style="border: none;">
+			<div class="span12">
+				<div class="pagination pagination-centered">
+					<ul>
+						<li><a href="javascript:void(0)">Ç Prev.</a></li>
+						<li><a href="javascript:void(0)">1</a></li>
+						<li><a href="javascript:void(0)">2</a></li>
+						<li><a href="javascript:void(0)">3</a></li>
+						<li><a href="javascript:void(0)">4</a></li>
+						<li><a href="javascript:void(0)">5</a></li>
+						<li><a href="javascript:void(0)">6</a></li>
+						<li><a href="javascript:void(0)">7</a></li>
+						<li><a href="javascript:void(0)">8</a></li>
+						<li><a href="javascript:void(0)">Next È</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end paging -->
+</div>
+<!-- end listing-js -->
+
 }

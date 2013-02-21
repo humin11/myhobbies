@@ -6,6 +6,7 @@ import play.db.ebean.Model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -38,9 +39,6 @@ public class TPost extends Model {
     public Boolean commentable;
 
     public Boolean likeable;
-
-    @OneToMany(mappedBy = "post")
-    public Set<TParticipation> participations;
 
     @OneToMany(mappedBy = "post")
     public Set<TComment> comments;

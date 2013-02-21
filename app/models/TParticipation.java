@@ -1,5 +1,6 @@
 package models;
 
+import models.base.Shareable;
 import play.data.format.Formats;
 import play.db.ebean.Model;
 
@@ -16,19 +17,18 @@ public class TParticipation extends Model {
     @ManyToOne
     public TPost post;
 
-    //e.g. Person,Group,Communities
+    //e.g. User,Aspect,Communities
     public String type;
 
     @ManyToOne
-    public TGroup group;
-
-    @ManyToOne
-    public TUser person;
+    public Shareable share_to;
 
     @OneToOne
     public TUser author;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;
+
+    public static Finder<Long, TParticipation> find = new Finder<Long, TParticipation>(Long.class, TParticipation.class);
 
 }
