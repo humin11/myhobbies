@@ -2,20 +2,20 @@ package models;
 
 import play.db.ebean.Model;
 
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import java.util.List;
 
 public class TGroupMember extends Model {
 
-    public Long group_id;
+    @ManyToOne
+    public TGroup group;
 
-    public Long user_id;
+    @OneToOne
+    public TUser user;
 
     public String remark;
 
     public static Finder<Long,TGroupMember> find = new Finder<Long, TGroupMember>(Long.class,TGroupMember.class);
-
-    public static List<TGroupMember> findByGroup(Long groupId){
-       return find.where().eq("groupId",groupId).findList();
-    }
 
 }

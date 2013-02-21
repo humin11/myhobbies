@@ -4,6 +4,7 @@ import play.db.ebean.Model;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 public class TPerson extends Model {
 
@@ -25,6 +26,7 @@ public class TPerson extends Model {
 
     public Float weight;
 
-    public Long userId;
+    @OneToOne
+    public TUser user;
 
 }

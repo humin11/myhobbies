@@ -5,6 +5,9 @@ import play.db.ebean.Model;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import java.util.Set;
 
 public class TGroup extends Model {
 
@@ -12,12 +15,15 @@ public class TGroup extends Model {
     @GeneratedValue
     public Long id;
 
-    @Constraints.Required
-    public Long owner;
+    @OneToOne
+    public TUser owner;
 
     @Constraints.Required
     public String name;
 
     //e.g. Friend,Custom,Others
     public String type;
+
+    @OneToMany(mappedBy = "group")
+    public Set<TGroupMember> members;
 }

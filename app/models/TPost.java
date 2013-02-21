@@ -4,12 +4,11 @@ import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="post")
@@ -22,9 +21,8 @@ public class TPost extends Model {
     @Constraints.Required
     public String content;
 
-    public Long creator_id;
-
-    public String creator;
+    @OneToOne
+    public TUser creator;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;
@@ -36,7 +34,8 @@ public class TPost extends Model {
     public String type;
 
     //forward from
-    public Long owner;
+    @OneToOne
+    public TPost owner;
 
     //e.g. Public,Friend,FriendRelation,CustomGroup
     public String status;
@@ -46,10 +45,14 @@ public class TPost extends Model {
 
     public Boolean hasPhoto;
 
-    public static Finder<Long,TPost> find = new Finder<Long, TPost>(Long.class,TPost.class);
+    public Long likes;
 
-    public static List<TPost> findByCreatorId(Long userId){
-        return find.where().eq("creatorId",userId).findList();
-    }
+    @OneToMany(mappedBy = "owner")
+    public Set<TComment> comments;
+
+    @OneToMany(mappedBy = "post")
+    public Set<TPostMember> members;
+
+    public static Finder<Long,TPost> find = new Finder<Long, TPost>(Long.class,TPost.class);
 
 }

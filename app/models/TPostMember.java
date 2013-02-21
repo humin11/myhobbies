@@ -2,15 +2,21 @@ package models;
 
 import play.db.ebean.Model;
 
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
 public class TPostMember extends Model {
 
-    public Long postId;
+    @ManyToOne
+    public TPost post;
 
     //e.g. Person,Group,Communities
     public String type;
 
-    public Long group_id;
+    @OneToOne
+    public TGroup group;
 
-    public Long user_id;
+    @OneToOne
+    public TUser user;
 
 }
