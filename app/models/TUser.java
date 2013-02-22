@@ -98,10 +98,9 @@ public class TUser extends Model implements Shareable{
     }
 
     public static List<TPost> findPosts(TUser user){
-        TPost.find.where()
+        return TPost.find.where()
                 .eq("shares.share_person",user.id)
-                .eq("shares.share_group.members.contact.member",user.id);
-        return null;
+                .eq("shares.share_group.members.contact.member",user.id).orderBy("create_at DESC").findList();
     }
 
 }
