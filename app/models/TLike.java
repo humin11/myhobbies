@@ -1,5 +1,6 @@
 package models;
 
+import models.base.Likeable;
 import play.data.format.Formats;
 import play.db.ebean.Model;
 
@@ -15,10 +16,10 @@ public class TLike extends Model {
     public Long id;
 
     @ManyToOne
-    public TPost post;
+    public Likeable like_to;
 
-    @ManyToOne
-    public TComment comment;
+    //e.g. POST,COMMENT,PHOTO
+    public String type;
 
     @OneToOne
     public TUser author;

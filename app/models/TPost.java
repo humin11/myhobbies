@@ -1,17 +1,19 @@
 package models;
 
+import com.avaje.ebean.annotation.Where;
+import models.base.Commentable;
+import models.base.Likeable;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name="post")
-public class TPost extends Model {
+public class TPost extends Model implements Commentable,Likeable {
 
     @Id
     @GeneratedValue
@@ -40,12 +42,15 @@ public class TPost extends Model {
 
     public Boolean likeable;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "comment_to")
+    @Where(clause = "type='POST'")
     public Set<TComment> comments;
 
     @OneToMany(mappedBy = "parent")
     public Set<TPost> reshares;
 
+    @OneToMany(mappedBy = "like_to")
+    @Where(clause = "type='POST'")
     public Set<TLike> likes;
 
     public Set<TPhoto> photos;

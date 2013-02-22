@@ -1,6 +1,9 @@
 package models;
 
 
+import com.avaje.ebean.annotation.Where;
+import models.base.Commentable;
+import models.base.Likeable;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -11,7 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(name="comment")
-public class TComment extends Model {
+public class TComment extends Model implements Commentable,Likeable {
 
     @Id
     @GeneratedValue
@@ -30,13 +33,17 @@ public class TComment extends Model {
     public Date modify_at;
 
     //e.g. modified or not
-    public String type;
+    public String status;
 
-    @OneToMany(mappedBy = "comment")
+    @OneToMany(mappedBy = "like_to")
+    @Where(clause = "type='COMMENT'")
     public Set<TLike> likes;
 
     @ManyToOne
-    public TPost post;
+    public Commentable comment_to;
+
+    //e.g. POST,COMMENT,PHOTO
+    public String type;
 
     public static Finder<Long,TComment> find = new Finder<Long, TComment>(Long.class,TComment.class);
 

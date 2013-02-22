@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.avaje.ebean.annotation.Where;
 import models.base.Shareable;
 import play.db.ebean.Model;
 import play.data.validation.*;
@@ -50,7 +51,8 @@ public class TUser extends Model implements Shareable{
     public TPerson person;
 
     @OneToMany(mappedBy = "share_to")
-    public Set<TParticipation> participations;
+    @Where(clause = "type='USER'")
+    public Set<TShare> participations;
 
     @OneToMany(mappedBy = "author")
     public Set<TPost> posts;
@@ -74,7 +76,7 @@ public class TUser extends Model implements Shareable{
     public static void sharePost(List<Shareable> shareList,TPost post,TUser user){
         Date now = new Date();
         for(Shareable shareable : shareList){
-            TParticipation participation = new TParticipation();
+            TShare participation = new TShare();
             participation.author = user;
             participation.create_at = now;
             participation.share_to = shareable;

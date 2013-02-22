@@ -1,5 +1,6 @@
 package models;
 
+import com.avaje.ebean.annotation.Where;
 import models.base.Shareable;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
@@ -30,7 +31,8 @@ public class TAspect extends Model implements Shareable{
     public Set<TAspectMember> members;
 
     @OneToMany(mappedBy = "share_to")
-    public Set<TParticipation> participations;
+    @Where(clause = "type='ASPECT'")
+    public Set<TShare> participations;
 
     public static Finder<Long,TAspect> find = new Finder<Long, TAspect>(Long.class,TAspect.class);
 
