@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Entity
 @Table(name="post")
-public class TPost extends Model implements Commentable,Likeable {
+public class TPost extends Model implements Commentable,Likeable{
 
     @Id
     @GeneratedValue
@@ -41,6 +41,9 @@ public class TPost extends Model implements Commentable,Likeable {
     public Boolean commentable;
 
     public Boolean likeable;
+
+    @OneToMany(mappedBy = "post")
+    public Set<TPostShare> shares;
 
     @OneToMany(mappedBy = "comment_to")
     @Where(clause = "type='POST'")

@@ -1,6 +1,5 @@
 package models;
 
-import models.base.Shareable;
 import play.data.format.Formats;
 import play.db.ebean.Model;
 
@@ -11,17 +10,20 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name="share")
-public class TShare extends Model {
+@Table(name="post_share")
+public class TPostShare extends Model {
 
     @ManyToOne
     public TPost post;
 
-    //e.g. USER,ASPECT,COMMUNITIES
-    public String type;
+    @ManyToOne
+    public TUser share_person;
 
     @ManyToOne
-    public Shareable share_to;
+    public TGroup share_group;
+
+    //e.g. PERSON,GROUP
+    public String share_type;
 
     @OneToOne
     public TUser author;
@@ -29,6 +31,6 @@ public class TShare extends Model {
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;
 
-    public static Finder<Long, TShare> find = new Finder<Long, TShare>(Long.class, TShare.class);
+    public static Finder<Long, TPostShare> find = new Finder<Long, TPostShare>(Long.class, TPostShare.class);
 
 }

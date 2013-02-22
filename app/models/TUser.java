@@ -50,9 +50,8 @@ public class TUser extends Model implements Shareable{
     @OneToOne
     public TPerson person;
 
-    @OneToMany(mappedBy = "share_to")
-    @Where(clause = "type='USER'")
-    public Set<TShare> participations;
+    @OneToMany(mappedBy = "share_person")
+    public Set<TPostShare> shares;
 
     @OneToMany(mappedBy = "author")
     public Set<TPost> posts;
@@ -76,17 +75,33 @@ public class TUser extends Model implements Shareable{
     public static void sharePost(List<Shareable> shareList,TPost post,TUser user){
         Date now = new Date();
         for(Shareable shareable : shareList){
-            TShare participation = new TShare();
-            participation.author = user;
-            participation.create_at = now;
-            participation.share_to = shareable;
-            if(shareable instanceof TAspect){
-                participation.type = "aspect";
-            }else if(shareable instanceof TUser){
-                participation.type = "user";
+            TPostShare share = new TPostShare();
+            share.author = user;
+            share.create_at = now;
+            share.post = post;
+            if(shareable instanceof TUser){
+                share.share_person = (TUser)shareable;
+                share.share_type = "PERSON";
+            }else if(shareable instanceof TGroup){
+                share.share_group = (TGroup)shareable;
+                share.share_type = "GROUP";
             }
-            participation.save();
+            share.save();
         }
+        TPostShare share = new TPostShare(); //add self share record
+        share.author = user;
+        share.create_at = now;
+        share.post = post;
+        share.share_person = user;
+        share.share_type = "PERSON";
+        share.save();
+    }
+
+    public static List<TPost> findPosts(TUser user){
+        TPost.find.where()
+                .eq("shares.share_person",user.id)
+                .eq("shares.share_group.members.contact.member",user.id);
+        return null;
     }
 
 }

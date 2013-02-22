@@ -11,8 +11,8 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
-@Table(name="aspect")
-public class TAspect extends Model implements Shareable{
+@Table(name="group")
+public class TGroup extends Model implements Shareable{
 
     @Id
     @GeneratedValue
@@ -27,14 +27,13 @@ public class TAspect extends Model implements Shareable{
     @Constraints.Required
     public String name;
 
-    @OneToMany(mappedBy = "aspect")
-    public Set<TAspectMember> members;
+    @OneToMany(mappedBy = "group")
+    public Set<TGroupMember> members;
 
-    @OneToMany(mappedBy = "share_to")
-    @Where(clause = "type='ASPECT'")
-    public Set<TShare> participations;
+    @OneToMany(mappedBy = "share_group")
+    public Set<TPostShare> shares;
 
-    public static Finder<Long,TAspect> find = new Finder<Long, TAspect>(Long.class,TAspect.class);
+    public static Finder<Long,TGroup> find = new Finder<Long, TGroup>(Long.class,TGroup.class);
 
 
 }
