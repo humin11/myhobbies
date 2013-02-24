@@ -64,5 +64,9 @@ public class TCourt extends Model {
 			court.save();
 		}
 	}
+	
+	public static TCourt findById(Long id){
+		return find.byId(id);
+	}
 
 }

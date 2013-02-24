@@ -7,6 +7,7 @@ GET     /                           controllers.Application.index
 
 # Court Page
 GET		/court						controllers.Court.index
+GET		/court/:id					controllers.Court.view(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
