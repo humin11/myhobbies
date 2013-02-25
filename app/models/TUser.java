@@ -63,6 +63,9 @@ public class TUser extends Model implements Shareable{
     public List<TComment> comments;
 
     @OneToMany(mappedBy = "author")
+    public List<TLike> likes;
+
+    @OneToMany(mappedBy = "author")
     public List<TPhoto> photos;
 
 	public static Finder<Long, TUser> find = new Finder<Long, TUser>(Long.class, TUser.class);
@@ -101,12 +104,6 @@ public class TUser extends Model implements Shareable{
         share.person = user;
         share.type = "PERSON";
         share.save();
-    }
-
-    public static List<TPost> findPosts(TUser user){
-        return TPost.find.where()
-                .eq("shares.share_person",user.id)
-                .eq("shares.share_aspect.members.contact.member",user.id).orderBy("create_at DESC").findList();
     }
 
 }

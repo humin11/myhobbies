@@ -1,10 +1,8 @@
 package models;
 
-import com.avaje.ebean.annotation.Where;
 import models.base.Commentable;
 import models.base.Loveable;
 import play.data.format.Formats;
-import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
@@ -51,7 +49,7 @@ public class TPost extends Model implements Commentable,Loveable {
     public List<TPost> reshares;
 
     @OneToMany(mappedBy = "post")
-    public List<TLove> loves;
+    public List<TLike> likes;
 
     @OneToMany(mappedBy = "post")
     public List<TMention> mentions;
@@ -60,5 +58,11 @@ public class TPost extends Model implements Commentable,Loveable {
     public List<TPhoto> photos;
 
     public static Finder<Long,TPost> find = new Finder<Long, TPost>(Long.class,TPost.class);
+
+    public static List<TPost> findPosts(TUser user){
+        return TPost.find.where()
+                .eq("shares.share_person",user.id)
+                .eq("shares.share_aspect.members.contact.member",user.id).orderBy("create_at DESC").findList();
+    }
 
 }

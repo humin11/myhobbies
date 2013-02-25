@@ -36,7 +36,7 @@ public class TComment extends Model implements Commentable,Loveable {
     public TPost post;
 
     @OneToMany(mappedBy = "comment")
-    public List<TLove> loves;
+    public List<TLike> likes;
 
     @OneToMany(mappedBy = "comment")
     public List<TMention> mentions;

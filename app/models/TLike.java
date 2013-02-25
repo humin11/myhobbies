@@ -7,8 +7,8 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="love")
-public class TLove extends Model {
+@Table(name="likes")
+public class TLike extends Model {
 
     @Id
     @GeneratedValue
@@ -23,7 +23,7 @@ public class TLove extends Model {
     //e.g. POST,COMMENT,PHOTO
     public String type;
 
-    @OneToOne
+    @ManyToOne
     public TUser author;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
