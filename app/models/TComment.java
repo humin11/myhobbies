@@ -3,7 +3,7 @@ package models;
 
 import com.avaje.ebean.annotation.Where;
 import models.base.Commentable;
-import models.base.Likeable;
+import models.base.Loveable;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -14,7 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(name="comment")
-public class TComment extends Model implements Commentable,Likeable {
+public class TComment extends Model implements Commentable,Loveable {
 
     @Id
     @GeneratedValue
@@ -37,7 +37,7 @@ public class TComment extends Model implements Commentable,Likeable {
 
     @OneToMany(mappedBy = "like_to")
     @Where(clause = "type='COMMENT'")
-    public Set<TLike> likes;
+    public Set<TLove> likes;
 
     @ManyToOne
     public Commentable comment_to;

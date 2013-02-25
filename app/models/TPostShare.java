@@ -20,7 +20,7 @@ public class TPostShare extends Model {
     public TUser share_person;
 
     @ManyToOne
-    public TGroup share_group;
+    public TAspect share_aspect;
 
     //e.g. PERSON,GROUP
     public String share_type;

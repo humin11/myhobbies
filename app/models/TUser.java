@@ -6,7 +6,9 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-import com.avaje.ebean.annotation.Where;
+import com.avaje.ebean.Query;
+
+import com.avaje.ebean.Ebean;
 import models.base.Shareable;
 import play.db.ebean.Model;
 import play.data.validation.*;
@@ -82,9 +84,9 @@ public class TUser extends Model implements Shareable{
             if(shareable instanceof TUser){
                 share.share_person = (TUser)shareable;
                 share.share_type = "PERSON";
-            }else if(shareable instanceof TGroup){
-                share.share_group = (TGroup)shareable;
-                share.share_type = "GROUP";
+            }else if(shareable instanceof TAspect){
+                share.share_aspect = (TAspect)shareable;
+                share.share_type = "ASPECT";
             }
             share.save();
         }
@@ -100,7 +102,7 @@ public class TUser extends Model implements Shareable{
     public static List<TPost> findPosts(TUser user){
         return TPost.find.where()
                 .eq("shares.share_person",user.id)
-                .eq("shares.share_group.members.contact.member",user.id).orderBy("create_at DESC").findList();
+                .eq("shares.share_aspect.members.contact.member",user.id).orderBy("create_at DESC").findList();
     }
 
 }

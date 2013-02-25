@@ -2,7 +2,7 @@ package models;
 
 import com.avaje.ebean.annotation.Where;
 import models.base.Commentable;
-import models.base.Likeable;
+import models.base.Loveable;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Entity
 @Table(name="post")
-public class TPost extends Model implements Commentable,Likeable{
+public class TPost extends Model implements Commentable,Loveable {
 
     @Id
     @GeneratedValue
@@ -52,9 +52,9 @@ public class TPost extends Model implements Commentable,Likeable{
     @OneToMany(mappedBy = "parent")
     public Set<TPost> reshares;
 
-    @OneToMany(mappedBy = "like_to")
+    @OneToMany(mappedBy = "love_to")
     @Where(clause = "type='POST'")
-    public Set<TLike> likes;
+    public Set<TLove> loves;
 
     public Set<TPhoto> photos;
 
