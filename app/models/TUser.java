@@ -2,18 +2,14 @@ package models;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.*;
-
-import com.avaje.ebean.annotation.Where;
 import models.base.Shareable;
 import play.db.ebean.Model;
 import play.data.validation.*;
 import play.data.format.*;
 
 @Entity
-@Table(name="user")
+@Table(name="users")
 public class TUser extends Model implements Shareable{
 	
 	@Id
@@ -50,15 +46,27 @@ public class TUser extends Model implements Shareable{
     @OneToOne
     public TPerson person;
 
-    @OneToMany(mappedBy = "share_person")
-    public Set<TPostShare> shares;
+    @OneToMany(mappedBy = "author")
+    public List<TAspect> aspects;
+
+    @OneToMany(mappedBy = "owner")
+    public List<TContact> contacts;
+
+    @OneToMany(mappedBy = "person")
+    public List<TPostShare> shares;
 
     @OneToMany(mappedBy = "author")
-    public Set<TPost> posts;
+    public List<TPost> posts;
 
     @OneToMany(mappedBy = "author")
-    public Set<TComment> comments;
-	
+    public List<TComment> comments;
+
+    @OneToMany(mappedBy = "author")
+    public List<TLike> likes;
+
+    @OneToMany(mappedBy = "author")
+    public List<TPhoto> photos;
+
 	public static Finder<Long, TUser> find = new Finder<Long, TUser>(Long.class, TUser.class);
 
     public static TUser findByEmail(String email) {
@@ -70,37 +78,6 @@ public class TUser extends Model implements Shareable{
                 .eq("email", email)
                 .eq("password", password)
                 .findUnique();
-    }
-
-    public static void sharePost(List<Shareable> shareList,TPost post,TUser user){
-        Date now = new Date();
-        for(Shareable shareable : shareList){
-            TPostShare share = new TPostShare();
-            share.author = user;
-            share.create_at = now;
-            share.post = post;
-            if(shareable instanceof TUser){
-                share.share_person = (TUser)shareable;
-                share.share_type = "PERSON";
-            }else if(shareable instanceof TGroup){
-                share.share_group = (TGroup)shareable;
-                share.share_type = "GROUP";
-            }
-            share.save();
-        }
-        TPostShare share = new TPostShare(); //add self share record
-        share.author = user;
-        share.create_at = now;
-        share.post = post;
-        share.share_person = user;
-        share.share_type = "PERSON";
-        share.save();
-    }
-
-    public static List<TPost> findPosts(TUser user){
-        return TPost.find.where()
-                .eq("shares.share_person",user.id)
-                .eq("shares.share_group.members.contact.member",user.id).orderBy("create_at DESC").findList();
     }
 
 }

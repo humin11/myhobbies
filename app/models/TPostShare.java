@@ -10,20 +10,20 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name="post_share")
+@Table(name="post_shares")
 public class TPostShare extends Model {
 
     @ManyToOne
     public TPost post;
 
     @ManyToOne
-    public TUser share_person;
+    public TUser person;
 
     @ManyToOne
-    public TGroup share_group;
+    public TAspect aspect;
 
     //e.g. PERSON,GROUP
-    public String share_type;
+    public String type;
 
     @OneToOne
     public TUser author;

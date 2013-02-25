@@ -5,7 +5,7 @@ import play.db.ebean.Model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="person")
+@Table(name="people")
 public class TPerson extends Model {
 
     @Id
