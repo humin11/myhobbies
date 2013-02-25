@@ -3,10 +3,7 @@ package models;
 import play.data.format.Formats;
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -17,8 +14,10 @@ public class TContact extends Model {
     @GeneratedValue
     public Long id;
 
+    @OneToOne
     public TUser owner;
 
+    @OneToOne
     public TUser member;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")

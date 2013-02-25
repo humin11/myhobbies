@@ -9,7 +9,7 @@ import play.db.ebean.Model;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name="post")
@@ -43,20 +43,21 @@ public class TPost extends Model implements Commentable,Loveable {
     public Boolean likeable;
 
     @OneToMany(mappedBy = "post")
-    public Set<TPostShare> shares;
+    public List<TPostShare> shares;
 
-    @OneToMany(mappedBy = "comment_to")
-    @Where(clause = "type='POST'")
-    public Set<TComment> comments;
+    @OneToMany(mappedBy = "post")
+    public List<TComment> comments;
 
     @OneToMany(mappedBy = "parent")
-    public Set<TPost> reshares;
+    public List<TPost> reshares;
 
-    @OneToMany(mappedBy = "love_to")
-    @Where(clause = "type='POST'")
-    public Set<TLove> loves;
+    @OneToMany(mappedBy = "post")
+    public List<TLove> loves;
 
-    public Set<TPhoto> photos;
+    @OneToMany(mappedBy = "post")
+    public List<TMention> mentions;
+
+    public List<TPhoto> photos;
 
     public static Finder<Long,TPost> find = new Finder<Long, TPost>(Long.class,TPost.class);
 

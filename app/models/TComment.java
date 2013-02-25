@@ -1,15 +1,13 @@
 package models;
 
-
-import com.avaje.ebean.annotation.Where;
 import models.base.Commentable;
 import models.base.Loveable;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
-
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -35,12 +33,14 @@ public class TComment extends Model implements Commentable,Loveable {
     //e.g. modified or not
     public String status;
 
-    @OneToMany(mappedBy = "like_to")
-    @Where(clause = "type='COMMENT'")
-    public Set<TLove> likes;
+    @OneToMany(mappedBy = "comment")
+    public Set<TLove> loves;
 
     @ManyToOne
-    public Commentable comment_to;
+    public TPost post;
+
+    @OneToMany(mappedBy = "comment")
+    public List<TMention> mentions;
 
     //e.g. POST,COMMENT,PHOTO
     public String type;

@@ -3,12 +3,7 @@ package models;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-
 import javax.persistence.*;
-
-import com.avaje.ebean.Query;
-
-import com.avaje.ebean.Ebean;
 import models.base.Shareable;
 import play.db.ebean.Model;
 import play.data.validation.*;
@@ -52,14 +47,14 @@ public class TUser extends Model implements Shareable{
     @OneToOne
     public TPerson person;
 
-    @OneToMany(mappedBy = "share_person")
-    public Set<TPostShare> shares;
+    @OneToMany(mappedBy = "person")
+    public List<TPostShare> shares;
 
     @OneToMany(mappedBy = "author")
-    public Set<TPost> posts;
+    public List<TPost> posts;
 
     @OneToMany(mappedBy = "author")
-    public Set<TComment> comments;
+    public List<TComment> comments;
 	
 	public static Finder<Long, TUser> find = new Finder<Long, TUser>(Long.class, TUser.class);
 
@@ -82,11 +77,11 @@ public class TUser extends Model implements Shareable{
             share.create_at = now;
             share.post = post;
             if(shareable instanceof TUser){
-                share.share_person = (TUser)shareable;
-                share.share_type = "PERSON";
+                share.person = (TUser)shareable;
+                share.type = "PERSON";
             }else if(shareable instanceof TAspect){
-                share.share_aspect = (TAspect)shareable;
-                share.share_type = "ASPECT";
+                share.aspect = (TAspect)shareable;
+                share.type = "ASPECT";
             }
             share.save();
         }
@@ -94,8 +89,8 @@ public class TUser extends Model implements Shareable{
         share.author = user;
         share.create_at = now;
         share.post = post;
-        share.share_person = user;
-        share.share_type = "PERSON";
+        share.person = user;
+        share.type = "PERSON";
         share.save();
     }
 

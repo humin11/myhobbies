@@ -1,6 +1,5 @@
 package models;
 
-import models.base.Loveable;
 import play.data.format.Formats;
 import play.db.ebean.Model;
 
@@ -16,7 +15,10 @@ public class TLove extends Model {
     public Long id;
 
     @ManyToOne
-    public Loveable love_to;
+    public TPost post;
+
+    @ManyToOne
+    public TComment comment;
 
     //e.g. POST,COMMENT,PHOTO
     public String type;

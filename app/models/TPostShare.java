@@ -17,13 +17,13 @@ public class TPostShare extends Model {
     public TPost post;
 
     @ManyToOne
-    public TUser share_person;
+    public TUser person;
 
     @ManyToOne
-    public TAspect share_aspect;
+    public TAspect aspect;
 
     //e.g. PERSON,GROUP
-    public String share_type;
+    public String type;
 
     @OneToOne
     public TUser author;
