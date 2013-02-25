@@ -11,13 +11,13 @@ import play.mvc.Result;
 
 import java.util.List;
 
-public class Post extends Controller {
+public class Posts extends Controller {
 
     @BodyParser.Of(BodyParser.Json.class)
     public static Result list(){
         ObjectNode result = Json.newObject();
         TUser user = TUser.find.byId(Long.valueOf(session("userid")));
-        List<TPost> posts = TUser.findPosts(user);
+        List<TPost> posts = TPost.findPosts(user);
         Cache.set("", "");
         return ok(result);
     }
