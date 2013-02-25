@@ -2,11 +2,10 @@ package models;
 
 import play.db.ebean.Model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
+@Entity
+@Table(name="mention")
 public class TMention extends Model {
 
     @Id

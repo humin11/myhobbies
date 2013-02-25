@@ -8,7 +8,6 @@ import play.db.ebean.Model;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name="comment")
@@ -33,11 +32,11 @@ public class TComment extends Model implements Commentable,Loveable {
     //e.g. modified or not
     public String status;
 
-    @OneToMany(mappedBy = "comment")
-    public Set<TLove> loves;
-
     @ManyToOne
     public TPost post;
+
+    @OneToMany(mappedBy = "comment")
+    public List<TLove> loves;
 
     @OneToMany(mappedBy = "comment")
     public List<TMention> mentions;
