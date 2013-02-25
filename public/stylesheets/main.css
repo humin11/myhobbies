@@ -1,3 +1,9 @@
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0; }
+em, i, q, cite, address,var { font-style:normal; }
+
+a { color:#369; text-decoration:none; }
+a:hover { text-decoration:none; color:#fff; background-color:#369; }
+
 body {
   position: relative;
   padding-top: 50px;
@@ -36,6 +42,11 @@ body > .navbar .brand:hover {
   text-decoration: none;
   text-shadow: 0 1px 0 rgba(255,255,255,.1), 0 0 30px rgba(255,255,255,.4);
 }
+
+.intro {line-height:22px;margin-top:3px;}
+.intro strong{color:#f1b000;margin-right:10px;}
+.intro b{margin-right:10px;vertical-align:middle;margin-bottom:3px;}
+.intro em{color:#303030;margin-right:5px;}
 
 /* ---------------------------------------------------------------------- */
 /*	Property Listing
