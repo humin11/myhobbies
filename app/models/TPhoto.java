@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="photo")
+@Table(name="photos")
 public class TPhoto extends Model {
 
     @Id

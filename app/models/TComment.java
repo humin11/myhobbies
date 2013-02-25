@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="comment")
+@Table(name="comments")
 public class TComment extends Model implements Commentable,Loveable {
 
     @Id

@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="aspect")
+@Table(name="aspects")
 public class TAspect extends Model implements Shareable{
 
     @Id

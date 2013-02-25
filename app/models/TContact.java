@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="contact")
+@Table(name="contacts")
 public class TContact extends Model {
 
     @Id

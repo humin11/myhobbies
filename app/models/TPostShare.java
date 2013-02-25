@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name="post_share")
+@Table(name="post_shares")
 public class TPostShare extends Model {
 
     @ManyToOne

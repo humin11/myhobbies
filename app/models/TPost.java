@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="post")
+@Table(name="posts")
 public class TPost extends Model implements Commentable,Loveable {
 
     @Id

@@ -8,7 +8,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="aspect_member")
+@Table(name="aspect_members")
 public class TAspectMember extends Model {
 
     @ManyToOne
