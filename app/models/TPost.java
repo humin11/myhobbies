@@ -19,7 +19,6 @@ public class TPost extends Model implements Commentable,Loveable {
     @GeneratedValue
     public Long id;
 
-    @Constraints.Required
     public String content;
 
     @ManyToOne
@@ -57,6 +56,7 @@ public class TPost extends Model implements Commentable,Loveable {
     @OneToMany(mappedBy = "post")
     public List<TMention> mentions;
 
+    @OneToMany(mappedBy = "post")
     public List<TPhoto> photos;
 
     public static Finder<Long,TPost> find = new Finder<Long, TPost>(Long.class,TPost.class);

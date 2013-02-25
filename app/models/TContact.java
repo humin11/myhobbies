@@ -14,7 +14,7 @@ public class TContact extends Model {
     @GeneratedValue
     public Long id;
 
-    @OneToOne
+    @ManyToOne
     public TUser owner;
 
     @OneToOne

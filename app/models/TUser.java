@@ -47,6 +47,12 @@ public class TUser extends Model implements Shareable{
     @OneToOne
     public TPerson person;
 
+    @OneToMany(mappedBy = "author")
+    public List<TAspect> aspects;
+
+    @OneToMany(mappedBy = "owner")
+    public List<TContact> contacts;
+
     @OneToMany(mappedBy = "person")
     public List<TPostShare> shares;
 
@@ -55,7 +61,10 @@ public class TUser extends Model implements Shareable{
 
     @OneToMany(mappedBy = "author")
     public List<TComment> comments;
-	
+
+    @OneToMany(mappedBy = "author")
+    public List<TPhoto> photos;
+
 	public static Finder<Long, TUser> find = new Finder<Long, TUser>(Long.class, TUser.class);
 
     public static TUser findByEmail(String email) {
