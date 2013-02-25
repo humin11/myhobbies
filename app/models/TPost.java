@@ -31,7 +31,7 @@ public class TPost extends Model implements Commentable,Loveable {
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date modify_at;
 
-    @OneToOne
+    @ManyToOne
     public TPost parent;
 
     public String status;
