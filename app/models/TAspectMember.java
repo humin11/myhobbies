@@ -8,15 +8,15 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="group_member")
-public class TGroupMember extends Model {
+@Table(name="aspect_members")
+public class TAspectMember extends Model {
 
     @ManyToOne
-    public TGroup group;
+    public TAspect aspect;
 
     @OneToOne
     public TContact contact;
 
-    public static Finder<Long,TGroupMember> find = new Finder<Long, TGroupMember>(Long.class,TGroupMember.class);
+    public static Finder<Long,TAspectMember> find = new Finder<Long, TAspectMember>(Long.class,TAspectMember.class);
 
 }

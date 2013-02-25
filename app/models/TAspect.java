@@ -1,6 +1,5 @@
 package models;
 
-import com.avaje.ebean.annotation.Where;
 import models.base.Shareable;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
@@ -8,11 +7,11 @@ import play.db.ebean.Model;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Entity
-@Table(name="group")
-public class TGroup extends Model implements Shareable{
+@Table(name="aspects")
+public class TAspect extends Model implements Shareable{
 
     @Id
     @GeneratedValue
@@ -27,13 +26,12 @@ public class TGroup extends Model implements Shareable{
     @Constraints.Required
     public String name;
 
-    @OneToMany(mappedBy = "group")
-    public Set<TGroupMember> members;
+    @OneToMany(mappedBy = "aspect")
+    public List<TAspectMember> members;
 
-    @OneToMany(mappedBy = "share_group")
-    public Set<TPostShare> shares;
+    @OneToMany(mappedBy = "aspect")
+    public List<TPostShare> shares;
 
-    public static Finder<Long,TGroup> find = new Finder<Long, TGroup>(Long.class,TGroup.class);
-
+    public static Finder<Long,TAspect> find = new Finder<Long, TAspect>(Long.class,TAspect.class);
 
 }

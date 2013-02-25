@@ -1,6 +1,5 @@
 package models;
 
-import models.base.Likeable;
 import play.data.format.Formats;
 import play.db.ebean.Model;
 
@@ -16,12 +15,15 @@ public class TLike extends Model {
     public Long id;
 
     @ManyToOne
-    public Likeable like_to;
+    public TPost post;
+
+    @ManyToOne
+    public TComment comment;
 
     //e.g. POST,COMMENT,PHOTO
     public String type;
 
-    @OneToOne
+    @ManyToOne
     public TUser author;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
