@@ -9,7 +9,8 @@ import javax.persistence.*;
 public class TMention extends Model {
 
     @Id
-    public GeneratedValue id;
+    @GeneratedValue
+    public Long id;
 
     @OneToOne
     public TUser user;
