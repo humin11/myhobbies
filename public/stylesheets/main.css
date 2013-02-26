@@ -1,3 +1,9 @@
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0; }
+em, i, q, cite, address,var { font-style:normal; }
+
+a { color:#369; text-decoration:none; }
+a:hover { text-decoration:none; color:#fff; background-color:#369; }
+
 body {
   position: relative;
   padding-top: 50px;
@@ -37,53 +43,74 @@ body > .navbar .brand:hover {
   text-shadow: 0 1px 0 rgba(255,255,255,.1), 0 0 30px rgba(255,255,255,.4);
 }
 
+.intro {line-height:22px;margin-top:3px;}
+.intro strong{color:#f1b000;margin-right:10px;}
+.intro b{margin-right:10px;vertical-align:middle;margin-bottom:3px;}
+.intro em{color:#303030;margin-right:5px;}
 
 /* ---------------------------------------------------------------------- */
-	/*	Property Listing
-	/* ---------------------------------------------------------------------- */
-	.listing-js .container-fluid {
-		padding:0;
-		margin:0 0 20px 0;
-		position:relative;
-	}
-	
-	.listing-js .row-fluid {
-		border-bottom:1px solid #fafafa;
-	}
-	.listing-js .row-fluid:hover, #renting-map-js > div:hover {
-		border-bottom-color:#C24F19;
-	}
-	
-	.row-fluid.appartment-listing {
-		border-bottom:none;
-	}
-	.row-fluid.appartment-listing > .span6 {
-		border-bottom:1px solid #fafafa;
-		padding-bottom:0;
-		padding-top:0;
-	}
-	
-	.latest-listing {
-		padding:0;
-		margin:0 0 20px 0;
-		position:relative;
-	}
-	
-	.listing-js .container-fluid img {
-		border:3px solid #FFF;
-		margin-bottom:20px;
-		box-sizing:border-box;
-	}
-	.listing-js select {
-		width:100%;
-		height:30px;
-		margin-top:-7px;
-	}
-	
-	.pagination { margin: 20px 0 0;	}
-	
-	.listing-js #google-map-js {margin-top:6px;	}
-	
-	#renting-map-js > div:nth-child(odd) {	margin-left:0;}
-	#renting-map-js > div {border-bottom:1px solid #FFF; margin-bottom:20px; display:block;}
-	#renting-map-js p.street,  #renting-map-js p.lat, #renting-map-js p.lng {display:none;}
+/*	Property Listing
+/* ---------------------------------------------------------------------- */
+.listing .container-fluid {
+	padding: 0;
+	margin: 0 0 20px 0;
+	position: relative;
+}
+
+.listing .row-fluid {
+	border-bottom: 1px solid #fafafa;
+}
+
+.listing .row-fluid:hover,#renting-map-js>div:hover {
+	border-bottom-color: #C24F19;
+}
+
+.row-fluid.appartment-listing {
+	border-bottom: none;
+}
+
+.row-fluid.appartment-listing>.span6 {
+	border-bottom: 1px solid #fafafa;
+	padding-bottom: 0;
+	padding-top: 0;
+}
+
+.latest-listing {
+	padding: 0;
+	margin: 0 0 20px 0;
+	position: relative;
+}
+
+.listing .container-fluid img {
+	border: 3px solid #FFF;
+	margin-bottom: 20px;
+	box-sizing: border-box;
+}
+
+.listing select {
+	width: 100%;
+	height: 30px;
+	margin-top: -7px;
+}
+
+.pagination {
+	margin: 20px 0 0;
+}
+
+.listing #google-map-js {
+	margin-top: 6px;
+}
+
+#renting-map-js>div:nth-child(odd) {
+	margin-left: 0;
+}
+
+#renting-map-js>div {
+	border-bottom: 1px solid #FFF;
+	margin-bottom: 20px;
+	display: block;
+}
+
+#renting-map-js p.street,#renting-map-js p.lat,#renting-map-js p.lng {
+	display: none;
+}
