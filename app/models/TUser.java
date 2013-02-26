@@ -10,7 +10,7 @@ import play.data.format.*;
 
 @Entity
 @Table(name="users")
-public class TUser extends Model implements Shareable{
+public class TUser extends Model{
 	
 	@Id
 	@GeneratedValue

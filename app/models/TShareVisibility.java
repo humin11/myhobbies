@@ -15,7 +15,7 @@ public class TShareVisibility extends Model {
     public Long id;
 
     @ManyToOne
-    public TContact contact;
+    public TUser recipient;
 
     public Long shareable_id;
 

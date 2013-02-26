@@ -14,9 +14,6 @@ public class TNotification extends Model {
     @GeneratedValue
     public Long id;
 
-    @ManyToOne
-    public TUser author;
-
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;
 

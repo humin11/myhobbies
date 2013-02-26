@@ -25,4 +25,6 @@ public class TContact extends Model {
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date update_at;
+
+    public static Finder<Long,TContact> find = new Finder<Long, TContact>(Long.class,TContact.class);
 }

@@ -3,6 +3,7 @@ package models;
 import com.avaje.ebean.annotation.Where;
 import models.base.Commentable;
 import models.base.Likeable;
+import models.base.Shareable;
 import play.data.format.Formats;
 import play.db.ebean.Model;
 
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name="posts")
-public class TPost extends Model implements Commentable,Likeable {
+public class TPost extends Model implements Shareable,Commentable,Likeable {
 
     @Id
     @GeneratedValue

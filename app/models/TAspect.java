@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name="aspects")
-public class TAspect extends Model implements Shareable{
+public class TAspect extends Model{
 
     @Id
     @GeneratedValue
