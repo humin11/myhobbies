@@ -1,31 +1,28 @@
 package models;
 
-
 import play.data.format.Formats;
 import play.db.ebean.Model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name="aspect_visibilities")
-public class TAspectVisibility extends Model {
-
-    @Id
-    @GeneratedValue
-    public Long id;
+@Table(name="circle_members")
+public class TCircleMember extends Model {
 
     @ManyToOne
-    public TAspect aspect;
+    public TCircle circle;
 
-    public Long shareable_id;
-
-    //e.g. POST,PHOTO
-    public String shareable_type;
+    @ManyToOne
+    public TContact contact;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date update_at;
+
 }

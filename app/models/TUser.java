@@ -3,7 +3,7 @@ package models;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
-import models.base.Shareable;
+
 import play.db.ebean.Model;
 import play.data.validation.*;
 import play.data.format.*;
@@ -46,11 +46,11 @@ public class TUser extends Model{
     @OneToOne
     public TPerson person;
 
-    @OneToMany(mappedBy = "author")
-    public List<TAspect> aspects;
-
     @OneToMany(mappedBy = "owner")
-    public List<TContact> contacts;
+    public List<TContact> self_contacts;
+
+    @OneToMany(mappedBy = "person")
+    public List<TContact> in_others_contacts;
 
     @OneToMany(mappedBy = "person")
     public List<TShareVisibility> shares;

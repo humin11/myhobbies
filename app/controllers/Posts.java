@@ -1,6 +1,7 @@
 package controllers;
 
 import models.*;
+import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 import play.cache.Cache;
 import play.libs.Json;
@@ -22,6 +23,7 @@ public class Posts extends Controller {
         return ok(result);
     }
 
+    @BodyParser.Of(BodyParser.Json.class)
     public static Result create(){
         Date now = new Date();
         TUser author = TUser.find.byId(Long.valueOf(session("userid")));
@@ -31,9 +33,10 @@ public class Posts extends Controller {
         post.update_at = now;
 
         post.save();
+        JsonNode params = request().body().asJson();
 
         if(post.ispublic){
-            List<TContact> contacts = TContact.find.where().eq("member",author.id).findList();
+            List<TContact> contacts = TContact.find.where().eq("person",author.id).findList();
             shareAll(post,contacts,now);
             notifyAll(post,contacts,now);
         }else{
@@ -45,29 +48,37 @@ public class Posts extends Controller {
     protected static void shareAll(TPost post,List<TContact> contacts,Date now){
         for(TContact contact : contacts){
             TUser recipient = contact.owner;
-            TShareVisibility shareVisibility = new TShareVisibility();
-            shareVisibility.recipient = recipient;
-            shareVisibility.shareable_id = post.id;
-            shareVisibility.shareable_type = "POST";
-            shareVisibility.create_at = now;
-            shareVisibility.update_at = now;
-            shareVisibility.hidden = false;
-            shareVisibility.save();
+            shareWith(post,recipient,now);
         }
     }
 
     protected static void notifyAll(TPost post,List<TContact> contacts,Date now){
         for(TContact contact : contacts){
             TUser recipient = contact.owner;
-            TNotification notification = new TNotification();
-            notification.recipient = recipient;
-            notification.source_id = post.id;
-            notification.source_type = "POST";
-            notification.create_at = now;
-            notification.update_at = now;
-            notification.unread = true;
-            notification.save();
+            notifyWith(post,recipient,now);
         }
+    }
+
+    protected static void shareWith(TPost post,TUser recipient,Date now){
+        TShareVisibility shareVisibility = new TShareVisibility();
+        shareVisibility.recipient = recipient;
+        shareVisibility.shareable_id = post.id;
+        shareVisibility.shareable_type = "POST";
+        shareVisibility.create_at = now;
+        shareVisibility.update_at = now;
+        shareVisibility.hidden = false;
+        shareVisibility.save();
+    }
+
+    protected static void notifyWith(TPost post,TUser recipient,Date now){
+        TNotification notification = new TNotification();
+        notification.recipient = recipient;
+        notification.source_id = post.id;
+        notification.source_type = "POST";
+        notification.create_at = now;
+        notification.update_at = now;
+        notification.unread = true;
+        notification.save();
     }
 
 }

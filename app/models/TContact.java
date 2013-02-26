@@ -5,6 +5,7 @@ import play.db.ebean.Model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="contacts")
@@ -18,7 +19,7 @@ public class TContact extends Model {
     public TUser owner;
 
     @OneToOne
-    public TUser member;
+    public TUser person;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;
@@ -26,5 +27,12 @@ public class TContact extends Model {
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date update_at;
 
+    @OneToMany(mappedBy = "contact")
+    public List<TCircleMember> circle_members;
+
+    @Transient
+    public Boolean sharing;
+
     public static Finder<Long,TContact> find = new Finder<Long, TContact>(Long.class,TContact.class);
+
 }

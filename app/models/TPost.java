@@ -1,9 +1,6 @@
 package models;
 
 import com.avaje.ebean.annotation.Where;
-import models.base.Commentable;
-import models.base.Likeable;
-import models.base.Shareable;
 import play.data.format.Formats;
 import play.db.ebean.Model;
 
@@ -13,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name="posts")
-public class TPost extends Model implements Shareable,Commentable,Likeable {
+public class TPost extends Model {
 
     @Id
     @GeneratedValue
@@ -59,7 +56,7 @@ public class TPost extends Model implements Shareable,Commentable,Likeable {
     public static List<TPost> findPosts(TUser user){
         return TPost.find.where()
                 .eq("shares.share_person",user.id)
-                .eq("shares.share_aspect.members.contact.member",user.id).orderBy("create_at DESC").findList();
+                .eq("shares.share_aspect.members.contact.person",user.id).orderBy("create_at DESC").findList();
     }
 
 }

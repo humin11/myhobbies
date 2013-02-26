@@ -1,8 +1,6 @@
 package models;
 
 import com.avaje.ebean.annotation.Where;
-import models.base.Commentable;
-import models.base.Likeable;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -12,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name="comments")
-public class TComment extends Model implements Commentable,Likeable {
+public class TComment extends Model {
 
     @Id
     @GeneratedValue
