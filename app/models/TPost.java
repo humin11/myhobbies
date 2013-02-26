@@ -34,25 +34,17 @@ public class TPost extends Model {
 
     public Boolean ispublic;
 
-    @OneToMany(mappedBy = "post")
     public List<TComment> comments;
 
     @OneToMany(mappedBy = "parent")
     public List<TPost> reshares;
 
-    @OneToMany(mappedBy = "likeable_id")
-    @Where(clause = "likeable_type='POST'")
     public List<TLike> likes;
 
-    @OneToMany(mappedBy = "source_id")
-    @Where(clause = "source_type='POST'")
     public List<TMention> mentions;
 
-    @OneToMany(mappedBy = "post")
     public List<TPhoto> photos;
 
-    @OneToMany(mappedBy = "shareable_id")
-    @Where(clause = "shareable_type='POST'")
     public List<TShareVisibility> shares;
 
     public static Finder<Long,TPost> find = new Finder<Long, TPost>(Long.class,TPost.class);

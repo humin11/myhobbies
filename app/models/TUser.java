@@ -53,7 +53,7 @@ public class TUser extends Model{
     @OneToMany(mappedBy = "person")
     public List<TContact> in_others_contacts;
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "recipient")
     public List<TShareVisibility> shares;
 
     @OneToMany(mappedBy = "author")
