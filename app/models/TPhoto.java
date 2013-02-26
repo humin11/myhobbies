@@ -23,6 +23,9 @@ public class TPhoto extends Model {
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;
 
+    @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
+    public Date update_at;
+
     public String small;
 
     public String medium;

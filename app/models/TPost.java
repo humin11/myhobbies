@@ -1,7 +1,8 @@
 package models;
 
+import com.avaje.ebean.annotation.Where;
 import models.base.Commentable;
-import models.base.Loveable;
+import models.base.Likeable;
 import play.data.format.Formats;
 import play.db.ebean.Model;
 
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name="posts")
-public class TPost extends Model implements Commentable,Loveable {
+public class TPost extends Model implements Commentable,Likeable {
 
     @Id
     @GeneratedValue
@@ -26,21 +27,14 @@ public class TPost extends Model implements Commentable,Loveable {
     public Date create_at;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
-    public Date modify_at;
+    public Date update_at;
 
     @ManyToOne
     public TPost parent;
 
     public String status;
 
-    public Boolean shareable;
-
-    public Boolean commentable;
-
-    public Boolean likeable;
-
-    @OneToMany(mappedBy = "post")
-    public List<TPostShare> shares;
+    public Boolean ispublic;
 
     @OneToMany(mappedBy = "post")
     public List<TComment> comments;
@@ -48,10 +42,12 @@ public class TPost extends Model implements Commentable,Loveable {
     @OneToMany(mappedBy = "parent")
     public List<TPost> reshares;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "likeable_id")
+    @Where(clause = "likeable_type='POST'")
     public List<TLike> likes;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "source_id")
+    @Where(clause = "source_type='POST'")
     public List<TMention> mentions;
 
     @OneToMany(mappedBy = "post")

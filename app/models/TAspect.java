@@ -23,15 +23,18 @@ public class TAspect extends Model implements Shareable{
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;
 
+    @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
+    public Date update_at;
+
     @Constraints.Required
     public String name;
+
+    public Integer order_id;
 
     @OneToMany(mappedBy = "aspect")
     public List<TAspectMember> members;
 
     @OneToMany(mappedBy = "aspect")
-    public List<TPostShare> shares;
-
-    public static Finder<Long,TAspect> find = new Finder<Long, TAspect>(Long.class,TAspect.class);
+    public List<TAspectVisibility> shares;
 
 }

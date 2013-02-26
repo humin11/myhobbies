@@ -53,7 +53,7 @@ public class TUser extends Model implements Shareable{
     public List<TContact> contacts;
 
     @OneToMany(mappedBy = "person")
-    public List<TPostShare> shares;
+    public List<TShareVisibility> shares;
 
     @OneToMany(mappedBy = "author")
     public List<TPost> posts;

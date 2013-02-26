@@ -14,14 +14,10 @@ public class TLike extends Model {
     @GeneratedValue
     public Long id;
 
-    @ManyToOne
-    public TPost post;
-
-    @ManyToOne
-    public TComment comment;
+    public Long likeable_id;
 
     //e.g. POST,COMMENT,PHOTO
-    public String type;
+    public String likeable_type;
 
     @ManyToOne
     public TUser author;

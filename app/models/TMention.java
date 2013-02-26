@@ -15,10 +15,9 @@ public class TMention extends Model {
     @OneToOne
     public TUser user;
 
-    @ManyToOne
-    public TPost post;
+    public Long source_id;
 
-    @ManyToOne
-    public TComment comment;
+    //e.g. POST,COMMENT
+    public String source_type;
 
 }

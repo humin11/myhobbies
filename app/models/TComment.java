@@ -1,7 +1,8 @@
 package models;
 
+import com.avaje.ebean.annotation.Where;
 import models.base.Commentable;
-import models.base.Loveable;
+import models.base.Likeable;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name="comments")
-public class TComment extends Model implements Commentable,Loveable {
+public class TComment extends Model implements Commentable,Likeable {
 
     @Id
     @GeneratedValue
@@ -27,23 +28,22 @@ public class TComment extends Model implements Commentable,Loveable {
     public Date create_at;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
-    public Date modify_at;
+    public Date update_at;
 
     //e.g. modified or not
     public String status;
 
-    @ManyToOne
-    public TPost post;
-
-    @OneToMany(mappedBy = "comment")
+    @OneToMany(mappedBy = "likeable_id")
+    @Where(clause = "likeable_type='COMMENT'")
     public List<TLike> likes;
 
-    @OneToMany(mappedBy = "comment")
+    @OneToMany(mappedBy = "source_id")
+    @Where(clause = "source_type='COMMENT'")
     public List<TMention> mentions;
 
-    //e.g. POST,COMMENT,PHOTO
-    public String type;
+    public Long commentable_id;
 
-    public static Finder<Long,TComment> find = new Finder<Long, TComment>(Long.class,TComment.class);
+    //e.g. POST,COMMENT,PHOTO
+    public String commentable_type;
 
 }
