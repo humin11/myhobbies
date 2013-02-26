@@ -38,13 +38,13 @@ public class TCircle extends Model{
 
     public static Finder<Long,TCircle> find = new Finder<Long, TCircle>(Long.class,TCircle.class);
 
-    public static List<TCircle> findAllCircles(TUser author){
-        return find.where().eq("author",author.id).findList();
+    public static List<TCircle> findAllCircles(TUser user){
+        return find.where().eq("author",user.id).findList();
     }
 
-    public static List<TCircle> findCirclesWithPerson(TUser author,TUser person){
+    public static List<TCircle> findCirclesWithPerson(TUser user,TUser person){
         return find.where()
-                .eq("author",author.id)
+                .eq("author",user.id)
                 .eq("members.contact.person",person.id)
                 .findList();
     }

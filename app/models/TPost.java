@@ -51,12 +51,22 @@ public class TPost extends Model {
     @OneToMany(mappedBy = "post")
     public List<TPhoto> photos;
 
+    @OneToMany(mappedBy = "shareable_id")
+    @Where(clause = "shareable_type='POST'")
+    public List<TShareVisibility> shares;
+
     public static Finder<Long,TPost> find = new Finder<Long, TPost>(Long.class,TPost.class);
 
-    public static List<TPost> findPosts(TUser user){
-        return TPost.find.where()
-                .eq("shares.share_person",user.id)
-                .eq("shares.share_aspect.members.contact.person",user.id).orderBy("create_at DESC").findList();
+    public static List<TPost> findSharedPosts(TUser user,Integer maxRow){
+        return findSharedPostsFromOthers(user,maxRow);
+    }
+
+    public static List<TPost> findSharedPostsFromOthers(TUser user,Integer maxRow){
+        List<TUser> contactUsers = TUser.findContactUsers(user);
+        return find.where()
+                .in("author",contactUsers)
+                .eq("shares.recipient",user.id)
+                .eq("shares.hidden",false).findList();
     }
 
 }

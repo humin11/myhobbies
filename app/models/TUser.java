@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
@@ -78,6 +79,19 @@ public class TUser extends Model{
                 .eq("email", email)
                 .eq("password", password)
                 .findUnique();
+    }
+
+    public static List<TUser> findContactUsers(TUser user){
+        List<TContact> contacts = TContact.findContacts(user);
+        List<TUser> contactUsers = new ArrayList<TUser>();
+        for (TContact contact : contacts){
+            contactUsers.add(contact.person);
+        }
+        return contactUsers;
+    }
+
+    public static List<TUser> findPeopleInCircles(List<TCircle> circles){
+        return find.where().in("in_others_contacts.circle_members.circle",circles).findList();
     }
 
 }

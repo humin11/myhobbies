@@ -35,4 +35,8 @@ public class TContact extends Model {
 
     public static Finder<Long,TContact> find = new Finder<Long, TContact>(Long.class,TContact.class);
 
+    public static List<TContact> findContacts(TUser user){
+        return find.where().eq("owner",user).findList();
+    }
+
 }
