@@ -15,4 +15,5 @@ public class Court extends Controller {
 		TCourt court = TCourt.findById(id);
 		return ok(show.render(court));
 	}
+	
 }

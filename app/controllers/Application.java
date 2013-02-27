@@ -8,7 +8,7 @@ public class Application extends Controller {
   
   public static Result index(){
 	  TUser.find.all();
-	  return ok(index.render("My Applications"));
+      return ok(index.render("My Applications"));
   }
   
 }
