@@ -17,10 +17,11 @@ public class TShareVisibility extends Model {
     @ManyToOne
     public TUser recipient;
 
-    public Long shareable_id;
+    @ManyToOne
+    public TPost post;
 
     //e.g. POST,PHOTO
-    public String shareable_type;
+    public String share_type;
 
     public Boolean hidden;
 

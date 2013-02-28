@@ -31,12 +31,14 @@ public class TComment extends Model {
     //e.g. modified or not
     public String status;
 
+    @OneToMany(mappedBy = "comment")
     public List<TLike> likes;
 
+    @OneToMany(mappedBy = "comment")
     public List<TMention> mentions;
 
     @ManyToOne
-    public Long commentable_id;
+    public TPost post;
 
     //e.g. POST,COMMENT,PHOTO
     public String commentable_type;

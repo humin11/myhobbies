@@ -2,7 +2,6 @@ package models;
 
 import play.data.format.Formats;
 import play.db.ebean.Model;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -37,7 +36,6 @@ public class TPhoto extends Model {
     public String photo_path;
 
     public String photo_name;
-
 
 
 }

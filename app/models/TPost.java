@@ -34,31 +34,44 @@ public class TPost extends Model {
 
     public Boolean ispublic;
 
+    @OneToMany(mappedBy = "post")
     public List<TComment> comments;
 
     @OneToMany(mappedBy = "parent")
     public List<TPost> reshares;
 
+    @OneToMany(mappedBy = "post")
     public List<TLike> likes;
 
+    @OneToMany(mappedBy = "post")
     public List<TMention> mentions;
 
     public List<TPhoto> photos;
 
+    @OneToMany(mappedBy = "post")
     public List<TShareVisibility> shares;
 
     public static Finder<Long,TPost> find = new Finder<Long, TPost>(Long.class,TPost.class);
 
-    public static List<TPost> findSharedPosts(TUser user,Integer maxRow){
-        return findSharedPostsFromOthers(user,maxRow);
+    public static List<TPost> findSharedPosts(TUser user,Integer pageNum,Integer maxRow){
+        return findSharedPostsFromOthers(user,pageNum,maxRow);
     }
 
-    public static List<TPost> findSharedPostsFromOthers(TUser user,Integer maxRow){
+    public static List<TPost> findSharedPostsFromSelf(TUser user,Integer pageNum,Integer maxRow){
+        return find.where()
+                .eq("author",user)
+                .orderBy("create_at DESC")
+                .findPagingList(maxRow).getPage(pageNum).getList();
+    }
+
+    public static List<TPost> findSharedPostsFromOthers(TUser user,Integer pageNum,Integer maxRow){
         List<TUser> contactUsers = TUser.findContactUsers(user);
         return find.where()
                 .in("author",contactUsers)
                 .eq("shares.recipient",user.id)
-                .eq("shares.hidden",false).findList();
+                .eq("shares.hidden",false)
+                .orderBy("create_at DESC")
+                .findPagingList(maxRow).getPage(pageNum).getList();
     }
 
 }
