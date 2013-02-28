@@ -8,8 +8,11 @@
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-responsive.min.css")">
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/jquery.rating.css")">
 <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
 <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
+<script src="@routes.Assets.at("javascripts/jquery.rating.js")" type="text/javascript"></script>
+<script src="@routes.Assets.at("javascripts/main.js")" type="text/javascript"></script>
 </head>
 <body>
 	<div class="navbar navbar-inverse navbar-fixed-top">
@@ -23,10 +26,10 @@
 				<a class="brand" href="#">草根篮球</a>
 				<div class="nav-collapse collapse">
 					<ul class="nav">
-						<li class="active"><a href="#">@Messages("home")</a></li>
+						<li class="active"><a href="@routes.Application.index">@Messages("home")</a></li>
 						<li class=""><a href="#">@Messages("friends")</a></li>
 						<li class=""><a href="#">@Messages("events")</a></li>
-						<li class=""><a href="/court">@Messages("court")</a></li>
+						<li class=""><a href="@routes.Court.index">@Messages("court")</a></li>
 						<li class=""><a href="#">@Messages("brand")</a></li>
 						<li class=""><a href="#">@Messages("store")</a></li>
 						<li class=""><a href="#">@Messages("ask")</a></li>

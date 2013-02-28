@@ -17,3 +17,6 @@ dist
 /bin
 /.cache
 /.DS_Store
+/.ensime
+/myhobbies.sublime-project
+/myhobbies.sublime-workspace

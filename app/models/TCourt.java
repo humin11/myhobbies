@@ -32,7 +32,9 @@ public class TCourt extends Model {
 	
 	@Constraints.Required
 	public String address;
-	
+
+	public int city_id;
+
 	public String telephone;
 	
 	public int type;
@@ -54,11 +56,19 @@ public class TCourt extends Model {
 	public static List<TCourt> findAll(){
 		return find.all();
 	}
+
+	public static List<TCourt> findByCity(int cityId){
+		return find.where().eq("city_id",cityId).findList();
+	}
 	
 	public static TCourt findByName(String name){
 		return find.where().eq("name", name).findUnique();
 	}
 	
+	public static TCourt findByNameAndCity(String name, int cityId){
+		return find.where().eq("name", name).eq("city_id", cityId).findUnique();
+	}
+
 	public static void create(TCourt court){
 		if(findByName(court.name)==null){
 			court.save();

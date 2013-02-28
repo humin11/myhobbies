@@ -1,5 +1,7 @@
 package models;
 
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Expr;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -31,10 +33,10 @@ public class TCircle extends Model{
     public Integer order_id;
 
     @OneToMany(mappedBy = "circle")
-    public List<TCircleMember> members;
+    public List<TCircleMember> circle_members;
 
     @OneToMany(mappedBy = "circle")
-    public List<TCircleVisibility> shares;
+    public List<TCircleVisibility> circle_visibilities;
 
     public static Finder<Long,TCircle> find = new Finder<Long, TCircle>(Long.class,TCircle.class);
 
@@ -45,8 +47,19 @@ public class TCircle extends Model{
     public static List<TCircle> findCirclesWithPerson(TUser user,TUser person){
         return find.where()
                 .eq("author",user.id)
-                .eq("members.contact.person",person.id)
+                .eq("circle_members.person",person.id)
                 .findList();
+    }
+
+    public static TCircleMember addContactById(Long circle_id,TContact contact,Date now){
+        TCircleMember circleMember = new TCircleMember();
+        circleMember.circle = find.byId(circle_id);
+        circleMember.contact = contact;
+        circleMember.person = contact.person;
+        circleMember.create_at = now;
+        circleMember.update_at = now;
+        circleMember.save();
+        return circleMember;
     }
 
 }

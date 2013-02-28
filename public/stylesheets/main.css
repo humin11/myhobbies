@@ -4,6 +4,9 @@ em, i, q, cite, address,var { font-style:normal; }
 a { color:#369; text-decoration:none; }
 a:hover { text-decoration:none; color:#fff; background-color:#369; }
 
+.label a { color: #fff; text-decoration: none;}
+.label a:hover { text-decoration: none; color: #FFF; }
+
 body {
   position: relative;
   padding-top: 50px;
@@ -43,7 +46,7 @@ body > .navbar .brand:hover {
   text-shadow: 0 1px 0 rgba(255,255,255,.1), 0 0 30px rgba(255,255,255,.4);
 }
 
-.intro {line-height:22px;margin-top:3px;}
+.intro {line-height:15px;margin-top:10px;}
 .intro strong{color:#f1b000;margin-right:10px;}
 .intro b{margin-right:10px;vertical-align:middle;margin-bottom:3px;}
 .intro em{color:#303030;margin-right:5px;}
@@ -51,6 +54,7 @@ body > .navbar .brand:hover {
 /* ---------------------------------------------------------------------- */
 /*	Property Listing
 /* ---------------------------------------------------------------------- */
+
 .listing .container-fluid {
 	padding: 0;
 	margin: 0 0 20px 0;
@@ -58,7 +62,8 @@ body > .navbar .brand:hover {
 }
 
 .listing .row-fluid {
-	border-bottom: 1px solid #fafafa;
+	border-bottom: 1px solid #E8E8E8;
+	margin-top: 5px;
 }
 
 .listing .row-fluid:hover,#renting-map-js>div:hover {
@@ -70,7 +75,7 @@ body > .navbar .brand:hover {
 }
 
 .row-fluid.appartment-listing>.span6 {
-	border-bottom: 1px solid #fafafa;
+	border-bottom: 1px solid #E8E8E8;
 	padding-bottom: 0;
 	padding-top: 0;
 }

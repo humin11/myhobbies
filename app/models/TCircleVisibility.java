@@ -18,7 +18,8 @@ public class TCircleVisibility extends Model {
     @ManyToOne
     public TCircle circle;
 
-    public Long shareable_id;
+    @ManyToOne
+    public TPost post;
 
     //e.g. POST,PHOTO
     public String shareable_type;

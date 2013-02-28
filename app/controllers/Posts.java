@@ -3,29 +3,39 @@ package controllers;
 import models.*;
 import org.codehaus.jackson.JsonNode;
 import play.mvc.Controller;
+import play.mvc.Result;
 
 import java.util.Date;
 import java.util.List;
 
 public class Posts extends Controller {
 
-    public static void create(){
+    public static Result create(){
+        JsonNode params = request().body().asJson();
         Date now = new Date();
-        TUser author = TUser.find.byId(Long.valueOf(session("userid")));
+        TUser connectedUser = TUser.find.byId(Long.valueOf(session("userid")));
         TPost post = new TPost();
-        post.author = author;
+        post.author = connectedUser;
         post.create_at = now;
         post.update_at = now;
-
+        post.ispublic = true;
         post.save();
-        JsonNode params = request().body().asJson();
 
         if(post.ispublic){
-            List<TContact> contacts = TContact.findContacts(author);
+            List<TContact> contacts = TContact.findContacts(connectedUser);
             shareAll(post,contacts);
             shareSelf(post);
             notifyAll(post,contacts);
+        }else{
+            for (TParticipation participation : post.participations){
+                if("CIRCLE".equals(participation.type)){
+                    shareWith(post,participation.circle);
+                }else if("PERSON".equals(participation.type)){
+                    shareWith(post,participation.person);
+                }
+            }
         }
+        return ok();
     }
 
     protected static void shareAll(TPost post,List<TContact> contacts){
@@ -46,11 +56,20 @@ public class Posts extends Controller {
         }
     }
 
+    protected static void shareWith(TPost post,TCircle circle){
+        TCircleVisibility circleVisibility = new TCircleVisibility();
+        circleVisibility.post = post;
+        circleVisibility.shareable_type = "POST";
+        circleVisibility.create_at = post.create_at;
+        circleVisibility.update_at = post.create_at;
+        circleVisibility.save();
+    }
+
     protected static void shareWith(TPost post,TUser recipient){
         TShareVisibility shareVisibility = new TShareVisibility();
         shareVisibility.recipient = recipient;
         shareVisibility.post = post;
-        shareVisibility.share_type = "POST";
+        shareVisibility.shareable_type = "POST";
         shareVisibility.create_at = post.create_at;
         shareVisibility.update_at = post.create_at;
         shareVisibility.hidden = false;
