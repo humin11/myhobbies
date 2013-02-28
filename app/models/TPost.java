@@ -1,5 +1,9 @@
 package models;
 
+import com.avaje.ebean.Expr;
+import com.avaje.ebean.Expression;
+import com.avaje.ebean.RawSql;
+import com.avaje.ebean.RawSqlBuilder;
 import com.avaje.ebean.annotation.Where;
 import play.data.format.Formats;
 import play.db.ebean.Model;
@@ -50,7 +54,13 @@ public class TPost extends Model {
     public List<TPhoto> photos;
 
     @OneToMany(mappedBy = "post")
-    public List<TShareVisibility> shares;
+    public List<TShareVisibility> share_visibilities;
+
+    @OneToMany(mappedBy = "post")
+    public List<TCircleVisibility> circle_visibilities;
+
+    @OneToMany(mappedBy = "post")
+    public List<TParticipation> participations;
 
     public static Finder<Long,TPost> find = new Finder<Long, TPost>(Long.class,TPost.class);
 
@@ -67,12 +77,33 @@ public class TPost extends Model {
 
     public static List<TPost> findSharedPostsFromOthers(TUser user,Integer pageNum,Integer maxRow){
         List<TUser> contactUsers = TUser.findContactUsers(user);
-        return find.where()
-                .in("author",contactUsers)
-                .eq("shares.recipient",user.id)
-                .eq("shares.hidden",false)
+        String contactUserIds = "";
+        for (TUser contactUser : contactUsers){
+            contactUserIds += contactUser.id;
+            contactUserIds += ",";
+        }
+        if(contactUserIds.endsWith(","))
+            contactUserIds = contactUserIds.substring(0,contactUserIds.length()-2);
+        String sql = "select a.* from posts a,share_visibilities b,circle_visibilities c,circle_members d" +
+                "where a.author_id in ("+contactUserIds+") and a.id=b.post_id and b.recipient="+user.id+" and b.hidden=0 " +
+                "or a.id=c.post_id and c.circle_id=d.circle_id and d.person="+user.id;
+        RawSql rawSql = RawSqlBuilder.parse(sql).create();
+        return find.setRawSql(rawSql)
                 .orderBy("create_at DESC")
+                .setDistinct(true)
                 .findPagingList(maxRow).getPage(pageNum).getList();
+        /*return find.where()
+                .or(
+                    Expr.and(
+                            Expr.in("author",contactUsers),
+                            Expr.and(
+                                    Expr.eq("share_visibilities.recipient",user.id),
+                                    Expr.eq("share_visibilities.hidden",false))),
+                    Expr.eq("circle_visibilities.circle.circle_members.person",user.id)
+                )
+                .orderBy("create_at DESC")
+                .setDistinct(true)
+                .findPagingList(maxRow).getPage(pageNum).getList();*/
     }
 
 }

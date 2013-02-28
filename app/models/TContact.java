@@ -30,13 +30,20 @@ public class TContact extends Model {
     @OneToMany(mappedBy = "contact")
     public List<TCircleMember> circle_members;
 
-    @Transient
     public Boolean sharing;
+
+    public Boolean receiving;
 
     public static Finder<Long,TContact> find = new Finder<Long, TContact>(Long.class,TContact.class);
 
     public static List<TContact> findContacts(TUser user){
         return find.where().eq("owner",user).findList();
+    }
+
+    public static TContact findContact(TUser user,TUser person){
+        return find.where()
+                .eq("owner",user)
+                .eq("person",person).findUnique();
     }
 
 }

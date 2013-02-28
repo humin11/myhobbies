@@ -7,28 +7,28 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="share_visibilities")
-public class TShareVisibility extends Model {
+@Table(name="participations")
+public class TParticipation extends Model {
 
     @Id
     @GeneratedValue
     public Long id;
 
     @ManyToOne
-    public TUser recipient;
-
-    @ManyToOne
     public TPost post;
 
-    //e.g. POST,PHOTO
-    public String shareable_type;
+    @OneToOne
+    public TCircle circle;
 
-    public Boolean hidden;
+    @OneToOne
+    public TUser person;
+
+    //e.g. CIRCLE,PERSON
+    public String type;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date update_at;
-
 }
