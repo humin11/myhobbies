@@ -1,5 +1,6 @@
 package controllers;
 
+import com.avaje.ebean.Ebean;
 import models.TCircle;
 import models.TContact;
 import models.TUser;
@@ -28,8 +29,13 @@ public class Circles extends Controller {
         JsonNode params = request().body().asJson();
         TUser connectedUser = TUser.find.byId(Long.valueOf(session("userid")));
         TCircle circle = TCircle.find.byId(params.get("circle_id").asLong());
-        circle.delete();
-        TContact.deleteOrphans(connectedUser);
+        Ebean.beginTransaction();
+        try{
+            circle.delete();
+            TContact.deleteOrphans(connectedUser);
+        }finally {
+            Ebean.endTransaction();
+        }
         return ok();
     }
 
