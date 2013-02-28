@@ -2,7 +2,6 @@ package models;
 
 import play.data.format.Formats;
 import play.db.ebean.Model;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -16,6 +15,9 @@ public class TPhoto extends Model {
 
     @ManyToOne
     public TPost post;
+
+    @ManyToOne
+    public TAlbum album;
 
     @ManyToOne
     public TUser author;
@@ -38,6 +40,6 @@ public class TPhoto extends Model {
 
     public String photo_name;
 
-
+    public Integer order_id;
 
 }
