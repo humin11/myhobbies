@@ -17,6 +17,9 @@ public class TPhoto extends Model {
     public TPost post;
 
     @ManyToOne
+    public TAlbum album;
+
+    @ManyToOne
     public TUser author;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
@@ -37,5 +40,6 @@ public class TPhoto extends Model {
 
     public String photo_name;
 
+    public Integer order_id;
 
 }

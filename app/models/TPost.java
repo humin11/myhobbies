@@ -46,6 +46,7 @@ public class TPost extends Model {
     @OneToMany(mappedBy = "post")
     public List<TMention> mentions;
 
+    @OneToMany(mappedBy = "post")
     public List<TPhoto> photos;
 
     @OneToMany(mappedBy = "post")
