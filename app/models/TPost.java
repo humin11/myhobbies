@@ -85,10 +85,12 @@ public class TPost extends Model {
         if(contactUserIds.endsWith(","))
             contactUserIds = contactUserIds.substring(0,contactUserIds.length()-2);
         String sql = "select a.* from posts a,share_visibilities b,circle_visibilities c,circle_members d" +
-                "where a.author_id in ("+contactUserIds+") and a.id=b.post_id and b.recipient="+user.id+" and b.hidden=0 " +
-                "or a.id=c.post_id and c.circle_id=d.circle_id and d.person="+user.id;
+                "where a.author_id in (:contactUserIds) and a.id = b.post_id and b.recipient = :recipient and b.hidden = 0 " +
+                "or a.id = c.post_id and c.circle_id = d.circle_id and d.person= :recipient";
         RawSql rawSql = RawSqlBuilder.parse(sql).create();
         return find.setRawSql(rawSql)
+                .setParameter("contactUserIds",contactUserIds)
+                .setParameter("recipient",user.id)
                 .orderBy("create_at DESC")
                 .setDistinct(true)
                 .findPagingList(maxRow).getPage(pageNum).getList();

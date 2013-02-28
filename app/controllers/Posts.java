@@ -13,16 +13,16 @@ public class Posts extends Controller {
     public static Result create(){
         JsonNode params = request().body().asJson();
         Date now = new Date();
-        TUser author = TUser.find.byId(Long.valueOf(session("userid")));
+        TUser connectedUser = TUser.find.byId(Long.valueOf(session("userid")));
         TPost post = new TPost();
-        post.author = author;
+        post.author = connectedUser;
         post.create_at = now;
         post.update_at = now;
         post.ispublic = true;
         post.save();
 
         if(post.ispublic){
-            List<TContact> contacts = TContact.findContacts(author);
+            List<TContact> contacts = TContact.findContacts(connectedUser);
             shareAll(post,contacts);
             shareSelf(post);
             notifyAll(post,contacts);
