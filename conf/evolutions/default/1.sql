@@ -29,7 +29,7 @@ create table circle_members (
 create table circle_visibilities (
   id                        bigint auto_increment not null,
   circle_id                 bigint,
-  shareable_id              bigint,
+  post_id                   bigint,
   shareable_type            varchar(255),
   create_at                 datetime,
   update_at                 datetime,
@@ -62,6 +62,8 @@ create table contacts (
   person_id                 bigint,
   create_at                 datetime,
   update_at                 datetime,
+  sharing                   tinyint(1) default 0,
+  receiving                 tinyint(1) default 0,
   constraint pk_contacts primary key (id))
 ;
 
@@ -110,6 +112,17 @@ create table notifications (
   source_type               varchar(255),
   unread                    tinyint(1) default 0,
   constraint pk_notifications primary key (id))
+;
+
+create table participations (
+  id                        bigint auto_increment not null,
+  post_id                   bigint,
+  circle_id                 bigint,
+  person_id                 bigint,
+  type                      varchar(255),
+  create_at                 datetime,
+  update_at                 datetime,
+  constraint pk_participations primary key (id))
 ;
 
 create table people (
@@ -168,7 +181,7 @@ create table share_visibilities (
   id                        bigint auto_increment not null,
   recipient_id              bigint,
   post_id                   bigint,
-  share_type                varchar(255),
+  shareable_type            varchar(255),
   hidden                    tinyint(1) default 0,
   create_at                 datetime,
   update_at                 datetime,
@@ -199,48 +212,56 @@ alter table circle_members add constraint fk_circle_members_contact_3 foreign ke
 create index ix_circle_members_contact_3 on circle_members (contact_id);
 alter table circle_visibilities add constraint fk_circle_visibilities_circle_4 foreign key (circle_id) references circles (id) on delete restrict on update restrict;
 create index ix_circle_visibilities_circle_4 on circle_visibilities (circle_id);
-alter table comments add constraint fk_comments_author_5 foreign key (author_id) references users (id) on delete restrict on update restrict;
-create index ix_comments_author_5 on comments (author_id);
-alter table comments add constraint fk_comments_post_6 foreign key (post_id) references posts (id) on delete restrict on update restrict;
-create index ix_comments_post_6 on comments (post_id);
-alter table contacts add constraint fk_contacts_owner_7 foreign key (owner_id) references users (id) on delete restrict on update restrict;
-create index ix_contacts_owner_7 on contacts (owner_id);
-alter table contacts add constraint fk_contacts_person_8 foreign key (person_id) references users (id) on delete restrict on update restrict;
-create index ix_contacts_person_8 on contacts (person_id);
-alter table likes add constraint fk_likes_post_9 foreign key (post_id) references posts (id) on delete restrict on update restrict;
-create index ix_likes_post_9 on likes (post_id);
-alter table likes add constraint fk_likes_comment_10 foreign key (comment_id) references comments (id) on delete restrict on update restrict;
-create index ix_likes_comment_10 on likes (comment_id);
-alter table likes add constraint fk_likes_author_11 foreign key (author_id) references users (id) on delete restrict on update restrict;
-create index ix_likes_author_11 on likes (author_id);
-alter table mentions add constraint fk_mentions_user_12 foreign key (user_id) references users (id) on delete restrict on update restrict;
-create index ix_mentions_user_12 on mentions (user_id);
-alter table mentions add constraint fk_mentions_post_13 foreign key (post_id) references posts (id) on delete restrict on update restrict;
-create index ix_mentions_post_13 on mentions (post_id);
-alter table mentions add constraint fk_mentions_comment_14 foreign key (comment_id) references comments (id) on delete restrict on update restrict;
-create index ix_mentions_comment_14 on mentions (comment_id);
-alter table notifications add constraint fk_notifications_recipient_15 foreign key (recipient_id) references users (id) on delete restrict on update restrict;
-create index ix_notifications_recipient_15 on notifications (recipient_id);
-alter table people add constraint fk_people_user_16 foreign key (user_id) references users (id) on delete restrict on update restrict;
-create index ix_people_user_16 on people (user_id);
-alter table photos add constraint fk_photos_post_17 foreign key (post_id) references posts (id) on delete restrict on update restrict;
-create index ix_photos_post_17 on photos (post_id);
-alter table photos add constraint fk_photos_album_18 foreign key (album_id) references albums (id) on delete restrict on update restrict;
-create index ix_photos_album_18 on photos (album_id);
-alter table photos add constraint fk_photos_author_19 foreign key (author_id) references users (id) on delete restrict on update restrict;
-create index ix_photos_author_19 on photos (author_id);
-alter table posts add constraint fk_posts_author_20 foreign key (author_id) references users (id) on delete restrict on update restrict;
-create index ix_posts_author_20 on posts (author_id);
-alter table posts add constraint fk_posts_parent_21 foreign key (parent_id) references posts (id) on delete restrict on update restrict;
-create index ix_posts_parent_21 on posts (parent_id);
-alter table profiles add constraint fk_profiles_user_22 foreign key (user_id) references users (id) on delete restrict on update restrict;
-create index ix_profiles_user_22 on profiles (user_id);
-alter table share_visibilities add constraint fk_share_visibilities_recipient_23 foreign key (recipient_id) references users (id) on delete restrict on update restrict;
-create index ix_share_visibilities_recipient_23 on share_visibilities (recipient_id);
-alter table share_visibilities add constraint fk_share_visibilities_post_24 foreign key (post_id) references posts (id) on delete restrict on update restrict;
-create index ix_share_visibilities_post_24 on share_visibilities (post_id);
-alter table users add constraint fk_users_person_25 foreign key (person_id) references people (id) on delete restrict on update restrict;
-create index ix_users_person_25 on users (person_id);
+alter table circle_visibilities add constraint fk_circle_visibilities_post_5 foreign key (post_id) references posts (id) on delete restrict on update restrict;
+create index ix_circle_visibilities_post_5 on circle_visibilities (post_id);
+alter table comments add constraint fk_comments_author_6 foreign key (author_id) references users (id) on delete restrict on update restrict;
+create index ix_comments_author_6 on comments (author_id);
+alter table comments add constraint fk_comments_post_7 foreign key (post_id) references posts (id) on delete restrict on update restrict;
+create index ix_comments_post_7 on comments (post_id);
+alter table contacts add constraint fk_contacts_owner_8 foreign key (owner_id) references users (id) on delete restrict on update restrict;
+create index ix_contacts_owner_8 on contacts (owner_id);
+alter table contacts add constraint fk_contacts_person_9 foreign key (person_id) references users (id) on delete restrict on update restrict;
+create index ix_contacts_person_9 on contacts (person_id);
+alter table likes add constraint fk_likes_post_10 foreign key (post_id) references posts (id) on delete restrict on update restrict;
+create index ix_likes_post_10 on likes (post_id);
+alter table likes add constraint fk_likes_comment_11 foreign key (comment_id) references comments (id) on delete restrict on update restrict;
+create index ix_likes_comment_11 on likes (comment_id);
+alter table likes add constraint fk_likes_author_12 foreign key (author_id) references users (id) on delete restrict on update restrict;
+create index ix_likes_author_12 on likes (author_id);
+alter table mentions add constraint fk_mentions_user_13 foreign key (user_id) references users (id) on delete restrict on update restrict;
+create index ix_mentions_user_13 on mentions (user_id);
+alter table mentions add constraint fk_mentions_post_14 foreign key (post_id) references posts (id) on delete restrict on update restrict;
+create index ix_mentions_post_14 on mentions (post_id);
+alter table mentions add constraint fk_mentions_comment_15 foreign key (comment_id) references comments (id) on delete restrict on update restrict;
+create index ix_mentions_comment_15 on mentions (comment_id);
+alter table notifications add constraint fk_notifications_recipient_16 foreign key (recipient_id) references users (id) on delete restrict on update restrict;
+create index ix_notifications_recipient_16 on notifications (recipient_id);
+alter table participations add constraint fk_participations_post_17 foreign key (post_id) references posts (id) on delete restrict on update restrict;
+create index ix_participations_post_17 on participations (post_id);
+alter table participations add constraint fk_participations_circle_18 foreign key (circle_id) references circles (id) on delete restrict on update restrict;
+create index ix_participations_circle_18 on participations (circle_id);
+alter table participations add constraint fk_participations_person_19 foreign key (person_id) references users (id) on delete restrict on update restrict;
+create index ix_participations_person_19 on participations (person_id);
+alter table people add constraint fk_people_user_20 foreign key (user_id) references users (id) on delete restrict on update restrict;
+create index ix_people_user_20 on people (user_id);
+alter table photos add constraint fk_photos_post_21 foreign key (post_id) references posts (id) on delete restrict on update restrict;
+create index ix_photos_post_21 on photos (post_id);
+alter table photos add constraint fk_photos_album_22 foreign key (album_id) references albums (id) on delete restrict on update restrict;
+create index ix_photos_album_22 on photos (album_id);
+alter table photos add constraint fk_photos_author_23 foreign key (author_id) references users (id) on delete restrict on update restrict;
+create index ix_photos_author_23 on photos (author_id);
+alter table posts add constraint fk_posts_author_24 foreign key (author_id) references users (id) on delete restrict on update restrict;
+create index ix_posts_author_24 on posts (author_id);
+alter table posts add constraint fk_posts_parent_25 foreign key (parent_id) references posts (id) on delete restrict on update restrict;
+create index ix_posts_parent_25 on posts (parent_id);
+alter table profiles add constraint fk_profiles_user_26 foreign key (user_id) references users (id) on delete restrict on update restrict;
+create index ix_profiles_user_26 on profiles (user_id);
+alter table share_visibilities add constraint fk_share_visibilities_recipient_27 foreign key (recipient_id) references users (id) on delete restrict on update restrict;
+create index ix_share_visibilities_recipient_27 on share_visibilities (recipient_id);
+alter table share_visibilities add constraint fk_share_visibilities_post_28 foreign key (post_id) references posts (id) on delete restrict on update restrict;
+create index ix_share_visibilities_post_28 on share_visibilities (post_id);
+alter table users add constraint fk_users_person_29 foreign key (person_id) references people (id) on delete restrict on update restrict;
+create index ix_users_person_29 on users (person_id);
 
 
 
@@ -269,6 +290,8 @@ drop table likes;
 drop table mentions;
 
 drop table notifications;
+
+drop table participations;
 
 drop table people;
 

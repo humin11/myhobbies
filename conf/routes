@@ -4,6 +4,7 @@
 
 # Home page
 GET     /                           controllers.Application.index
+POST    /posts/create               controllers.Posts.create
 
 # Court Page
 GET		/court						controllers.Court.index

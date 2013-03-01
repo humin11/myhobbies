@@ -1,0 +1,36 @@
+.post-content {
+    width: 390px;
+    min-height: 60px;
+    margin-left: 1px;
+    margin-right: 1px;
+    padding-top: 4px;
+    padding-left: 5px;
+    padding-right: 20px;
+    outline: 0;
+    border: 1px solid #c4c4c4;
+    font-size: 12px;
+    word-wrap: break-word;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.post-content .p{
+    margin: 0;
+}
+
+.participation-content {
+    width: 370px;
+    height: 16px;
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-bottom: 10px;
+    padding: 7px 20px 7px 5px;
+    outline: 0;
+    border: 1px solid #c4c4c4;
+    background-color: #ffffff;
+    font-size: 12px;
+    word-wrap: break-word;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    text-align: left;
+}

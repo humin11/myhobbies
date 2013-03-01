@@ -11,6 +11,7 @@ import java.util.List;
 public class Posts extends Controller {
 
     public static Result create(){
+        System.out.println("*********create*********");
         JsonNode params = request().body().asJson();
         Date now = new Date();
         TUser connectedUser = TUser.find.byId(Long.valueOf(session("userid")));
