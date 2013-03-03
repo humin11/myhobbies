@@ -21,7 +21,7 @@ public class TParticipation extends Model {
     public TCircle circle;
 
     @OneToOne
-    public TUser person;
+    public User person;
 
     //e.g. CIRCLE,PERSON
     public String type;

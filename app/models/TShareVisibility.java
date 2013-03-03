@@ -15,7 +15,7 @@ public class TShareVisibility extends Model {
     public Long id;
 
     @ManyToOne
-    public TUser recipient;
+    public User recipient;
 
     @ManyToOne
     public TPost post;

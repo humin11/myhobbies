@@ -13,7 +13,7 @@ public class TAlbum extends Model {
     @GeneratedValue
     public Long id;
 
-    public TUser owner;
+    public User owner;
 
     public String name;
 

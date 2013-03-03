@@ -13,7 +13,7 @@ public class TMention extends Model {
     public Long id;
 
     @OneToOne
-    public TUser user;
+    public User user;
 
     @ManyToOne
     public TPost post;
