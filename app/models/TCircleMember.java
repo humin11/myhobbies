@@ -3,15 +3,16 @@ package models;
 import play.data.format.Formats;
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name="circle_members")
 public class TCircleMember extends Model {
+
+    @Id
+    @GeneratedValue
+    public Long id;
 
     @ManyToOne
     public TCircle circle;
@@ -19,7 +20,7 @@ public class TCircleMember extends Model {
     @ManyToOne
     public TContact contact;
 
-    public TUser person;
+    public User person;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;
