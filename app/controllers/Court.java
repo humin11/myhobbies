@@ -3,6 +3,7 @@ package controllers;
 import java.util.List;
 
 import models.TCourt;
+import play.Logger;
 import play.mvc.*;
 
 import views.html.court.*;

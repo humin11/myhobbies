@@ -46,7 +46,7 @@ body > .navbar .brand:hover {
   text-shadow: 0 1px 0 rgba(255,255,255,.1), 0 0 30px rgba(255,255,255,.4);
 }
 
-.intro {line-height:15px;margin-top:10px;}
+.intro {line-height:22px;margin-top:10px;}
 .intro strong{color:#f1b000;margin-right:10px;}
 .intro b{margin-right:10px;vertical-align:middle;margin-bottom:3px;}
 .intro em{color:#303030;margin-right:5px;}
@@ -119,3 +119,20 @@ body > .navbar .brand:hover {
 #renting-map-js p.street,#renting-map-js p.lat,#renting-map-js p.lng {
 	display: none;
 }
+
+#side-section  {}
+#side-section .module-top {margin-top:15px;-webkit-border-top-left-radius: 3px;-webkit-border-top-right-radius: 3px;-moz-border-radius-topleft: 3px;-moz-border-radius-topright: 3px;border-top-left-radius: 3px;border-top-right-radius: 3px;height: 20px;background: #52B8EB;color: white;padding: 5px 13px 7px 13px;font-size: 12px;font-weight: 500;}
+#side-section .module-top i { padding-right:10px;}
+#side-section .error input {border: 1px solid #FFA0A0;}
+#side-section .module {border: 1px solid whiteSmoke;padding: 15px;background: #FCFCFC;margin:  0px;}
+#side-section .module span {font-size: 11px;}
+#side-section .module .w-input { box-sizing: border-box;
+width: 100%;}
+
+#side-section .module .label-main {font-weight: 600;font-size: 12px;}
+#side-section  .nav-list {
+padding-right: 15px;
+padding-left: 15px;
+margin-bottom: 0;
+border: 1px solid #EEE;
+border-radius: 4px;}
