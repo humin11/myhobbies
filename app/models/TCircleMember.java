@@ -20,7 +20,7 @@ public class TCircleMember extends Model {
     @ManyToOne
     public TContact contact;
 
-    public TUser person;
+    public User person;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;

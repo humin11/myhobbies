@@ -23,7 +23,7 @@ public class TPost extends Model {
     public String content;
 
     @ManyToOne
-    public TUser author;
+    public User author;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;
@@ -64,21 +64,21 @@ public class TPost extends Model {
 
     public static Finder<Long,TPost> find = new Finder<Long, TPost>(Long.class,TPost.class);
 
-    public static List<TPost> findSharedPosts(TUser user,Integer pageNum,Integer maxRow){
+    public static List<TPost> findSharedPosts(User user,Integer pageNum,Integer maxRow){
         return findSharedPostsFromOthers(user,pageNum,maxRow);
     }
 
-    public static List<TPost> findSharedPostsFromSelf(TUser user,Integer pageNum,Integer maxRow){
+    public static List<TPost> findSharedPostsFromSelf(User user,Integer pageNum,Integer maxRow){
         return find.where()
                 .eq("author",user)
                 .orderBy("create_at DESC")
                 .findPagingList(maxRow).getPage(pageNum).getList();
     }
 
-    public static List<TPost> findSharedPostsFromOthers(TUser user,Integer pageNum,Integer maxRow){
-        List<TUser> contactUsers = TUser.findContactUsers(user);
+    public static List<TPost> findSharedPostsFromOthers(User user,Integer pageNum,Integer maxRow){
+        List<User> contactUsers = User.findContactUsers(user);
         String contactUserIds = "";
-        for (TUser contactUser : contactUsers){
+        for (User contactUser : contactUsers){
             contactUserIds += contactUser.id;
             contactUserIds += ",";
         }

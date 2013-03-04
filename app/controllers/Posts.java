@@ -14,7 +14,7 @@ public class Posts extends Controller {
         System.out.println("*********create*********");
         JsonNode params = request().body().asJson();
         Date now = new Date();
-        TUser connectedUser = TUser.find.byId(Long.valueOf(session("userid")));
+        User connectedUser = User.find.byId(Long.valueOf(session("userid")));
         TPost post = new TPost();
         post.author = connectedUser;
         post.create_at = now;
@@ -41,7 +41,7 @@ public class Posts extends Controller {
 
     protected static void shareAll(TPost post,List<TContact> contacts){
         for(TContact contact : contacts){
-            TUser recipient = contact.owner;
+            User recipient = contact.owner;
             shareWith(post,recipient);
         }
     }
@@ -52,7 +52,7 @@ public class Posts extends Controller {
 
     protected static void notifyAll(TPost post,List<TContact> contacts){
         for(TContact contact : contacts){
-            TUser recipient = contact.owner;
+            User recipient = contact.owner;
             notifyWith(post,recipient);
         }
     }
@@ -66,7 +66,7 @@ public class Posts extends Controller {
         circleVisibility.save();
     }
 
-    protected static void shareWith(TPost post,TUser recipient){
+    protected static void shareWith(TPost post,User recipient){
         TShareVisibility shareVisibility = new TShareVisibility();
         shareVisibility.recipient = recipient;
         shareVisibility.post = post;
@@ -77,7 +77,7 @@ public class Posts extends Controller {
         shareVisibility.save();
     }
 
-    protected static void notifyWith(TPost post,TUser recipient){
+    protected static void notifyWith(TPost post,User recipient){
         TNotification notification = new TNotification();
         notification.recipient = recipient;
         notification.source_id = post.id;

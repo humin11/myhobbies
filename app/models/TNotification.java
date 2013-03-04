@@ -21,7 +21,7 @@ public class TNotification extends Model {
     public Date update_at;
 
     @ManyToOne
-    public TUser recipient;
+    public User recipient;
 
     public Long source_id;
 

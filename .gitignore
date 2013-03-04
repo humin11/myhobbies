@@ -20,3 +20,4 @@ dist
 /.ensime
 /myhobbies.sublime-project
 /myhobbies.sublime-workspace
+/.ensime_lucene

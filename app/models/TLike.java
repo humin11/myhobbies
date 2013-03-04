@@ -24,7 +24,7 @@ public class TLike extends Model {
     public String likeable_type;
 
     @ManyToOne
-    public TUser author;
+    public User author;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;

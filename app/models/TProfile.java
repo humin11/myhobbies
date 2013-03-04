@@ -13,7 +13,7 @@ public class TProfile extends Model {
     public Long id;
 
     @OneToOne
-    public TUser user;
+    public User user;
 
     //e.g. ANYONE,CIRCLES,EXTENDED,SELF,CUSTOM (default EXTENDED)
     public String notification_type;

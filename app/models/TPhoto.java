@@ -20,7 +20,7 @@ public class TPhoto extends Model {
     public TAlbum album;
 
     @ManyToOne
-    public TUser author;
+    public User author;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;

@@ -17,10 +17,10 @@ public class TContact extends Model {
     public Long id;
 
     @ManyToOne
-    public TUser owner;
+    public User owner;
 
     @OneToOne
-    public TUser person;
+    public User person;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;
@@ -37,17 +37,17 @@ public class TContact extends Model {
 
     public static Finder<Long,TContact> find = new Finder<Long, TContact>(Long.class,TContact.class);
 
-    public static List<TContact> findContacts(TUser user){
+    public static List<TContact> findContacts(User user){
         return find.where().eq("owner",user).findList();
     }
 
-    public static TContact findContact(TUser user,TUser person){
+    public static TContact findContact(User user,User person){
         return find.where()
                 .eq("owner",user)
                 .eq("person",person).findUnique();
     }
 
-    public static TContact add(TUser owner,TUser person,Date now){
+    public static TContact add(User owner,User person,Date now){
         TContact contact = new TContact();
         contact.owner = owner;
         contact.person = person;
@@ -57,7 +57,7 @@ public class TContact extends Model {
         return contact;
     }
 
-    public static void deleteOrphans(TUser user){
+    public static void deleteOrphans(User user){
         Ebean.createSqlUpdate("delete from contacts where owner_id = :owner_id and contact_id not in" +
                 "(select b.contact_id from circles a,circle_members b where a.id = b.circle_id and a.author = :owner_id)")
                 .setParameter("owner_id",user.id).execute();

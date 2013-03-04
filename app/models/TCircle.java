@@ -19,7 +19,7 @@ public class TCircle extends Model{
     public Long id;
 
     @ManyToOne
-    public TUser author;
+    public User author;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date create_at;
@@ -40,11 +40,11 @@ public class TCircle extends Model{
 
     public static Finder<Long,TCircle> find = new Finder<Long, TCircle>(Long.class,TCircle.class);
 
-    public static List<TCircle> findAllCircles(TUser user){
+    public static List<TCircle> findAllCircles(User user){
         return find.where().eq("author",user.id).findList();
     }
 
-    public static List<TCircle> findCirclesWithPerson(TUser user,TUser person){
+    public static List<TCircle> findCirclesWithPerson(User user,User person){
         return find.where()
                 .eq("author",user.id)
                 .eq("circle_members.person",person.id)
