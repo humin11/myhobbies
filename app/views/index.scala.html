@@ -1,13 +1,17 @@
 @(message: String)
 
 @main("Welcome to CGLQ") {
-    
-    @(message)
 
-    <div id="postModal" class="">
-    </div>
+    <a id="newBtn" class="btn" ><i class="icon-pencil"></i>&nbsp;Share</a>
+    <div id="postModal" class="hide"></div>
 
     <script>
-          $('#postModal').postkit();
+        $('#postModal').postkit({
+            anchor:'newBtn',
+            showtype: 'popup'
+        });
+        $('#newBtn').click(function(){
+            $('#postModal').postkit('show');
+        });
     </script>
 }

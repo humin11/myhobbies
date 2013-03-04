@@ -2,7 +2,10 @@
     var Postkit = function (element, options) {
         this.options = options;
         this.$element = $(element);
-        this.postWidth = 450;
+        this.postWidth = 400;
+        this.anchor = options["anchor"];
+        this.showtype = options["showtype"];
+        this.initialize();
     }
 
     Postkit.prototype = {
@@ -10,24 +13,64 @@
         constructor: Postkit,
 
         initialize: function(){
-            this.$element.addClass('modal');
-            var divBody = $('<div class="modal-body"></div>');
+            if(this.showtype == 'popup'){
+                this.initPopup();
+            }
+            var divBody = $('<div class=""></div>');
             var postContent = $('<div class="post-content"></div>');
             postContent.attr('contenteditable',true);
             var closeBtn = $('<div type="button" class="close">&times;</div>');
-            var divFooter = $('<div class="modal-footer"></div>');
+            var divFooter = $('<div class=""></div>');
             closeBtn.css('position','absolute');
-            closeBtn.css('left',this.postWidth-35);
+            closeBtn.css('left',this.postWidth-15);
+            var $el = this.$element;
+            closeBtn.click(function(){
+                postContent.empty();
+                $el.hide();
+            });
             divBody.append(closeBtn);
             divBody.append(postContent);
 
             this.addParticipationBtn(divFooter);
             this.addShareBtn(divFooter);
-
-            this.$element.append(divBody);
-            this.$element.append(divFooter);
+            if(this.showtype == 'popup'){
+                var kitContent = $(this.$element.find('.postkit-content')[0]);
+                kitContent.append(divBody);
+                kitContent.append(divFooter);
+            }else{
+                this.$element.append(divBody);
+                this.$element.append(divFooter);
+            }
             this.$element.width(this.postWidth);
+        },
 
+        initPopup: function(){
+            this.$element.addClass('hide postkit-wrapper');
+            var kitArrow = $('<div class="postkit-arrow-top"><div class="postkit-arrow-top-inner"></div></div>');
+            var kitContent = $('<div class="postkit-content"></div>');
+            this.$element.append(kitArrow);
+            this.$element.append(kitContent);
+        },
+
+        initPosition: function(){
+            var anchorBtn = $('#'+this.anchor);
+            var postX = anchorBtn.offset().left-this.postWidth/2;
+            if(postX < 50)
+                postX = 50;
+            var postY = anchorBtn.offset().top+anchorBtn.height()+8;
+            if(postY < 0)
+                postY = 0;
+            var kitArrow = $(this.$element.find('.postkit-arrow-top')[0]);
+            kitArrow.css('left',anchorBtn.offset().left+anchorBtn.width()/2-postX);
+            this.$element.css('left',postX);
+            this.$element.css('top',postY);
+        },
+
+        show: function(){
+            if(this.showtype == 'popup'){
+                this.initPosition();
+            }
+            this.$element.show();
         },
 
         addShareBtn: function(footContainer){
@@ -77,12 +120,11 @@
                 $this.data('postkit', (data = new Postkit(this, options)));
             if (typeof option == 'string')
                 data[option]();
-            data.initialize();
         })
     }
 
     $.fn.postkit.defaults = {
-
+        showtype: 'popup',
         show: true
     }
 

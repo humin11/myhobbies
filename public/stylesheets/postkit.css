@@ -1,11 +1,46 @@
+.postkit-wrapper {
+    position:absolute;
+    border: 1px solid #CCC;
+    border-width: 1px;
+    border-radius: 3px;
+    background-color:#fff;
+    padding: 10px;
+}
+
+.postkit-arrow-top {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 1px;
+    border-color: transparent;
+    border-style: solid;
+    top: -8px;
+    left: 50%;
+    margin-left: -8px;
+    border-bottom-color: #CCC;
+    border-width: 0 8px 8px;
+}
+
+.postkit-arrow-top-inner {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 1px;
+    border-color: transparent;
+    border-style: solid;
+    top: 2px;
+    margin-left: -6px;
+    border-bottom-color: #fff;
+    border-width: 0 6px 6px;
+}
+
 .post-content {
-    width: 390px;
     min-height: 60px;
     margin-left: 1px;
     margin-right: 1px;
     padding-top: 4px;
     padding-left: 5px;
-    padding-right: 20px;
+    padding-right: 25px;
     outline: 0;
     border: 1px solid #c4c4c4;
     font-size: 12px;
