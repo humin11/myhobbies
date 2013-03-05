@@ -70,7 +70,7 @@
             this.$element.mouseleave(function(){
                 $ele.mouseIn = false;
             });
-            $(document.body).click(function(evt){
+            $(document.body).click(function(){
                 if(!$ele.mouseIn){
                     $ele.hide();
                 }

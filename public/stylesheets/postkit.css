@@ -5,6 +5,7 @@
     border-radius: 3px;
     background-color:#fff;
     padding: 10px;
+    z-index: 1041;
 }
 
 .postkit-arrow-top {
