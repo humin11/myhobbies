@@ -11,12 +11,12 @@ import java.util.List;
 public class Posts extends Controller {
 
     public static Result create(){
-        System.out.println("*********create*********");
-        JsonNode params = request().body().asJson();
+        String content = request().getQueryString("content");
         Date now = new Date();
         User connectedUser = User.find.byId(Long.valueOf(session("userid")));
         TPost post = new TPost();
         post.author = connectedUser;
+        post.content = content;
         post.create_at = now;
         post.update_at = now;
         post.ispublic = true;
@@ -36,7 +36,7 @@ public class Posts extends Controller {
                 }
             }
         }
-        return ok();
+        return ok("ok");
     }
 
     protected static void shareAll(TPost post,List<TContact> contacts){

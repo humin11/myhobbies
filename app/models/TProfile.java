@@ -15,6 +15,12 @@ public class TProfile extends Model {
     @OneToOne
     public User user;
 
+    public String avatar_small;
+
+    public String avatar_medium;
+
+    public String avatar_large;
+
     //e.g. ANYONE,CIRCLES,EXTENDED,SELF,CUSTOM (default EXTENDED)
     public String notification_type;
 

@@ -15,33 +15,66 @@
         initialize: function(){
             if(this.showtype == 'popup'){
                 this.initPopup();
+                this.autoHide();
             }
             var divBody = $('<div class=""></div>');
-            var postContent = $('<div class="post-content"></div>');
-            postContent.attr('contenteditable',true);
+            var postMessage = $('<div class="postkit-message"></div>');
+            postMessage.attr('contenteditable',true);
+            postMessage.attr('placeholder','Share Something...');
             var closeBtn = $('<div type="button" class="close">&times;</div>');
-            var divFooter = $('<div class=""></div>');
             closeBtn.css('position','absolute');
             closeBtn.css('left',this.postWidth-15);
             var $el = this.$element;
             closeBtn.click(function(){
-                postContent.empty();
+                postMessage.empty();
                 $el.hide();
             });
             divBody.append(closeBtn);
-            divBody.append(postContent);
+            divBody.append(postMessage);
 
-            this.addParticipationBtn(divFooter);
-            this.addShareBtn(divFooter);
+            var tools = $('<div class="postkit-toolsbody"></div>');
+            this.addToolsBtn(tools);
+
+            var particContainer = $('<div class="postkit-particbody"></div>');
+            this.addParticipationBtn(particContainer);
+
+            var divFooter = $('<div class="postkit-footer"></div>');
+            var shareBtn = this.addShareBtn(divFooter);
+            postMessage.keydown(function(){
+                if(postMessage.text().length > 0){
+                    shareBtn.removeClass('disabled');
+                }else{
+                    shareBtn.addClass('disabled');
+                }
+            });
             if(this.showtype == 'popup'){
                 var kitContent = $(this.$element.find('.postkit-content')[0]);
                 kitContent.append(divBody);
+                kitContent.append(tools);
+                kitContent.append(particContainer);
                 kitContent.append(divFooter);
             }else{
                 this.$element.append(divBody);
+                this.$element.append(tools);
+                this.$element.append(particContainer);
                 this.$element.append(divFooter);
             }
             this.$element.width(this.postWidth);
+        },
+
+        autoHide: function(){
+            var $ele = this.$element;
+            this.$element.mouseenter(function(){
+                $ele.mouseIn = true;
+            });
+            this.$element.mouseleave(function(){
+                $ele.mouseIn = false;
+            });
+            $(document.body).click(function(evt){
+                if(!$ele.mouseIn){
+                    $ele.hide();
+                }
+            });
         },
 
         initPopup: function(){
@@ -76,34 +109,38 @@
         addShareBtn: function(footContainer){
             var shareBtn = $('<a class="btn btn-success"></a>');
             shareBtn.text('Share');
+            var $el = this.$element;
             shareBtn.click(function(){
-                $.post('/posts/create',function(data){
-
-                });
+                if(!shareBtn.hasClass('disabled')){
+                    var postContent = $($el.find('.postkit-content')[0]);
+                    var content = postContent.text();
+                    var params = {};
+                    params["content"] = content;
+                    $.post('/posts/create?'+$.param(params),function(){
+                        postContent.empty();
+                        $el.hide();
+                    });
+                }
             });
+            shareBtn.addClass('disabled');
             footContainer.append(shareBtn);
+            return shareBtn;
         },
 
-        addParticipationBtn: function(footContainer){
-            var dropDown = $('<div></div>');
-            var particBtn = $('<div class="participation-content dropdown-toggle" data-toggle="dropdown"></div>');
+        addToolsBtn: function(toolsContainer){
+            var picBtn = $('<span class="postkit-tool-photo"></span>');
+            toolsContainer.append(picBtn);
+        },
+
+        addParticipationBtn: function(particContainer){
+            var particBtn = $('<div class="postkit-partic-content"></div>');
             particBtn.attr('contenteditable',true);
-            particBtn.css('cursor','pointer');
-
-            var dropDownMenu = $('<ul class="dropdown-menu" ></ul>');
-            dropDownMenu.append('<li><a tabindex="-1" href="#">Public</a></li>');
-            dropDownMenu.append('<li><a tabindex="-1" href="#">Circles</a></li>');
-            dropDownMenu.append('<li class="divider"></li>');
-            dropDownMenu.append('<li><a tabindex="-1" href="#">Test</a></li>');
-
             particBtn.click(function(){
-                dropDownMenu.show();
+
             });
-
-            dropDown.append(particBtn);
-            dropDown.append(dropDownMenu);
-            //footContainer.append(dropDown);
-
+            particContainer.append(particBtn);
+            var addBtn = $('<div class="postkit-partic-addicon"></div>');
+            particContainer.append(addBtn);
         }
 
     }

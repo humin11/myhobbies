@@ -27,6 +27,7 @@ public class Application extends Controller {
 	public static final String USER_ROLE = "user";
 
 	public static Result index() {
+        session("userid","1");
 		return ok(index.render("My Applications"));
 	}
 
