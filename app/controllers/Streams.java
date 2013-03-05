@@ -12,9 +12,8 @@ import java.util.List;
 public class Streams extends Controller {
 
     public static Result list(){
-        JsonNode params = request().body().asJson();
-        int pageNum = params.get("pageNum")==null?1:params.get("pageNum").asInt();
-        int maxRow = params.get("maxRow")==null?15:params.get("maxRow").asInt();
+        int pageNum = request().getQueryString("pageNum")==null?1:Integer.parseInt(request().getQueryString("pageNum"));
+        int maxRow = request().getQueryString("maxRow")==null?15:Integer.parseInt(request().getQueryString("maxRow"));
         User connectedUser = User.find.byId(Long.valueOf(session("userid")));
         List<TPost> posts = TPost.findSharedPosts(connectedUser,pageNum,maxRow);
         JsonNode result = Json.toJson(posts);

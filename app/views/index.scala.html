@@ -12,6 +12,53 @@
         });
         $('#newBtn').click(function(){
             $('#postModal').postkit('show');
+            return false;
         });
     </script>
+
+
+    <div class="container-fluid">
+        <div class="span12">
+            <div class="post">
+                <div class="post-main">
+                    <button class="righttop-option-btn"></button>
+                    <div class="user-avatar">PersonAvatar</div>
+                    <div class="post-arrow-left"></div>
+                    <div class="post-header">
+                        <header>
+                            <h3 class="author-name"></h3>
+                            <span>
+                                <span class="create_at"></span>
+                                <span class="status-detail"></span>
+                            </span>
+                        </header>
+                    </div>
+                    <div class="post-body">
+                        <div class="post-title">测试标题</div>
+                        <div class="post-content">
+                            <div class="post-content-message">
+                                测试内容
+                                <span class="expand-message"></span>
+                            </div>
+                            <div class="post-content-photo"></div>
+                        </div>
+                        <div class="post-footer">
+                            <div class="post-btn-likes">支持</div>
+                            <div class="post-btn-reshare">转发</div>
+                            <div class="post-btngroup-status">
+                                <div class="post-count-likes">23</div>
+                                <div class="post-count-reshare">11</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-comments">
+                    <div class="post-comments-list"></div>
+                    <div class="post-comments-new"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 }
