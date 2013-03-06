@@ -1,7 +1,27 @@
 @import "common";
 
 .box { 
-  color: saturate(@base, 5%);
-  border-color: lighten(@base, 30%);
-  div { .box-shadow(0 0 5px, 30%) }
+  // color: saturate(@base, 5%);
+  min-height: 10px;
+  border: 1px solid @base;
+  padding-bottom: 10px;
+  // border-color: lighten(@base, 30%);
+  .row-fluid { 
+  	margin-left: 10px; 
+  	margin-top: 5px;
+	.operation {
+		margin-right: 15px;
+	}
+  }
+
+  .dl-horizontal {
+	margin-top: 5px;
+	dt { 
+	  	width: 70px;
+	  	text-align: left;
+	}
+	dd { 
+	  	margin-left: 90px;
+	}
+  }
 }
