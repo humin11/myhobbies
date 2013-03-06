@@ -188,6 +188,9 @@ create table posts (
 create table profiles (
   id                        bigint auto_increment not null,
   user_id                   bigint,
+  avatar_small              varchar(255),
+  avatar_medium             varchar(255),
+  avatar_large              varchar(255),
   notification_type         varchar(255),
   comment_type              varchar(255),
   constraint pk_profiles primary key (id))
