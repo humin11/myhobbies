@@ -4,6 +4,14 @@
 @main(Messages("court")) {
 	
 	<div class="span9">
+		<div id="breadcrumb">
+			<ul class="breadcrumb">
+			  <li><a href="#">北京</a> <span class="divider">/</span></li>
+			  <li><a href="#">朝阳区</a> <span class="divider">/</span></li>
+			  <li class="active">朝阳公园篮球中心</li>
+			</ul>
+		</div>
+
 		<section class="court-info">
 			<div class="box">
 				<div class="row-fluid">
@@ -67,10 +75,39 @@
 					</div>
 					<div class="span6">
 						<div class="operation pull-right">
-							<p class="text-center"><span><a href="#">纠错/举报</a></span>&nbsp;|&nbsp;<span><a href="#">分享</a></span></p>
+							<p class="text-center"><span><a href="#"><small>纠错/举报</small></a></span>&nbsp;|&nbsp;<span><a href="#"><small>分享</small></a></span></p>
 						</div>
 					</div>
 				</div>
+			</div>
+		</section>
+
+		<section>
+			<div class="piclist">
+				<h2>图片列表</h2>
+				<div class="row-fluid">
+					<div class="span3">
+						<img src="@routes.Assets.at("images/court.thumb.jpg")" style="width:98%" class="img-polaroid"/>
+					</div>
+					<div class="span3">
+						<img src="@routes.Assets.at("images/court.thumb.jpg")" style="width:98%" class="img-polaroid"/>
+					</div>
+					<div class="span3">
+						<img src="@routes.Assets.at("images/court.thumb.jpg")" style="width:98%" class="img-polaroid"/>
+					</div>
+					<div class="span3">
+						<img src="@routes.Assets.at("images/court.thumb.jpg")" style="width:98%" class="img-polaroid"/>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<div class="description">
+				<ul class="nav nav-pills">
+				  <li class="active"><a href="#home" data-toggle="tab">评论(123)</a></li>
+				  <li><a href="#desc" data-toggle="tab">场地简介</a></li>
+				</ul>
 			</div>
 		</section>
 	</div>
