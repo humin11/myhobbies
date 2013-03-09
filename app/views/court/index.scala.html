@@ -1,4 +1,5 @@
 @(courtList: List[TCourt])
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
 
 @main(Messages("court")) {
 
@@ -356,6 +357,34 @@
     </div>
   	<!-- 个人信息结束 -->
 
+  	<div class="module-n">
+        <div class="row-fluid">
+        	<div class="span12" id="court_location_list">
+            </div>
+        </div>
+    </div>
+
+	<div class="module-top normal">热门场地</div>
+    <div class="module">
+    	<div class="row-fluid">
+    		<div class="span12">
+    		</div>
+    	</div>
+    </div>
 </div>
 
 }
+
+<script type="text/javascript">
+var map = new BMap.Map("court_location_list");
+// 创建地址解析器实例
+var myGeo = new BMap.Geocoder();
+// 将地址解析结果显示在地图上,并调整地图视野
+myGeo.getPoint("朝阳区朝阳公园", function(point){
+  if (point) {
+    map.centerAndZoom(point, 16);
+    map.addOverlay(new BMap.Marker(point));
+  }
+}, "北京市");
+
+</script>
