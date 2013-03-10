@@ -8,6 +8,8 @@ POST    /posts/create               controllers.Posts.create
 
 # Court Page
 GET		/court						controllers.Court.index
+GET		/court/blank				controllers.Court.blank
+POST 	/court/new					controllers.Court.add
 GET		/court/:id					controllers.Court.view(id: Long)
 
 GET     /restricted                 controllers.Application.restricted

@@ -19,7 +19,7 @@ public class TCourt extends Model {
 	 * 
 	 */
 	private static final long serialVersionUID = 8307669596439812153L;
-	
+
 	@Id
 	@GeneratedValue
 	public Long id;
