@@ -12,6 +12,10 @@ events = Events
 ask = Ask & Questions
 
 
+#
+found.court = Found new Court
+
+
 # Override default Play's validation messages
 
 # --- Constraints

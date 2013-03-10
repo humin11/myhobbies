@@ -11,6 +11,9 @@ store = 集市
 events = 活动
 ask = 问答中心
 
+found.court = 发现新球场
+
+
 # Override default Play's validation messages
 
 # --- Constraints
