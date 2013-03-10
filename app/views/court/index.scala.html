@@ -12,29 +12,8 @@
 					<p><a href="@routes.Court.view(1)" class="title">北京理工大学篮球场</a></p>
 				</div>
 				<div>
-					<div class="clear">
-						<input class="star {split:4} required" type="radio" name="court-rating@i" disabled="disabled" value="1"/>
-					    <input class="star {split:4}" type="radio" name="court-rating@i" disabled="disabled" value="2"/>
-					    <input class="star {split:4}" type="radio" name="court-rating@i" disabled="disabled" value="3"/>
-					    <input class="star {split:4}" type="radio" name="court-rating@i" disabled="disabled" value="4"/>
-					    <input class="star {split:4}" type="radio" name="court-rating@i" disabled="disabled" value="5"/>
-					    <input class="star {split:4}" type="radio" name="court-rating@i" disabled="disabled" value="6"/>
-					    <input class="star {split:4}" type="radio" name="court-rating@i" disabled="disabled" value="7"/>
-					    <input class="star {split:4}" type="radio" name="court-rating@i" disabled="disabled" value="8"/>
-					    <input class="star {split:4}" type="radio" name="court-rating@i" disabled="disabled" value="9"/>
-					    <input class="star {split:4}" type="radio" name="court-rating@i" disabled="disabled" value="10"/>
-					    <input class="star {split:4}" type="radio" name="court-rating@i" disabled="disabled" value="11" checked="checked"/>
-					    <input class="star {split:4}" type="radio" name="court-rating@i" disabled="disabled" value="12"/>
-					    <input class="star {split:4}" type="radio" name="court-rating@i" disabled="disabled" value="13"/>
-					    <input class="star {split:4}" type="radio" name="court-rating@i" disabled="disabled" value="14"/>
-					    <input class="star {split:4}" type="radio" name="court-rating@i" disabled="disabled" value="15"/>
-					    <input class="star {split:4}" type="radio" name="court-rating@i" disabled="disabled" value="16"/>
-					    <input class="star {split:4}" type="radio" name="court-rating@i" disabled="disabled" value="17"/>
-					    <input class="star {split:4}" type="radio" name="court-rating@i" disabled="disabled" value="18"/>
-					    <input class="star {split:4}" type="radio" name="court-rating@i" disabled="disabled" value="19"/>
-					    <input class="star {split:4}" type="radio" name="court-rating@i" disabled="disabled" value="20"/>
-					</div>
-					<div><span>&nbsp;&nbsp;<a href="#">145封评价</a></span></div>
+					<div class="rateit" data-rateit-value="2.5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
+					<span>&nbsp;&nbsp;<a href="#">145封评价</a></span> | <span>人均: <strong>￥15元</strong></span>
 				</div>
 
 				<!-- Short List Tags -->
@@ -74,17 +53,17 @@
 
 	<!--start list-->
 	<div class="container-fluid">
-		@displayItem(1);
-		@displayItem(2);
-		@displayItem(3);
-		@displayItem(4);
-		@displayItem(5);
-		@displayItem(6);
-		@displayItem(7);
-		@displayItem(8);
-		@displayItem(9);
-		@displayItem(10);
-		@displayItem(11);
+		@displayItem(1)
+		@displayItem(2)
+		@displayItem(3)
+		@displayItem(4)
+		@displayItem(5)
+		@displayItem(6)
+		@displayItem(7)
+		@displayItem(8)
+		@displayItem(9)
+		@displayItem(10)
+		@displayItem(11)
 
 	</div>
 	<!--end list-->
@@ -95,7 +74,7 @@
 </div>
 <!-- end listing-js -->
 
-<div class="span3" id="side-section">
+<div class="span3 right-sidebar" id="side-section">
 	<!-- 个人信息 -->
     <div class="module-n">
         <div class="row-fluid">
@@ -116,7 +95,79 @@
 	<div class="module-top normal">热门场地</div>
     <div class="module">
     	<div class="row-fluid">
-    		<div class="span12">
+    		<div class="span12 wrapper">
+    			<ul class="month-income">
+                <li>
+                  <span class="icon-block blue-block">
+                    <b class="fs1" aria-hidden="true" data-icon="&#xe1ba;"></b>
+                  </span>
+                  <h5>
+                    @@srinubasava 
+                    <small class="info-fade">
+                      Developer
+                    </small>
+                  </h5>
+                  <p>
+                    10 minutes ago
+                  </p>
+                </li>
+                <li>
+                  <span class="icon-block orange-block">
+                    <b class="fs1" aria-hidden="true" data-icon="&#xe1c9;"></b>
+                  </span>
+                  <h5>
+                    @@prempillai 
+                    <small class="info-fade">
+                      Sr. Developer
+                    </small>
+                  </h5>
+                  <p>
+                    28 minutes ago
+                  </p>
+                </li>
+                <li>
+                  <span class="icon-block green-block">
+                    <b class="fs1" aria-hidden="true" data-icon="&#xe1bd;"></b>
+                  </span>
+                  <h5>
+                    @@arjunurs 
+                    <small class="info-fade">
+                      Developer
+                    </small>
+                  </h5>
+                  <p>
+                    14 minutes ago
+                  </p>
+                </li>
+                <li>
+                  <span class="icon-block red-block">
+                    <b class="fs1" aria-hidden="true" data-icon="&#xe1c0;"></b>
+                  </span>
+                  <h5>
+                    @@gajjugujju 
+                    <small class="info-fade">
+                      Team Leader
+                    </small>
+                  </h5>
+                  <p>
+                    28 minutes ago
+                  </p>
+                </li>
+                <li>
+                  <span class="icon-block yellow-block">
+                    <b class="fs1" aria-hidden="true" data-icon="&#xe1c4;"></b>
+                  </span>
+                  <h5>
+                    @@boomer 
+                    <small class="info-fade">
+                      Business
+                    </small>
+                  </h5>
+                  <p>
+                    28 minutes ago
+                  </p>
+                </li>
+              </ul>
     		</div>
     	</div>
     </div>
