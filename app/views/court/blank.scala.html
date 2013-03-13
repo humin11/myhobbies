@@ -3,6 +3,15 @@
 @import helper._
 @import helper.twitterBootstrap._
 
-@main("title") {
-    
+@main("发现新球场") {
+    @helper.form(action = routes.Court.save()) {
+        @helper.inputText(courtForm("name"))
+        @helper.inputText(courtForm("logo"))
+        @helper.inputText(courtForm("address"))
+
+        <div class="actions">
+            <input type="submit" value="Create this computer" class="btn primary"> or 
+            <a href="@routes.Court.index()" class="btn">Cancel</a> 
+        </div>
+    }
 }

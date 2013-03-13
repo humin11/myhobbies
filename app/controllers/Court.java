@@ -28,12 +28,13 @@ public class Court extends Controller {
 		return ok(blank.render(courtForm));
 	}
 	
-	public static Result add(){
+	public static Result save(){
 		Form<TCourt> filledForm = courtForm.bindFromRequest();
 		if(filledForm.hasErrors()){
 			return badRequest(blank.render(courtForm));
 		} else {
 			TCourt court = filledForm.get();
+			court.save();
 			List<TCourt> courtList = TCourt.findByCity(1);
 			return ok(index.render(courtList));
 		}
