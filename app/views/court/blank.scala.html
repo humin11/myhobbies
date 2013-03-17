@@ -1,17 +1,39 @@
 @(courtForm: Form[TCourt])
 
 @import helper._
-@import helper.twitterBootstrap._
 
-@main("发现新球场") {
-    @helper.form(action = routes.Court.save()) {
-        @helper.inputText(courtForm("name"))
-        @helper.inputText(courtForm("logo"))
-        @helper.inputText(courtForm("address"))
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
 
-        <div class="actions">
-            <input type="submit" value="Create this computer" class="btn primary"> or 
-            <a href="@routes.Court.index()" class="btn">Cancel</a> 
+@scripts = {
+  <script src="@routes.Assets.at("javascripts/jqBootstrapValidation.js")" type="text/javascript"></script>
+}
+
+@main("发现新球场", null , scripts) {
+  <div class="span12">
+    <div class="widget">
+      <div class="widget-header">
+        <div class="title">
+          Event registration for<a id="redgForm">m</a>
         </div>
-    }
+        <span class="tools">
+          <a class="fs1" aria-hidden="true" data-icon="&#xe090;"></a>
+        </span>
+      </div>
+      <div class="widget-body">
+        @form(action = routes.Court.save(), args = 'class -> "form-horizontal no-margin") {
+          @inputText(courtForm("name"), '_label -> "Name", '_help -> "Please input name", '_error -> "Wrong Name", 'placeholder -> "Your Name")
+          @inputFile(courtForm("logo"))
+          @helper.inputText(courtForm("address"))
+
+          <div class="form-actions no-margin">
+            <button type="submit" class="btn btn-info pull-right">
+              Registar
+            </button>
+            <div class="clearfix">
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
 }

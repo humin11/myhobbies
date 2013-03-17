@@ -25,6 +25,8 @@ public class TCourt extends Model {
 	public Long id;
 	
 	@Constraints.Required
+	@Constraints.MinLength(2)
+	@Constraints.MaxLength(128)
 	public String name;
 	
 	@Constraints.Required
