@@ -4,12 +4,6 @@
 * Generate input according twitter bootsrap rules *
 **************************************************@
 
-@(
-	elements.field.constraints.foreach{
-		case(that,value) => if(that=="constraint.required"){  println(elements.input.toString())}
-		case(key, value) => println ("key="+key)
-	}
-)
 <div class="control-group @if(elements.hasErrors) {error}">
 	<label class="control-label" for="@elements.id">
 	  @elements.label

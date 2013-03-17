@@ -21,7 +21,7 @@
       </div>
       <div class="widget-body">
         @form(action = routes.Court.save(), args = 'class -> "form-horizontal no-margin") {
-          @inputText(courtForm("name"), '_label -> "Name", '_help -> "Please input name", '_error -> "Wrong Name", 'placeholder -> "Your Name")
+          @inputText(courtForm("name"), '_label -> "Name", '_help -> "Please input name", '_error -> "Wrong Name", 'placeholder -> "Your Name", 'minlength -> "2", 'maxlength -> "128", 'required -> "required")
           @inputFile(courtForm("logo"))
           @helper.inputText(courtForm("address"))
 
