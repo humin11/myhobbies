@@ -10,6 +10,7 @@ POST    /posts/create               controllers.Posts.create
 GET		/court						controllers.Court.index
 GET		/court/blank				controllers.Court.blank
 POST 	/court/new					controllers.Court.save
+POST 	/court/upload				controllers.Court.upload
 GET		/court/:id					controllers.Court.view(id: Long)
 
 GET     /restricted                 controllers.Application.restricted

@@ -5,3 +5,4 @@ $ ->
     $('ul.nav a[href="'+pathname+'"]').parent('li').addClass 'active'
 
     $("input,select,textarea").not("[type=submit]").jqBootstrapValidation()
+

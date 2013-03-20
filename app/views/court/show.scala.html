@@ -1,8 +1,14 @@
 @(court: TCourt)
-<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/court.css")">
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
 
-@main(Messages("court")) {
+@styles ={
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/court.css")">
+}
+
+@scripts = {
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+}
+
+@main(Messages("court"), null, styles, scripts) {
 	
 	<div class="span9">
 		<div id="breadcrumb">
@@ -108,7 +114,7 @@
 	    	</div>
 	    </div>
 
-	    <div class="module-top warning">常来的朋友 · <a href="#">所有朋友</a></div>
+	    <div class="module-top normal">常来的朋友 · <a href="#">所有朋友</a></div>
 	    <div class="module">
 	    	<div class="row-fluid">
 	    		<div class="span12">

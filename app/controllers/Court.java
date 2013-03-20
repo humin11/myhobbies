@@ -1,12 +1,14 @@
 package controllers;
 
+import java.io.File;
 import java.util.List;
 
 import models.TCourt;
-import play.Logger;
-import static play.data.Form.*;
+import play.mvc.Http.MultipartFormData;
+import play.mvc.Http.MultipartFormData.FilePart;
 import play.data.*;
 import play.mvc.*;
+import static play.data.Form.*;
 
 import views.html.court.*;
 
@@ -37,6 +39,20 @@ public class Court extends Controller {
 			court.save();
 			List<TCourt> courtList = TCourt.findByCity(1);
 			return ok(index.render(courtList));
+		}
+	}
+
+	public static Result upload() {
+	    MultipartFormData body = request().body().asMultipartFormData();
+		FilePart picture = body.getFile("logo");
+		if (picture != null) {
+			String fileName = picture.getFilename();
+			String contentType = picture.getContentType(); 
+			File file = picture.getFile();
+			return ok("File uploaded");
+		} else {
+			flash("error", "Missing file");
+			return redirect(routes.Application.index());    
 		}
 	}
 

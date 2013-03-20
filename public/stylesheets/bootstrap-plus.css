@@ -1364,7 +1364,7 @@ input.span1, textarea.span1, .uneditable-input.span1 {
   .controls-row [class*="span"] {
     float: left; }
 
-.row-fluid .controls-row [class*="span"] {
+.row-fluid .boots-row [class*="span"] {
   float: left; }
 
 .controls-row .checkbox[class*="span"], .controls-row .radio[class*="span"] {
@@ -3567,9 +3567,10 @@ button.btn.btn-mini, input[type="submit"].btn.btn-mini {
 
 .thumbnail {
   display: block;
-  padding: 4px;
+  padding: 1px;
   line-height: 20px;
   border: 1px solid #dddddd;
+  margin-bottom: 5px;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
@@ -3594,13 +3595,14 @@ a.thumbnail:hover {
   box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
   /* Opera 10.5, IE9 */ }
 
-.thumbnail > img {
+.thumbnail div > img {
   display: block;
   max-width: 100%;
   margin-left: auto;
   margin-right: auto; }
 .thumbnail .caption {
-  padding: 9px 0;
+  margin-left: auto;
+  margin-right: auto;
   color: #525252; }
 
 .alert {
