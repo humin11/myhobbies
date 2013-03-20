@@ -17,6 +17,8 @@ import com.feth.play.module.pa.user.NameIdentity;
 import com.feth.play.module.pa.user.FirstLastNameIdentity;
 import models.TokenAction.Type;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 import play.db.ebean.Model;
 import play.data.validation.*;
 import play.data.format.*;
@@ -56,12 +58,15 @@ public class User extends Model implements Subject{
 	public boolean emailValidated;
 
 	@ManyToMany
+    @JsonIgnore
 	public List<SecurityRole> roles;
 
 	@OneToMany(cascade = CascadeType.ALL)
+    @JsonIgnore
 	public List<LinkedAccount> linkedAccounts;
 
 	@ManyToMany
+    @JsonIgnore
 	public List<UserPermission> permissions;
 	
 	@Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
@@ -77,24 +82,35 @@ public class User extends Model implements Subject{
 	public Date unlocked_at;
 
     @OneToOne
+    @JsonIgnore
     public TPerson person;
 
     @OneToMany(mappedBy = "owner")
+    @JsonIgnore
     public List<TContact> self_contacts;
 
+    @OneToMany(mappedBy = "author")
+    @JsonIgnore
+    public List<TCircle> circles;
+
     @OneToMany(mappedBy = "person")
+    @JsonIgnore
     public List<TContact> in_others_contacts;
 
     @OneToMany(mappedBy = "author")
+    @JsonManagedReference
     public List<TPost> posts;
 
     @OneToMany(mappedBy = "author")
+    @JsonManagedReference
     public List<TComment> comments;
 
     @OneToMany(mappedBy = "author")
+    @JsonIgnore
     public List<TLike> likes;
 
     @OneToMany(mappedBy = "author")
+    @JsonIgnore
     public List<TPhoto> photos;
 
 	public static Finder<Long, User> find = new Finder<Long, User>(Long.class, User.class);
@@ -104,15 +120,6 @@ public class User extends Model implements Subject{
                 .eq("email", email)
                 .eq("password", password)
                 .findUnique();
-    }
-
-    public static List<User> findContactUsers(User user){
-        List<TContact> contacts = TContact.findContacts(user);
-        List<User> contactUsers = new ArrayList<User>();
-        for (TContact contact : contacts){
-            contactUsers.add(contact.person);
-        }
-        return contactUsers;
     }
 
     public static List<User> findPeopleInCircles(List<TCircle> circles){

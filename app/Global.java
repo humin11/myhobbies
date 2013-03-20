@@ -12,6 +12,8 @@ import controllers.routes;
 import play.Application;
 import play.GlobalSettings;
 import play.mvc.Call;
+import redis.clients.jedis.Jedis;
+import service.post.Receiver;
 
 public class Global extends GlobalSettings {
 

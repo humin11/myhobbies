@@ -1,10 +1,10 @@
 package models;
 
-import com.avaje.ebean.Expr;
-import com.avaje.ebean.Expression;
 import com.avaje.ebean.RawSql;
 import com.avaje.ebean.RawSqlBuilder;
-import com.avaje.ebean.annotation.Where;
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 import play.data.format.Formats;
 import play.db.ebean.Model;
 
@@ -23,6 +23,7 @@ public class TPost extends Model {
     public String content;
 
     @ManyToOne
+    @JsonBackReference
     public User author;
 
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
@@ -39,73 +40,74 @@ public class TPost extends Model {
     public Boolean ispublic;
 
     @OneToMany(mappedBy = "post")
+    @JsonManagedReference
     public List<TComment> comments;
 
     @OneToMany(mappedBy = "parent")
+    @JsonIgnore
     public List<TPost> reshares;
 
     @OneToMany(mappedBy = "post")
+    @JsonIgnore
     public List<TLike> likes;
 
     @OneToMany(mappedBy = "post")
+    @JsonIgnore
     public List<TMention> mentions;
 
     @OneToMany(mappedBy = "post")
+    @JsonIgnore
     public List<TPhoto> photos;
 
     @OneToMany(mappedBy = "post")
+    @JsonIgnore
     public List<TShareVisibility> share_visibilities;
 
     @OneToMany(mappedBy = "post")
+    @JsonIgnore
     public List<TCircleVisibility> circle_visibilities;
 
     @OneToMany(mappedBy = "post")
+    @JsonIgnore
     public List<TParticipation> participations;
 
     public static Finder<Long,TPost> find = new Finder<Long, TPost>(Long.class,TPost.class);
 
-    public static List<TPost> findSharedPosts(User user,Integer pageNum,Integer maxRow){
-        return findSharedPostsFromOthers(user,pageNum,maxRow);
-    }
-
-    public static List<TPost> findSharedPostsFromSelf(User user,Integer pageNum,Integer maxRow){
+    public static List<TPost> findSelfPosts(User user,Integer pageNum,Integer maxRow){
         return find.where()
                 .eq("author",user)
                 .orderBy("create_at DESC")
                 .findPagingList(maxRow).getPage(pageNum).getList();
     }
 
-    public static List<TPost> findSharedPostsFromOthers(User user,Integer pageNum,Integer maxRow){
-        List<User> contactUsers = User.findContactUsers(user);
-        String contactUserIds = "";
-        for (User contactUser : contactUsers){
-            contactUserIds += contactUser.id;
-            contactUserIds += ",";
+    public static List<TPost> findPublics(User user,Integer pageNum,Integer maxRow){
+        return find.where()
+                .eq("share_visibilities.recipient",user)
+                .eq("share_visibilities.hidden",false)
+                .orderBy("create_at DESC")
+                .setDistinct(true)
+                .findPagingList(maxRow).getPage(pageNum).getList();
+    }
+
+    public static List<TPost> findShared(User user,Integer pageNum,Integer maxRow){
+        List<TContact> followed = user.self_contacts;
+        String followedUserIds = "";
+        for (TContact followedUser : followed){
+            followedUserIds += followedUser.person;
+            followedUserIds += ",";
         }
-        if(contactUserIds.endsWith(","))
-            contactUserIds = contactUserIds.substring(0,contactUserIds.length()-2);
+        if(followedUserIds.endsWith(","))
+            followedUserIds = followedUserIds.substring(0,followedUserIds.length()-2);
         String sql = "select a.* from posts a,share_visibilities b,circle_visibilities c,circle_members d" +
-                "where a.author_id in (:contactUserIds) and a.id = b.post_id and b.recipient = :recipient and b.hidden = 0 " +
+                "where a.author_id in (:followedUserIds) and a.id = b.post_id and b.recipient = :recipient and b.hidden = 0 " +
                 "or a.id = c.post_id and c.circle_id = d.circle_id and d.person= :recipient";
         RawSql rawSql = RawSqlBuilder.parse(sql).create();
         return find.setRawSql(rawSql)
-                .setParameter("contactUserIds",contactUserIds)
+                .setParameter("followedUserIds",followedUserIds)
                 .setParameter("recipient",user.id)
                 .orderBy("create_at DESC")
                 .setDistinct(true)
                 .findPagingList(maxRow).getPage(pageNum).getList();
-        /*return find.where()
-                .or(
-                    Expr.and(
-                            Expr.in("author",contactUsers),
-                            Expr.and(
-                                    Expr.eq("share_visibilities.recipient",user.id),
-                                    Expr.eq("share_visibilities.hidden",false))),
-                    Expr.eq("circle_visibilities.circle.circle_members.person",user.id)
-                )
-                .orderBy("create_at DESC")
-                .setDistinct(true)
-                .findPagingList(maxRow).getPage(pageNum).getList();*/
     }
 
 }

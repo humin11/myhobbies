@@ -1,10 +1,77 @@
 @(message: String)
 
+@import org.codehaus.jackson.JsonNode
+
+@postItem(jsonNode:JsonNode) = {
+    <div class="row-fluid">
+        <div class="span4">
+            <div class="post">
+                <i class="post-option"></i>
+                <div class="post-avatar"></div>
+                <div class="post-arrow-left"><div class="post-arrow-left-inner"></div></div>
+                <div class="post-header row-fluid">
+                    <span class="post-header-author">理工大狸子</span>
+                    <span class="post-header-status">下午20:30</span>
+                    <span class="post-header-status divider">-</span>
+                    <span class="post-header-status">公开</span>
+                </div>
+                <div class="post-body row-fluid">
+                    <div class="post-title"></div>
+                    <div class="post-content">
+                        <div class="post-message">
+                            <p>周末一个超级大火锅送给汪海鹏周末一个超级大火锅送给汪海鹏周末一个
+                                超级大火锅送给汪海鹏周末一个超级大火锅送给汪海鹏周末
+                                一个超级大火锅送给汪海鹏周末一个超级大火锅送给汪海鹏</p>
+                            <span class="post-message-expand">展开此信息 ?</span>
+                        </div>
+                        <div class="post-photo">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="post-footer row-fluid">
+                </div>
+            </div>
+            <div class="comments row-fluid">
+                <div class="comments-list row-fluid">
+                    @commentItem(null)
+                    @commentItem(null)
+                </div>
+                <div class="comments-new row-fluid" contenteditable="true">添加评论...</div>
+            </div>
+        </div>
+    </div>
+}
+
+@commentItem(jsonNode:JsonNode) = {
+
+}
+
 @main("Welcome to CGLQ") {
 
-    <a id="newBtn" class="btn" ><i class="icon-pencil"></i>&nbsp;Share</a>
-    <div id="postModal" class="hide"></div>
 
+
+
+    <div class="container">
+        <div class="row-fluid">
+            <a id="newBtn" class="btn pull-right"><i class="icon-pencil"></i>&nbsp;Share</a>
+            <div id="postModal" class="hide"></div>
+        </div>
+        <div class="row-fluid">
+            <div class="span3">
+            </div>
+            <div class="span6">
+                @postItem(null)
+                @postItem(null)
+                @postItem(null)
+                @postItem(null)
+            </div>
+            <div class="span3">
+
+
+            </div>
+        </div>
+    </div>
     <script>
         $('#postModal').postkit({
             anchor:'newBtn',
@@ -14,50 +81,25 @@
             $('#postModal').postkit('show');
             return false;
         });
+        var cometFrame = $('<iframe id="cometFrame"></iframe>');
+        cometFrame.css('position','absolute');
+        cometFrame.css('top','-100px');
+        cometFrame.css('left','-100px');
+        cometFrame.width(1);
+        cometFrame.height(1);
+        $('body').append(cometFrame);
+        var url = "/streams/news?callback={cb}";
+        var t = new Date().getTime();
+
+
+        var content = '<body onload="var d=document,s=d.createElement(\'script\');s.src=\''
+            +url.replace(/{cb}/,'alert')
+            +'\';d.getElementsByTagName(\'head\')[0].appendChild(s)"></body>';
+        var doc = cometFrame[0].contentWindow.document;
+
+        doc.open().write(content);
+        doc.close();
+
     </script>
-
-
-    <div class="container-fluid">
-        <div class="span6">
-            <div class="post">
-                <div class="post-main">
-                    <i class="post-option"></i>
-                    <div class="post-avatar"></div>
-                    <div class="post-arrow-left"><div class="post-arrow-left-inner"></div></div>
-                    <div class="post-header row-fluid">
-                        <span class="post-header-author">理工大狸子</span>
-                        <span class="post-header-status">下午20:30</span>
-                        <span class="post-header-status divider">-</span>
-                        <span class="post-header-status">公开</span>
-                    </div>
-                    <div class="post-body">
-                        <div class="post-title"></div>
-                        <div class="post-content">
-                            <div class="post-message">
-                                <p>周末一个超级大火锅送给汪海鹏</p>
-                                <span class="post-message-expand hide">展开此信息 »</span>
-                            </div>
-                            <div class="post-photo">
-
-                            </div>
-                        </div>
-                        <div class="post-footer row-fluid">
-                            <span class="post-btn-likes">顶</span>
-                            <span class="post-btn-reshare"></span>
-                            <div class="post-btngroup-status">
-                                <div class="post-count-likes"></div>
-                                <div class="post-count-reshare"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="post-comments">
-                    <div class="post-comments-list"></div>
-                    <div class="post-comments-new"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
 }

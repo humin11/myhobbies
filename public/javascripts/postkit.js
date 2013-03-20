@@ -6,6 +6,7 @@
         this.anchor = options["anchor"];
         this.showtype = options["showtype"];
         this.initialize();
+        this.createPostURL = '/people/buildPost';
     }
 
     Postkit.prototype = {
@@ -112,11 +113,11 @@
             var $el = this.$element;
             shareBtn.click(function(){
                 if(!shareBtn.hasClass('disabled')){
-                    var postContent = $($el.find('.postkit-content')[0]);
+                    var postContent = $($el.find('.postkit-message')[0]);
                     var content = postContent.text();
                     var params = {};
                     params["content"] = content;
-                    $.post('/posts/create?'+$.param(params),function(){
+                    $.post('/people/buildPost?'+$.param(params),function(){
                         postContent.empty();
                         $el.hide();
                     });
