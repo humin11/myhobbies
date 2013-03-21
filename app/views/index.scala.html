@@ -130,15 +130,26 @@
             comment_list.find('.comment').hover(function(){
                 var delbtn = $(this).find('.comment-delbtn');
                 delbtn.show();
+                var reply = $(this).find('.comment-reply');
+                reply.show();
             },function(){
                 var delbtn = $(this).find('.comment-delbtn');
                 delbtn.hide();
+                var reply = $(this).find('.comment-reply');
+                reply.hide();
             });
             comment_list.find('.comment-delbtn').click(function(){
                 var comment = $(this).parents('.comment');
-                $.post('/comments/delete?id='+comment.attr('id'),function(){
+                $.post('/comments/delete?id='+comment.attr('uid'),function(){
                     comment.remove();
                 });
+            });
+            comment_list.find('.comment-reply').click(function(){
+                var comment = $(this).parents('.comment');
+                var author = comment.find('.comment-author').text();
+                var comments = comment.parents('.comments');
+                comments.find('.comments-new-noinput').trigger('click');
+                comments.find('.comments-new-input').text('+'+author);
             });
         }
 
