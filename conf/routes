@@ -6,6 +6,7 @@
 GET     /                           controllers.Application.index
 POST    /posts/create               controllers.Posts.create
 POST    /comments/create            controllers.Comments.create
+POST    /comments/delete            controllers.Comments.delete
 GET     /streams/news               controllers.Streams.news
 
 # Court Page

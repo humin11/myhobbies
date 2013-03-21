@@ -15,5 +15,7 @@ import views._
 object Comments extends Controller {
 
     def create = TODO
+    
+    def delete = TODO
 
 }
