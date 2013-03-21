@@ -2,7 +2,9 @@ package controllers;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
+import models.TPost;
 import models.User;
 import play.Routes;
 import play.data.Form;
@@ -27,8 +29,11 @@ public class Application extends Controller {
 	public static final String USER_ROLE = "user";
 
 	public static Result index() {
-        session("userid","1");
-		return ok(index.render("My Applications"));
+        final User user = Application.getLocalUser(session());
+        int pageNum = request().getQueryString("pageNum")==null?0:Integer.parseInt(request().getQueryString("pageNum"));
+        int maxRow = request().getQueryString("maxRow")==null?10:Integer.parseInt(request().getQueryString("maxRow"));
+        List<TPost> posts = TPost.findPublics(user,pageNum,maxRow);
+		return ok(index.render("My Applications",posts));
 	}
 
 	public static User getLocalUser(final Session session) {

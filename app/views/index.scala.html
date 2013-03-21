@@ -1,10 +1,98 @@
-@(message: String)
+@(message: String,posts: List[TPost])
+
+@import org.codehaus.jackson.JsonNode
+
+@postItem(post:TPost) = {
+    <div class="row-fluid">
+        <div class="span4">
+            <div class="post row-fluid">
+                <i class="post-option"></i>
+                <div class="post-avatar"></div>
+                <div class="post-arrow-left"><div class="post-arrow-left-inner"></div></div>
+                <div class="post-header row-fluid">
+                    <span class="post-header-author">@post.author.name</span>
+                    <span class="post-header-status">@post.create_at</span>
+                    <span class="post-header-status divider">-</span>
+                    <span class="post-header-status">公开</span>
+                </div>
+                <div class="post-body row-fluid">
+                    <div class="post-title"></div>
+                    <div class="post-content">
+                        <div class="post-message">
+                            <p>@post.content</p>
+                            <span class="post-message-expand hide">展开此信息 ?</span>
+                        </div>
+                        <div class="post-photo">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="post-footer row-fluid">
+                </div>
+            </div>
+            <div class="comments row-fluid">
+                <div class="row-fluid comments-more @(" hide".when(post.comments.size()<=3))">
+                    <div class="span2">@(post.comments.size())条评论</div>
+                    <i class="icon-chevron-down"></i>
+                </div>
+                <div class="comments-list row-fluid">
+                    @for(i <- 0.to(2)) {
+                        @if(post.comments.size() > i){
+                            @commentItem(post.comments.get(i))
+                        }
+                    }
+                </div>
+                <div class="post-inputable comments-new-noinput row-fluid" contenteditable="plaintext-only">添加评论...</div>
+                <div class="comments-new-section row-fluid hide">
+                    <div class="row-fluid">
+                        <div class="span2 comments-avatar"></div>
+                        <div class="span10 post-inputable comments-new-input" contenteditable="plaintext-only"></div>
+                    </div>
+                    <div class="comments-new-btns row-fluid pull-left">
+                        <a class="btn btn-success btn-mini comment-sendbtn" post="@post.id">发表评论</a>
+                        <a class="btn btn-mini comment-cancelbtn">取消</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@commentItem(comment:TComment) = {
+    <div class="row-fluid">
+        <div class="span2 comments-avatar"></div>
+        <div class="span10">
+            <div class="row-fluid">
+                <div class="row-fluid">
+                    <span class="post-header-author">@comment.author.name</span>
+                    <span class="post-header-status">@comment.create_at</span>
+                </div>
+                <div class="post-message row-fluid">@comment.content</div>
+            </div>
+        </div>
+    </div>
+}
 
 @main("Welcome to CGLQ") {
+    <div class="container">
+        <div class="row-fluid">
+            <a id="newBtn" class="btn pull-right"><i class="icon-pencil"></i>&nbsp;Share</a>
+            <div id="postModal" class="hide"></div>
+        </div>
+        <div class="row-fluid">
+            <div class="span3">
+            </div>
+            <div class="span6">
+                @for(p <- posts) {
+                    @postItem(p)
+                }
+            </div>
+            <div class="span3">
 
-    <a id="newBtn" class="btn" ><i class="icon-pencil"></i>&nbsp;Share</a>
-    <div id="postModal" class="hide"></div>
 
+            </div>
+        </div>
+    </div>
     <script>
         $('#postModal').postkit({
             anchor:'newBtn',
@@ -14,50 +102,45 @@
             $('#postModal').postkit('show');
             return false;
         });
+
+        $('.comments-new-noinput').click(function(){
+            $(this).hide();
+            var comment_input = $(this).next();
+            comment_input.show();
+            comment_input.find('.post-inputable')[0].focus();
+        });
+        $('.comment-sendbtn').click(function(){
+            var sendbtn = $(this);
+            var postId = $(this).attr('post');
+            var comment_input = $(this).parent().parent();
+            var comment_content = comment_input.find('.comments-new-input')[0];
+            var content = $(comment_content).text();
+            $.post('/comments/create?postId='+postId+'&content='+content,function(){
+                sendbtn.next().trigger('click');
+            });
+        });
+        $('.comment-cancelbtn').click(function(){
+            var comment_input = $(this).parent().parent();
+            comment_input.hide();
+            var comment_input_fake = comment_input.prev();
+            comment_input_fake.show();
+        });
+        var cometFrame = $('<iframe id="cometFrame"></iframe>');
+        cometFrame.css('position','absolute');
+        cometFrame.css('top','-100px');
+        cometFrame.css('left','-100px');
+        cometFrame.width(1);
+        cometFrame.height(1);
+        $('body').append(cometFrame);
+
+        var url = "/streams/news?callback={cb}";
+        var t = new Date().getTime();
+        var content = '<body onload="var d=document,s=d.createElement(\'script\');s.src=\''
+            +url.replace(/{cb}/,'parent.window.alert')
+            +'\';d.getElementsByTagName(\'head\')[0].appendChild(s)"></body>';
+        var doc = cometFrame[0].contentWindow.document;
+        doc.open().write(content);
+        doc.close();
     </script>
-
-
-    <div class="container-fluid">
-        <div class="span6">
-            <div class="post">
-                <div class="post-main">
-                    <i class="post-option"></i>
-                    <div class="post-avatar"></div>
-                    <div class="post-arrow-left"><div class="post-arrow-left-inner"></div></div>
-                    <div class="post-header row-fluid">
-                        <span class="post-header-author">理工大狸子</span>
-                        <span class="post-header-status">下午20:30</span>
-                        <span class="post-header-status divider">-</span>
-                        <span class="post-header-status">公开</span>
-                    </div>
-                    <div class="post-body">
-                        <div class="post-title"></div>
-                        <div class="post-content">
-                            <div class="post-message">
-                                <p>周末一个超级大火锅送给汪海鹏</p>
-                                <span class="post-message-expand hide">展开此信息 »</span>
-                            </div>
-                            <div class="post-photo">
-
-                            </div>
-                        </div>
-                        <div class="post-footer row-fluid">
-                            <span class="post-btn-likes">顶</span>
-                            <span class="post-btn-reshare"></span>
-                            <div class="post-btngroup-status">
-                                <div class="post-count-likes"></div>
-                                <div class="post-count-reshare"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="post-comments">
-                    <div class="post-comments-list"></div>
-                    <div class="post-comments-new"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
 }
