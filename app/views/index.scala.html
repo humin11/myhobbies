@@ -120,6 +120,12 @@
                     var delbtn = $(this).find('.comment-delbtn');
                     delbtn.hide();
                 });
+                comments_list.find('.comment-delbtn').click(function(){
+                    var comment = $(this).parents('.comment');
+                    $.post('/comments/delete?id='+comment.attr('id'),function(){
+                        comment.remove();
+                    });
+                });
             });
         });
         $('.comment-cancelbtn').click(function(){
