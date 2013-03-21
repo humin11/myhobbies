@@ -1,7 +1,6 @@
 @(message: String,posts: List[TPost])
 
 @import org.codehaus.jackson.JsonNode
-
 @postItem(post:TPost) = {
     <div class="row-fluid">
         <div class="span4">
@@ -19,8 +18,14 @@
                     <div class="post-title"></div>
                     <div class="post-content">
                         <div class="post-message">
-                            <p>@post.content</p>
-                            <span class="post-message-expand hide">展开此信息 ?</span>
+                            <p>
+                                @if(post.content.length()>200){
+                                    @post.content.substring(0,200)...
+                                }else{
+                                    @post.content
+                                }
+                            </p>
+                            <span class="post-message-expand @("hide".when(post.content.length()<200))">展开此信息 ?</span>
                         </div>
                         <div class="post-photo">
 
@@ -31,16 +36,12 @@
                 </div>
             </div>
             <div class="comments row-fluid">
-                <div class="row-fluid comments-more @(" hide".when(post.comments.size()<=3))">
+                <div class="row-fluid comments-more @(" hide".when(post.comments.size()<3))">
                     <div class="span2">@(post.comments.size())条评论</div>
                     <i class="icon-chevron-down"></i>
                 </div>
                 <div class="comments-list row-fluid">
-                    @for(i <- 0.to(2)) {
-                        @if(post.comments.size() > i){
-                            @commentItem(post.comments.get(i))
-                        }
-                    }
+                    @commentItems(post.comments.sortBy(_.create_at).takeRight(3))
                 </div>
                 <div class="post-inputable comments-new-noinput row-fluid" contenteditable="plaintext-only">添加评论...</div>
                 <div class="comments-new-section row-fluid hide">
@@ -49,7 +50,7 @@
                         <div class="span10 post-inputable comments-new-input" contenteditable="plaintext-only"></div>
                     </div>
                     <div class="comments-new-btns row-fluid pull-left">
-                        <a class="btn btn-success btn-mini comment-sendbtn" post="@post.id">发表评论</a>
+                        <a class="btn btn-success btn-mini comment-addbtn" post="@post.id">发表评论</a>
                         <a class="btn btn-mini comment-cancelbtn">取消</a>
                     </div>
                 </div>
@@ -58,20 +59,13 @@
     </div>
 }
 
-@commentItem(comment:TComment) = {
-    <div class="row-fluid">
-        <div class="span2 comments-avatar"></div>
-        <div class="span10">
-            <div class="row-fluid">
-                <div class="row-fluid">
-                    <span class="post-header-author">@comment.author.name</span>
-                    <span class="post-header-status">@comment.create_at</span>
-                </div>
-                <div class="post-message row-fluid">@comment.content</div>
-            </div>
-        </div>
-    </div>
+@commentItems(comments:List[TComment]) = {
+    @for(c <- comments) {
+        @views.html.post.comment(c)
+    }
 }
+
+
 
 @main("Welcome to CGLQ") {
     <div class="container">
@@ -107,16 +101,25 @@
             $(this).hide();
             var comment_input = $(this).next();
             comment_input.show();
-            comment_input.find('.post-inputable')[0].focus();
+            comment_input.find('.post-inputable').focus();
         });
-        $('.comment-sendbtn').click(function(){
+        $('.comment-addbtn').click(function(){
             var sendbtn = $(this);
+            var comments_list = sendbtn.parents('.comments').find('.comments-list');
             var postId = $(this).attr('post');
             var comment_input = $(this).parent().parent();
-            var comment_content = comment_input.find('.comments-new-input')[0];
-            var content = $(comment_content).text();
-            $.post('/comments/create?postId='+postId+'&content='+content,function(){
+            var content = comment_input.find('.comments-new-input');
+            $.post('/comments/create?postId='+postId+'&content='+content.text(),function(data){
+                content.text('');
                 sendbtn.next().trigger('click');
+                comments_list.append(data);
+                comments_list.find('.comment').hover(function(){
+                    var delbtn = $(this).find('.comment-delbtn');
+                    delbtn.show();
+                },function(){
+                    var delbtn = $(this).find('.comment-delbtn');
+                    delbtn.hide();
+                });
             });
         });
         $('.comment-cancelbtn').click(function(){
@@ -124,6 +127,19 @@
             comment_input.hide();
             var comment_input_fake = comment_input.prev();
             comment_input_fake.show();
+        });
+        $('.comment').hover(function(){
+            var delbtn = $(this).find('.comment-delbtn');
+            delbtn.show();
+        },function(){
+            var delbtn = $(this).find('.comment-delbtn');
+            delbtn.hide();
+        });
+        $('.comment-delbtn').click(function(){
+            var comment = $(this).parents('.comment');
+            $.post('/comments/delete?id='+comment.attr('id'),function(){
+                comment.remove();
+            });
         });
         var cometFrame = $('<iframe id="cometFrame"></iframe>');
         cometFrame.css('position','absolute');

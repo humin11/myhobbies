@@ -3,6 +3,7 @@ package controllers;
 import models.TContact;
 import models.TPost;
 import models.User;
+import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
 import service.post.Redis;
@@ -41,6 +42,7 @@ public class Streams extends Controller {
             }
             }
         });
+
         receiveThread.start();
         return ok(client);
     }

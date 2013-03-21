@@ -5,7 +5,6 @@ import models.TPost;
 import models.User;
 import play.mvc.Controller;
 import play.mvc.Result;
-
 import java.util.Date;
 
 public class Comments extends Controller {
@@ -14,7 +13,6 @@ public class Comments extends Controller {
         Long postId = Long.parseLong(request().getQueryString("postId"));
         TPost post = TPost.find.byId(postId);
         String content = request().getQueryString("content");
-        System.out.println(postId+":"+content);
         Date now = new Date();
         User localUser = Application.getLocalUser(session());
         TComment comment = new TComment();
@@ -28,7 +26,17 @@ public class Comments extends Controller {
         comment.save();
         if(localUser != post.author)
             Notifications.notify(comment);
-        return ok("ok");
+        return ok(views.html.post.comment.render(comment));
+    }
+
+    public static Result delete(){
+        Long id = Long.parseLong(request().getQueryString("id"));
+        TComment comment = TComment.find.byId(id);
+        User localUser = Application.getLocalUser(session());
+        if(localUser.id == comment.author.id){
+            comment.delete();
+        }
+        return ok("");
     }
 
 }
