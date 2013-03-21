@@ -1,77 +1,6 @@
-@(message: String,posts: List[TPost])
+@(message: String,posts: List[Post] = Nil)
 
 @import org.codehaus.jackson.JsonNode
-
-@postItem(post:TPost) = {
-    <div class="row-fluid">
-        <div class="span4">
-            <div class="post row-fluid">
-                <i class="post-option"></i>
-                <div class="post-avatar"></div>
-                <div class="post-arrow-left"><div class="post-arrow-left-inner"></div></div>
-                <div class="post-header row-fluid">
-                    <span class="post-header-author">@post.author.name</span>
-                    <span class="post-header-status">@post.create_at</span>
-                    <span class="post-header-status divider">-</span>
-                    <span class="post-header-status">公开</span>
-                </div>
-                <div class="post-body row-fluid">
-                    <div class="post-title"></div>
-                    <div class="post-content">
-                        <div class="post-message">
-                            <p>@post.content</p>
-                            <span class="post-message-expand hide">展开此信息 ?</span>
-                        </div>
-                        <div class="post-photo">
-
-                        </div>
-                    </div>
-                </div>
-                <div class="post-footer row-fluid">
-                </div>
-            </div>
-            <div class="comments row-fluid">
-                <div class="row-fluid comments-more @(" hide".when(post.comments.size()<=3))">
-                    <div class="span2">@(post.comments.size())条评论</div>
-                    <i class="icon-chevron-down"></i>
-                </div>
-                <div class="comments-list row-fluid">
-                    @for(i <- 0.to(2)) {
-                        @if(post.comments.size() > i){
-                            @commentItem(post.comments.get(i))
-                        }
-                    }
-                </div>
-                <div class="post-inputable comments-new-noinput row-fluid" contenteditable="plaintext-only">添加评论...</div>
-                <div class="comments-new-section row-fluid hide">
-                    <div class="row-fluid">
-                        <div class="span2 comments-avatar"></div>
-                        <div class="span10 post-inputable comments-new-input" contenteditable="plaintext-only"></div>
-                    </div>
-                    <div class="comments-new-btns row-fluid pull-left">
-                        <a class="btn btn-success btn-mini comment-sendbtn" post="@post.id">发表评论</a>
-                        <a class="btn btn-mini comment-cancelbtn">取消</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-}
-
-@commentItem(comment:TComment) = {
-    <div class="row-fluid">
-        <div class="span2 comments-avatar"></div>
-        <div class="span10">
-            <div class="row-fluid">
-                <div class="row-fluid">
-                    <span class="post-header-author">@comment.author.name</span>
-                    <span class="post-header-status">@comment.create_at</span>
-                </div>
-                <div class="post-message row-fluid">@comment.content</div>
-            </div>
-        </div>
-    </div>
-}
 
 @main("Welcome to CGLQ") {
     <div class="container">
@@ -83,9 +12,7 @@
             <div class="span3">
             </div>
             <div class="span6">
-                @for(p <- posts) {
-                    @postItem(p)
-                }
+            
             </div>
             <div class="span3">
 

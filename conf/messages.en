@@ -1,38 +1,21 @@
 
-title = 草根运动
+title = Grassroots Basketball
 
-scrollup = 回顶部
+scrollup = Scroll to top
 
 # Navigation
-home = 主页
-about = 关于我
-friends = 朋友圈
-court = 场地
-brand = 品牌
-store = 集市
-events = 活动
-ask = 问答中心
+home = Home
+about = About Me
+friends = Friends
+court = Play Ground
+brand = Brand
+store = Store
+events = Events
+ask = Ask & Questions
 
-name = {0}名称
-address = {0}地址
-businesshours = {0}营业时间
-telephone = 联系电话
-logo.new = 上传封面
 
-name.help = 请输入{0}名称, 格式: xxxx
-address.help = 请输入位置信息，如：xx大街xx号
-businesshours.help = 请输入{0}营业时间，格式: 00:00-24:00
-telephone.help = 请输入联系电话，格式: 010-12345678, 010-87654321
-
-check.min = 至少需要输入{0}个字符数
-check.max = 最多需要输入{0}个字符数
-
-court.found = 发现新场地
-court.new = 添加新场地
-
-submit = 提交
-cancel = 取消
-reset = 重设
+#
+found.court = Found new Court
 
 
 # Override default Play's validation messages

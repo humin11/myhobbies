@@ -1,15 +1,15 @@
-@(courtList: List[TCourt])
+@(courtList: List[Court] = Nil)
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
 
 @displayItem(i:Int) = {
 	<div class="row-fluid">
 			<div class="span3">
-				<a href="@routes.Court.view(1)"><img src="@routes.Assets.at("images/court.demo.jpeg")"
+				<a href="@routes.Courts.view(1)"><img src="@routes.Assets.at("images/court.demo.jpeg")"
 					alt="北京理工大学篮球场" /></a>
 			</div>
 			<div class="span9">
 				<div>
-					<p><a href="@routes.Court.view(1)" class="title">北京理工大学篮球场</a></p>
+					<p><a href="@routes.Courts.view(1)" class="title">北京理工大学篮球场</a></p>
 				</div>
 				<div>
 					<div class="rateit" data-rateit-value="2.5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
@@ -79,7 +79,7 @@
     <div class="module-n">
         <div class="row-fluid">
         	<div class="span12">
-            <a href="@routes.Court.blank()" ><button class="btn btn-success btn-block" type="button">@Messages("court.found")</button></a>
+            <a href="@routes.Courts.blank()" ><button class="btn btn-success btn-block" type="button">@Messages("court.found")</button></a>
           </div>
         </div>
     </div>

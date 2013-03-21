@@ -1,4 +1,4 @@
-@(courtForm: Form[TCourt])
+@(courtForm: Form[Court])
 
 @import helper._
 
@@ -24,7 +24,7 @@
         </span>
       </div>
       <div class="widget-body">
-        @form(action = routes.Court.save(), 'enctype -> "multipart/form-data", 'class -> "form-horizontal no-margin") {
+        @form(action = routes.Courts.save(), 'enctype -> "multipart/form-data", 'class -> "form-horizontal no-margin") {
           <div class="row-fluid">
             <div class="span9">
               @inputText(courtForm("name"), 'class ->"input-block-level", '_label -> Messages("name", Messages("court")), '_help -> Messages("name.help", Messages("court")), 'placeholder -> Messages("name.help", Messages("court")), 'minlength -> "2", 'maxlength -> "128", 'required -> "required")
