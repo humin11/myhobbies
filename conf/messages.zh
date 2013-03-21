@@ -1,5 +1,5 @@
 
-title = 草根篮球
+title = 草根运动
 
 scrollup = 回顶部
 
@@ -7,13 +7,32 @@ scrollup = 回顶部
 home = 主页
 about = 关于我
 friends = 朋友圈
-court = 场地资讯
+court = 场地
 brand = 品牌
 store = 集市
 events = 活动
 ask = 问答中心
 
-found.court = 发现新球场
+name = {0}名称
+address = {0}地址
+businesshours = {0}营业时间
+telephone = 联系电话
+logo.new = 上传封面
+
+name.help = 请输入{0}名称, 格式: xxxx
+address.help = 请输入位置信息，如：xx大街xx号
+businesshours.help = 请输入{0}营业时间，格式: 00:00-24:00
+telephone.help = 请输入联系电话，格式: 010-12345678, 010-87654321
+
+check.min = 至少需要输入{0}个字符数
+check.max = 最多需要输入{0}个字符数
+
+court.found = 发现新场地
+court.new = 添加新场地
+
+submit = 提交
+cancel = 取消
+reset = 重设
 
 
 # Override default Play's validation messages
