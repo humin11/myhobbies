@@ -76,7 +76,7 @@
         <div class="row-fluid">
             <div class="span3">
             </div>
-            <div class="span6">
+            <div id="post-list" class="span6">
                 @for(p <- posts) {
                     @postItem(p)
                 }
@@ -113,19 +113,7 @@
                 content.text('');
                 sendbtn.next().trigger('click');
                 comments_list.append(data);
-                comments_list.find('.comment').hover(function(){
-                    var delbtn = $(this).find('.comment-delbtn');
-                    delbtn.show();
-                },function(){
-                    var delbtn = $(this).find('.comment-delbtn');
-                    delbtn.hide();
-                });
-                comments_list.find('.comment-delbtn').click(function(){
-                    var comment = $(this).parents('.comment');
-                    $.post('/comments/delete?id='+comment.attr('id'),function(){
-                        comment.remove();
-                    });
-                });
+                initComment(comments_list);
             });
         });
         $('.comment-cancelbtn').click(function(){
@@ -134,35 +122,43 @@
             var comment_input_fake = comment_input.prev();
             comment_input_fake.show();
         });
-        $('.comment').hover(function(){
-            var delbtn = $(this).find('.comment-delbtn');
-            delbtn.show();
-        },function(){
-            var delbtn = $(this).find('.comment-delbtn');
-            delbtn.hide();
-        });
-        $('.comment-delbtn').click(function(){
-            var comment = $(this).parents('.comment');
-            $.post('/comments/delete?id='+comment.attr('id'),function(){
-                comment.remove();
-            });
-        });
-        var cometFrame = $('<iframe id="cometFrame"></iframe>');
-        cometFrame.css('position','absolute');
-        cometFrame.css('top','-100px');
-        cometFrame.css('left','-100px');
-        cometFrame.width(1);
-        cometFrame.height(1);
-        $('body').append(cometFrame);
 
-        var url = "/streams/news?callback={cb}";
-        var t = new Date().getTime();
-        var content = '<body onload="var d=document,s=d.createElement(\'script\');s.src=\''
+        initComment($('#post-list'));
+        initComet();
+
+        function initComment(comment_list){
+            comment_list.find('.comment').hover(function(){
+                var delbtn = $(this).find('.comment-delbtn');
+                delbtn.show();
+            },function(){
+                var delbtn = $(this).find('.comment-delbtn');
+                delbtn.hide();
+            });
+            comment_list.find('.comment-delbtn').click(function(){
+                var comment = $(this).parents('.comment');
+                $.post('/comments/delete?id='+comment.attr('id'),function(){
+                    comment.remove();
+                });
+            });
+        }
+
+        function initComet(){
+            var cometFrame = $('<iframe id="cometFrame"></iframe>');
+            cometFrame.css('position','absolute');
+            cometFrame.css('top','-100px');
+            cometFrame.css('left','-100px');
+            cometFrame.width(1);
+            cometFrame.height(1);
+            $('body').append(cometFrame);
+            var url = "/streams/news?callback={cb}";
+            var t = new Date().getTime();
+            var content = '<body onload="var d=document,s=d.createElement(\'script\');s.src=\''
             +url.replace(/{cb}/,'parent.window.alert')
             +'\';d.getElementsByTagName(\'head\')[0].appendChild(s)"></body>';
-        var doc = cometFrame[0].contentWindow.document;
-        doc.open().write(content);
-        doc.close();
+            var doc = cometFrame[0].contentWindow.document;
+            doc.open().write(content);
+            doc.close();
+        }
     </script>
 
 }
