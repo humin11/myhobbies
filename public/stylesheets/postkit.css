@@ -39,7 +39,7 @@
 
 }
 
-.postkit-message {
+.postkit-message-main {
     min-height: 60px;
     margin: 4px 4px 2px 4px;
     padding-top: 4px;
@@ -47,6 +47,19 @@
     padding-right: 25px;
     outline: 0;
     border: 1px solid #c4c4c4;
+    font-size: 12px;
+    word-wrap: break-word;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.postkit-message {
+    min-height: 60px;
+    margin: 4px 4px 2px 4px;
+    padding-top: 4px;
+    padding-left: 5px;
+    padding-right: 5px;
+    outline: 0;
     font-size: 12px;
     word-wrap: break-word;
     overflow-x: hidden;

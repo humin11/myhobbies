@@ -6,6 +6,7 @@ import org.codehaus.jackson.annotate.JsonBackReference;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonManagedReference;
 import play.data.format.Formats;
+import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public class TPost extends Model {
     @GeneratedValue
     public Long id;
 
+    @Column(length = 65535)
     public String content;
 
     @ManyToOne

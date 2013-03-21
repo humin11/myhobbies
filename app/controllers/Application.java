@@ -30,10 +30,10 @@ public class Application extends Controller {
 
 	public static Result index() {
         final User user = Application.getLocalUser(session());
-        int pageNum = request().getQueryString("pageNum")==null?1:Integer.parseInt(request().getQueryString("pageNum"));
-        int maxRow = request().getQueryString("maxRow")==null?1:Integer.parseInt(request().getQueryString("maxRow"));
+        int pageNum = request().getQueryString("pageNum")==null?0:Integer.parseInt(request().getQueryString("pageNum"));
+        int maxRow = request().getQueryString("maxRow")==null?10:Integer.parseInt(request().getQueryString("maxRow"));
         List<TPost> posts = TPost.findPublics(user,pageNum,maxRow);
-		return ok(index.render("My Applications"));
+		return ok(index.render("My Applications",posts));
 	}
 
 	public static User getLocalUser(final Session session) {

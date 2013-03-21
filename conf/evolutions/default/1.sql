@@ -175,7 +175,7 @@ create table photos (
 
 create table posts (
   id                        bigint auto_increment not null,
-  content                   varchar(255),
+  content                   varchar(65535),
   author_id                 bigint,
   create_at                 datetime,
   update_at                 datetime,

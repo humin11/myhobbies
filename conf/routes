@@ -4,8 +4,9 @@
 
 # Home page
 GET     /                           controllers.Application.index
-POST    /people/buildPost           controllers.People.buildPost
-GET    /streams/news               controllers.Streams.news
+POST    /posts/create               controllers.Posts.create
+POST    /comments/create            controllers.Comments.create
+GET     /streams/news               controllers.Streams.news
 
 # Court Page
 GET		/court						controllers.Court.index

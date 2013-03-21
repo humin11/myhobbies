@@ -1,7 +1,7 @@
 .post {
     position: relative;
     min-width: 400px;
-    margin-top: 15px;
+    margin-top: 20px;
     padding: 14px;
     border: 1px solid #CCC;
     border-radius: 2px;
@@ -16,6 +16,7 @@
     line-height: 44px;
     display: inline-block;
     cursor: pointer;
+    border-radius: 3px;
     background-image: url("/assets/images/avatar_small.png");
 }
 
@@ -50,14 +51,23 @@
     font-size: 12px;
     font-weight: bold;
     margin-right: 4px;
-    color: #00a;
+    color: #000;
     cursor: pointer;
+}
+
+.post-header-author:hover {
+    text-decoration: underline;
+    color: #2f63cf;
 }
 
 .post-header-status {
     font-size: 12px;
     color: #ccc;
     cursor: pointer;
+}
+
+.post-header-status:hover {
+    text-decoration: underline;
 }
 
 .post-title {
@@ -114,6 +124,16 @@
     border-radius: 1px;
 }
 
+.post-inputable {
+    outline: 0;
+    padding: 7px 5px 7px 5px;
+    background-color: #ffffff;
+    border: 1px solid #c4c4c4;
+    font-size: 12px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
 .comments {
     background-color: #f8f8f8;
     min-height: 60px;
@@ -124,16 +144,39 @@
     border-radius: 0 0 2px 2px;
 }
 
-.comments-new {
+.comments-more {
+    margin: 8px 0px 0px 15px;
+    cursor: pointer;
+}
+
+.comments-more:hover {
+    text-decoration: underline;
+    color: #2f63cf;
+}
+
+.comments-avatar {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    border-radius: 3px;
+    background-image: url("/assets/images/avatar_mini.png");
+    background-repeat: no-repeat;
+}
+
+.comments-new-noinput {
     height: 16px;
     max-width: 380px;
     margin: 15px;
-    padding: 7px 5px 7px 5px;
-    outline: 0;
-    background-color: #ffffff;
-    border: 1px solid #c4c4c4;
-    font-size: 12px;
-    overflow-x: hidden;
-    overflow-y: hidden;
     color: #c4c4c4;
+}
+
+.comments-new-section {
+    max-width: 380px;
+    margin: 15px;
+}
+
+.comments-new-input {
+    height: 64px;
+    margin-bottom: 10px;
+    color: #000;
 }

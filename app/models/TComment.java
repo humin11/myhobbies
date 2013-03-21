@@ -49,4 +49,16 @@ public class TComment extends Model {
     //e.g. POST,COMMENT,PHOTO
     public String commentable_type;
 
+    public static Finder<Long,TComment> find = new Finder<Long, TComment>(Long.class,TComment.class);
+
+    public static List<TComment> findComments(TPost post,Integer pageNum,Integer maxRow){
+        return find.where().eq("post",post)
+                .orderBy("create_at DESC")
+                .findPagingList(maxRow).getPage(pageNum).getList();
+    }
+
+    public static List<TComment> findLastThreeComments(TPost post){
+        return findComments(post,1,3);
+    }
+
 }
