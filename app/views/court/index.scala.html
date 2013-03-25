@@ -1,15 +1,15 @@
 @(courtList: List[Court] = Nil)
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
 
-@displayItem(i:Int) = {
+@displayItem(i:ObjectId) = {
 	<div class="row-fluid">
 			<div class="span3">
-				<a href="@routes.Courts.view(1)"><img src="@routes.Assets.at("images/court.demo.jpeg")"
+				<a href="@routes.Courts.view(i)"><img src="@routes.Assets.at("images/court.demo.jpeg")"
 					alt="北京理工大学篮球场" /></a>
 			</div>
 			<div class="span9">
 				<div>
-					<p><a href="@routes.Courts.view(1)" class="title">北京理工大学篮球场</a></p>
+					<p><a href="@routes.Courts.view(i)" class="title">北京理工大学篮球场</a></p>
 				</div>
 				<div>
 					<div class="rateit" data-rateit-value="2.5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
@@ -53,17 +53,8 @@
 
 	<!--start list-->
 	<div class="container-fluid">
-		@displayItem(1)
-		@displayItem(2)
-		@displayItem(3)
-		@displayItem(4)
-		@displayItem(5)
-		@displayItem(6)
-		@displayItem(7)
-		@displayItem(8)
-		@displayItem(9)
-		@displayItem(10)
-		@displayItem(11)
+		@displayItem(new ObjectId())
+		
 
 	</div>
 	<!--end list-->

@@ -1,23 +1,29 @@
 package models;
 
-import play.api.db._
+import java.util.{Date}
 import play.api.Play.current
+import com.novus.salat._
+import com.novus.salat.dao._
+import com.novus.salat.annotations._
+import com.mongodb.casbah.Imports._
+import se.radley.plugin.salat._
+import com.novus.salat.global._
 
-import anorm._
-import anorm.SqlParser._
+case class Court(
+  @Key("_id") id: ObjectId = new ObjectId, 
+  val name: String, 
+  val logo: Option[String] = None, 
+  val address: Option[String] = None, 
+  val telephone: Option[String] = None, 
+  val businesshours: Option[String] = None, 
+  val businfo: Option[String] = None,
+  val create_at: Option[Date] = None,
+  val update_at: Option[Date] = None
+)
 
-case class Court(name: String, logo: String, address: String, telephone: String, businesshours: String, businfo: String)
+object Court extends ModelCompanion[Court, ObjectId]{
+  val collection = mongoCollection("courts")
+  val dao = new SalatDAO[Court, ObjectId](collection = collection) {}
 
-object Court {
-  val simple = {
-      get[String]("court.name") ~
-      get[String]("court.logo") ~
-      get[String]("court.address") ~
-      get[String]("court.telephone") ~
-      get[String]("court.businesshours") ~
-      get[String]("court.businfo") map {
-        case name ~ logo ~ address ~ telephone ~ businesshours ~ businfo  => Court(name, logo, address, telephone, businesshours, businfo)
-      }
-  }
-
+  def findById(id: ObjectId) = dao.findOneById(id)
 }

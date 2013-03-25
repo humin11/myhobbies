@@ -24,12 +24,28 @@
         </span>
       </div>
       <div class="widget-body">
+
+
         @form(action = routes.Courts.save(), 'enctype -> "multipart/form-data", 'class -> "form-horizontal no-margin") {
+			@courtForm.errors.map { error =>
+            	 <div class="alert alert-block alert-error fade in">
+                      <button data-dismiss="alert" class="close" type="button">
+                        ×
+                      </button>
+                      <h4 class="alert-heading">
+                        Error!
+                      </h4>
+                      <p>
+                        @error.message
+                      </p>
+                    </div>
+            }
+          
           <div class="row-fluid">
             <div class="span9">
               @inputText(courtForm("name"), 'class ->"input-block-level", '_label -> Messages("name", Messages("court")), '_help -> Messages("name.help", Messages("court")), 'placeholder -> Messages("name.help", Messages("court")), 'minlength -> "2", 'maxlength -> "128", 'required -> "required")
-              @inputText(courtForm("businesshours"), 'class ->"input-block-level", '_label -> Messages("businesshours", Messages("court")), '_help -> Messages("businesshours.help", Messages("court")), 'placeholder -> Messages("businesshours.help", Messages("court")), 'minlength -> "2", 'maxlength -> "128", 'required -> "required")
-              @inputText(courtForm("telephone"), 'class ->"input-block-level", '_label -> Messages("telephone", Messages("court")), '_help -> Messages("telephone.help", Messages("court")), 'placeholder -> Messages("telephone.help", Messages("court")), 'minlength -> "2", 'maxlength -> "128", 'required -> "required")
+              @inputText(courtForm("businesshours"), 'class ->"input-block-level", '_label -> Messages("businesshours", Messages("court")), '_help -> Messages("businesshours.help", Messages("court")), 'placeholder -> Messages("businesshours.help", Messages("court")))
+              @inputText(courtForm("telephone"), 'class ->"input-block-level", '_label -> Messages("telephone", Messages("court")), '_help -> Messages("telephone.help", Messages("court")), 'placeholder -> Messages("telephone.help", Messages("court")))
               @inputText(courtForm("address"), 'class ->"input-block-level", '_label -> Messages("address", Messages("court")), '_showConstraints -> false, 'placeholder -> Messages("address.help", Messages("court")), 'required -> "required")
               <div class="control-group">
 				<div class="controls">
@@ -38,7 +54,7 @@
 		            </div>
 		          </div>
 				  <input type="hidden" name="longitude" id="longitude" />
-				  <input type="hidden" name="latitude" id="longitude" />
+				  <input type="hidden" name="latitude" id="latitude" />
 				</div>
 			</div>
             </div>
@@ -99,6 +115,7 @@
 		ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
 			var _value = e.item.value;
 		    myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+		    $("#address").val(myValue);
 		    setPlace();
 		});
 
