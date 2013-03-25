@@ -1,15 +1,15 @@
-@(courtList: List[Court] = Nil)
+@(currentPage: Page[(Court)], currentOrderBy: Int, currentFilter: String)
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
 
-@displayItem(i:ObjectId) = {
+@displayItem(court: Court) = {
 	<div class="row-fluid">
 			<div class="span3">
-				<a href="@routes.Courts.view(i)"><img src="@routes.Assets.at("images/court.demo.jpeg")"
+				<a href="@routes.Courts.view(court.id)"><img src="@routes.Assets.at("images/court.demo.jpeg")"
 					alt="北京理工大学篮球场" /></a>
 			</div>
 			<div class="span9">
 				<div>
-					<p><a href="@routes.Courts.view(i)" class="title">北京理工大学篮球场</a></p>
+					<p><a href="@routes.Courts.view(court.id)" class="title">@(court.name)</a></p>
 				</div>
 				<div>
 					<div class="rateit" data-rateit-value="2.5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
@@ -25,7 +25,7 @@
 				<!-- end short list -->
 
 				<div class="intro">
-					<p class="address"><small>地址: 西直门外大街45号</small></p>
+					<p class="address"><small>地址: @(court.address)</small></p>
 					<p> 
 						<span class="size"><small>环境：有大约30个篮球框</small></span> &nbsp;
 						<span class="price"><small>价格: 室外场地免费</small></span> &nbsp;
@@ -53,8 +53,11 @@
 
 	<!--start list-->
 	<div class="container-fluid">
-		@displayItem(new ObjectId())
-		
+    @Option(currentPage.items).filterNot(_.isEmpty).map { courts =>
+		  @courts.map { court =>
+        @displayItem(court)
+		  }
+    }
 
 	</div>
 	<!--end list-->

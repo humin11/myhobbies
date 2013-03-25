@@ -15,6 +15,8 @@ import views.html.court._
 
 object Courts extends Controller {
 
+	 val Home = Redirect(routes.Courts.list(0, 2, ""))
+
 	def courtForm(id: ObjectId = new ObjectId) = Form(
 		mapping(
 			"id" -> ignored(id),
@@ -30,10 +32,14 @@ object Courts extends Controller {
 	)
 
 	def index = Action {
-		/*
-		 * court list
-		 */
-		Ok(html.court.index(null))
+		Home
+	}
+
+	def list(page: Int, orderBy: Int, filter: String) = Action { implicit request =>
+	    Ok(html.court.index(
+	      Court.list(page = page, orderBy = orderBy, filter = filter),
+	      orderBy, filter
+	    ))
 	}
 	
 	def view(id: ObjectId) = Action {

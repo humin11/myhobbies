@@ -10,7 +10,8 @@ POST    /comments/delete            controllers.Comments.delete
 GET     /streams/news               controllers.Streams.news
 
 # Court Page
-GET		/court						controllers.Courts.index
+GET		/court    					controllers.Courts.index
+GET		/court/list					controllers.Courts.list(p:Int ?= 0, s:Int ?= 2, f ?= "")
 GET		/court/blank				controllers.Courts.blank
 POST 	/court/new					controllers.Courts.save
 POST 	/court/upload				controllers.Courts.upload

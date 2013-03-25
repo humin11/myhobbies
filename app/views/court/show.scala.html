@@ -15,7 +15,7 @@
 			<ul class="breadcrumb">
 			  <li><a href="#">北京</a> <span class="divider">/</span></li>
 			  <li><a href="#">朝阳区</a> <span class="divider">/</span></li>
-			  <li class="active">朝阳公园篮球中心</li>
+			  <li class="active">@(court.name)</li>
 			</ul>
 		</div>
 
@@ -24,7 +24,7 @@
 				<div class="row-fluid">
 					<div class="span8">
 						<div class="title">
-							<h4>朝阳公园篮球中心</h4>
+							<h4>@(court.name)</h4>
 						</div>
 						<div class="rating">
 							<div class="rateit" data-rateit-value="2.5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
@@ -33,13 +33,13 @@
 						<div class="information">
 							<dl class="dl-horizontal">
 							  <dt>地址：</dt>
-							  <dd>朝阳区朝阳公园南路1号朝阳公园东门(酷迪宠物乐园旁边)</dd>
+							  <dd>@(court.address)</dd>
 							  <dt>联系电话：</dt>
-							  <dd>010-65033703</dd>
+							  <dd>@(court.telephone)</dd>
 							  <dt>场地信息：</dt>
 							  <dd>室外场，塑胶场地</dd>
 							  <dt>营业时间：</dt>
-							  <dd>9：00 ～ 22：00</dd>
+							  <dd>@(court.businesshours)</dd>
 							  <dt>停车信息：</dt>
 							  <dd>收费停车，15元/小时</dd>
 							</dl>
