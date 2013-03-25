@@ -9,8 +9,6 @@ import com.mongodb.casbah.Imports._
 
 import java.util.{Date}
 
-import anorm._
-
 import models._
 import views._
 import views.html.court._
@@ -52,13 +50,11 @@ object Courts extends Controller {
 	}
 	
 	def save = Action { implicit request => 
-		val aa = courtForm().bindFromRequest;
-		println(aa);
 		courtForm().bindFromRequest.fold (
 		    formWithErrors => BadRequest(html.court.blank(formWithErrors)),
 		    {
 		    	court => {
-		    		println(court.name)
+		    		Court.insert(court)
 		    		Ok(html.court.show(court))
 		    	} 
 		    }

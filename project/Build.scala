@@ -9,9 +9,7 @@ object ApplicationBuild extends Build {
 
   val appDependencies = Seq(
     // Add your project dependencies here,
-      jdbc,
-      anorm,
-    "org.mindrot" % "jbcrypt" % "0.3m",
+     "org.mindrot" % "jbcrypt" % "0.3m",
     "securesocial" %% "securesocial" % "master-SNAPSHOT",
     "se.radley" %% "play-plugins-salat" % "1.2"
   )

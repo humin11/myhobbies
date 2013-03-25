@@ -7,8 +7,6 @@ import play.api.data.Forms._
 
 import java.util.{Date}
 
-import anorm._
-
 import models._
 import views._
 
