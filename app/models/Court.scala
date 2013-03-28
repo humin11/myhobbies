@@ -16,18 +16,36 @@ import mongoContext._
 case class Court(
   @Key("_id") id: ObjectId = new ObjectId, 
   name: String,
+  alias: Option[String] = None,
+  description: Option[String] = None,
   logo: Option[String] = None,
   address: Option[String] = None,
   telephone: Option[String] = None,
-  businesshours: Option[String] = None,
+  opentime: Option[String] = None,
+  closetime: Option[String] = None,
   businfo: Option[String] = None,
+  price: Seq[Price] = Seq.empty,
+  tags: Seq[Tag] = Seq.empty,
   create_at: Option[Date] = None,
   update_at: Option[Date] = None
+)
+
+case class Price(
+  price: Option[Int],
+  type_name: Option[String]
+)
+
+case class Park(
+  is_free: Boolean,
+  name: Option[String] = None,
+  price: Seq[Price] = Seq.empty
 )
 
 object Court extends ModelCompanion[Court, ObjectId]{
   val collection = mongoCollection("courts")
   val dao = new SalatDAO[Court, ObjectId](collection = collection) {}
+
+  collection.ensureIndex(DBObject("name" -> 1), "court_name", unique = true)
 
   def findById(id: ObjectId) = dao.findOneById(id)
 
