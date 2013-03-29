@@ -15,11 +15,15 @@ import play.api.data.Forms._
 import java.util.Date
 import scala.concurrent.duration._
 import play.api.libs.concurrent.Execution.Implicits._
+import com.mongodb.casbah.commons.MongoDBObject
+import views.html
 
 object Application extends Controller {
 
   def index = Action { implicit request =>
-    Ok(views.html.index(""))
+    implicit val user = {User.findOne(MongoDBObject("name" -> "admin")).get}
+    val posts = Post.findShares()
+    Ok(html.index("",posts))
   }
 
 }

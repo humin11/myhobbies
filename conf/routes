@@ -7,7 +7,7 @@ GET     /                           controllers.Application.index
 POST    /posts/create               controllers.Posts.create
 POST    /comments/create            controllers.Comments.create
 POST    /comments/delete            controllers.Comments.delete
-GET     /streams/news               controllers.Streams.news
+GET     /streams/comet               controllers.Streams.comet
 
 # Court Page
 GET		/court    					controllers.Courts.index
