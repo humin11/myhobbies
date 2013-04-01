@@ -10,14 +10,9 @@
 
 .post-avatar {
     position: absolute;
-    width: 44px;
-    height: 44px;
     margin-left: -75px;
     line-height: 44px;
     display: inline-block;
-    cursor: pointer;
-    border-radius: 3px;
-    background-image: url("/assets/images/avatar_small.png");
 }
 
 .post-arrow-left {
@@ -154,15 +149,6 @@
     color: #2f63cf;
 }
 
-.comments-avatar {
-    width: 32px;
-    height: 32px;
-    cursor: pointer;
-    border-radius: 3px;
-    background-image: url("/assets/images/avatar_mini.png");
-    background-repeat: no-repeat;
-}
-
 .comments-new-noinput {
     height: 16px;
     max-width: 380px;
@@ -179,4 +165,10 @@
     height: 64px;
     margin-bottom: 10px;
     color: #000;
+}
+
+.avatar-icon{
+    cursor: pointer;
+    border-radius: 3px;
+    margin: 1px;
 }

@@ -23,7 +23,9 @@ object Application extends Controller {
   def index = Action { implicit request =>
     implicit val user = {User.findOne(MongoDBObject("name" -> "admin")).get}
     val posts = Post.findShares()
-    Ok(html.index("",posts))
+    val contacts = User.findContactUser
+    val recommendUsers = User.findOtherUsers
+    Ok(html.index("",posts,contacts,recommendUsers))
   }
 
 }

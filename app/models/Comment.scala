@@ -12,7 +12,9 @@ import mongoContext._
 case class Comment(
   id: ObjectId = new ObjectId,
   post: ObjectId,
+  author: ObjectId,
   content: String,
+  status: String = "NEW",
   create_at: Date,
   update_at: Date
 )

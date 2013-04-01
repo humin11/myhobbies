@@ -1,0 +1,3 @@
+@(userId:ObjectId, icon:String = "images/avatar_small.png")
+@import org.bson.types.ObjectId
+<img class="avatar-icon" uid="@(userId)" src="@routes.Assets.at(icon)"></img>

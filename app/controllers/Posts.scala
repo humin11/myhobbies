@@ -35,11 +35,9 @@ object Posts extends Controller {
 
   def delete = Action { request =>
     val postId = request.getQueryString("postId")
-    postId match {
-      case Some(id) => {
-        ShareVisibility.removeByPost(new ObjectId(id))
-        Post.removeById(new ObjectId(id))
-      }
+    postId map { id =>
+      ShareVisibility.removeByPost(new ObjectId(id))
+      Post.removeById(new ObjectId(id))
     }
     Ok
   }

@@ -1,4 +1,4 @@
-@(message: String,posts: Seq[Post] = Nil)
+@(message: String, posts: Seq[Post] = Nil, contacts: Seq[User] = Nil, recommendUsers: Seq[User] = Nil)
 
 @import org.codehaus.jackson.JsonNode
 @postItem(post:Post) = {
@@ -6,7 +6,7 @@
         <div class="span4">
             <div class="post row-fluid">
                 <i class="post-option"></i>
-                <div class="post-avatar"></div>
+                <div class="post-avatar"><img class="avatar-icon" uid="@(post.author)" src="@routes.Assets.at("images/avatar_small.png")"></img></div>
                 <div class="post-arrow-left"><div class="post-arrow-left-inner"></div></div>
                 <div class="post-header row-fluid">
                     <span class="post-header-author">@(User.findOneById(post.author).get.id)</span>
@@ -59,6 +59,17 @@
     </div>
 }
 
+@row(list:Seq[User], num:Int = 5) = {
+    <div class="row-fluid">
+    @for(i <- 0 to list.size-1){
+        @if(i>0 && i%5 == 0){
+            </div>
+            <div class="row-fluid">
+        }
+        @views.html.post.avatar(list(i).id)
+    }
+    </div>
+}
 @commentItems(comments:Seq[Comment]) = {
     @for(c <- comments) {
         @views.html.post.comment(c)
@@ -70,6 +81,7 @@
         <div class="row-fluid">
             <a id="newBtn" class="btn pull-right"><i class="icon-pencil"></i>&nbsp;Share</a>
             <div id="postModal" class="hide"></div>
+            <div id="avatarModal" class="modal hide" style="width: 200px"></div>
         </div>
         <div class="row-fluid">
             <div class="span3">
@@ -79,9 +91,13 @@
                     @postItem(p)
                 }
             </div>
-            <div class="span3">
+            <div id="right-panel" class="span3">
+                <div id="recommend-list" class="row-fluid">
+                    @row(recommendUsers)
+                </div>
+                <div id="contact-list" class="row-fluid">
 
-
+                </div>
             </div>
         </div>
     </div>
@@ -120,7 +136,17 @@
             var comment_input_fake = comment_input.prev();
             comment_input_fake.show();
         });
-
+        $('.avatar-icon').hover(
+            function(){
+                var personId = $(this).attr('uid');
+                $.post('/people/avatar?id='+personId,function(avatarData){
+                    $('#avatarModal').html(avatarData);
+                    $('#avatarModal').show();
+                });
+            },function(){
+                $('#avatarModal').hide();
+            }
+        );
         initComment($('#post-list'));
         initComet();
 
@@ -167,6 +193,10 @@
             var doc = cometFrame[0].contentWindow.document;
             doc.open().write(content);
             doc.close();
+        }
+
+        function avatarMouseOverHandler(){
+
         }
     </script>
 

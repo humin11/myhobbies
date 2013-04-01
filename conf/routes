@@ -5,9 +5,10 @@
 # Home page
 GET     /                           controllers.Application.index
 POST    /posts/create               controllers.Posts.create
+POST	/people/avatar  			controllers.People.avatar
 POST    /comments/create            controllers.Comments.create
 POST    /comments/delete            controllers.Comments.delete
-GET     /streams/comet               controllers.Streams.comet
+GET     /streams/comet              controllers.Streams.comet
 
 # Court Page
 GET		/court    					controllers.Courts.index

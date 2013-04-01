@@ -28,4 +28,6 @@ object Contact extends ModelCompanion[Contact, ObjectId]{
 
   def findByPerson(implicit person: User):Seq[Contact] = find(MongoDBObject("person" -> person.id)).toSeq
 
+  def findPersonByOwner(personId: ObjectId)(implicit owner: User) = findOne(MongoDBObject("owner" -> owner.id,"person" -> personId))
+
 }
