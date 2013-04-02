@@ -14,7 +14,7 @@
 
 
 @main("Welcome to CGLQ") {
-    <div class="container">
+    <div id="main-container" class="container">
         <div class="row-fluid">
             <a id="newBtn" class="btn pull-right"><i class="icon-pencil"></i>&nbsp;Share</a>
             <div id="postModal" class="hide"></div>
@@ -46,92 +46,30 @@
             showtype: 'popup',
             onPost: function(data){
                 $('#post-list').prepend(data);
+                var newPost = $('#post-list:first');
+                avatarHoverHandler(newPost.find('.avatar-icon'));
+                commentNoInputClickHandler(newPost.find('.comments-new-noinput'));
+                commentAddBtnClickHandler(newPost.find('.comment-addbtn'));
+                commentCancelBtnClickHandler(newPost.find('.comment-cancelbtn'));
             }
         });
         $('#newBtn').click(function(){
             $('#postModal').postkit('show');
             return false;
         });
-
-        $('.comments-new-noinput').click(function(){
-            $(this).hide();
-            var comment_input = $(this).next();
-            comment_input.show();
-            comment_input.find('.post-inputable').focus();
-        });
-        $('.comment-addbtn').click(function(){
-            var sendbtn = $(this);
-            var comments_list = sendbtn.parents('.comments').find('.comments-list');
-            var postId = $(this).attr('post');
-            var comment_input = $(this).parent().parent();
-            var content = comment_input.find('.comments-new-input');
-            $.post('/comments/create?postId='+postId+'&content='+content.text(),function(data){
-                content.text('');
-                sendbtn.next().trigger('click');
-                comments_list.append(data);
-                initComment(comments_list);
-            });
-        });
-        $('.comment-cancelbtn').click(function(){
-            var comment_input = $(this).parent().parent();
-            comment_input.hide();
-            var comment_input_fake = comment_input.prev();
-            comment_input_fake.show();
-        });
-        $('.avatar-icon').hover(
-            function(evt){
-                var personId = $(this).attr('uid');
-                $('#avatarModal').css('left',evt.pageX);
-                $('#avatarModal').css('top',evt.pageY);
-                $.post('/people/avatar?id='+personId,function(avatarData){
-                    $('#avatarModal').html(avatarData);
-                    $('#avatarModal').show();
-                });
-            },function(evt){
-                setTimeout(function(){
-                    var mouseX = evt.pageX;
-                    var mouseY = evt.pageY;
-                    if(mouseX < $('#avatarModal').offset().left
-                            || mouseX > $('#avatarModal').offset().left+$('#avatarModal').width()
-                            || mouseY < $('#avatarModal').offset().top
-                            || mouseY > $('#avatarModal').offset().top+$('#avatarModal').height()){
-                        $('#avatarModal').hide();
-                    }
-                },0);
-            }
-        );
         $('#avatarModal').mouseleave(function(evt){
             $('#avatarModal').hide();
         });
-        initComment($('#post-list'));
-        initComet();
 
-        function initComment(comment_list){
-            comment_list.find('.comment').hover(function(){
-                var delbtn = $(this).find('.comment-delbtn');
-                delbtn.show();
-                var reply = $(this).find('.comment-reply');
-                reply.show();
-            },function(){
-                var delbtn = $(this).find('.comment-delbtn');
-                delbtn.hide();
-                var reply = $(this).find('.comment-reply');
-                reply.hide();
-            });
-            comment_list.find('.comment-delbtn').click(function(){
-                var comment = $(this).parents('.comment');
-                $.post('/comments/delete?id='+comment.attr('uid'),function(){
-                    comment.remove();
-                });
-            });
-            comment_list.find('.comment-reply').click(function(){
-                var comment = $(this).parents('.comment');
-                var author = comment.find('.comment-author').text();
-                var comments = comment.parents('.comments');
-                comments.find('.comments-new-noinput').trigger('click');
-                comments.find('.comments-new-input').text('+'+author);
-            });
-        }
+        avatarHoverHandler($('#main-container').find('.avatar-icon'));
+        commentNoInputClickHandler($('.comments-new-noinput'));
+        commentAddBtnClickHandler($('.comment-addbtn'));
+        commentCancelBtnClickHandler($('.comment-cancelbtn'));
+        commentHoverHandler($('#post-list .comment'));
+        commentDelBtnClickHandler($('#post-list .comment-delbtn'));
+        commentReplyClickHandler($('#post-list .comment-reply'));
+
+        initComet();
 
         function initComet(){
             var cometFrame = $('<iframe id="cometFrame"></iframe>');
@@ -149,10 +87,6 @@
             var doc = cometFrame[0].contentWindow.document;
             doc.open().write(content);
             doc.close();
-        }
-
-        function avatarMouseOverHandler(){
-
         }
     </script>
 
