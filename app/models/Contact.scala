@@ -24,6 +24,8 @@ object Contact extends ModelCompanion[Contact, ObjectId]{
   def collection = mongoCollection("contacts")
   val dao = new SalatDAO[Contact, ObjectId](collection = collection) {}
 
+  collection.ensureIndex(MongoDBObject("owner" -> 1,"person" -> 2), "contact_person", unique = true)
+
   def findByOwner(implicit owner: User):Seq[Contact] = find(MongoDBObject("owner" -> owner.id)).toSeq
 
   def findByPerson(implicit person: User):Seq[Contact] = find(MongoDBObject("person" -> person.id)).toSeq

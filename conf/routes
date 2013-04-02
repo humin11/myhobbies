@@ -6,6 +6,8 @@
 GET     /                           controllers.Application.index
 POST    /posts/create               controllers.Posts.create
 POST	/people/avatar  			controllers.People.avatar
+POST	/people/follow  			controllers.People.follow
+POST	/people/unfollow  			controllers.People.unfollow
 POST    /comments/create            controllers.Comments.create
 POST    /comments/delete            controllers.Comments.delete
 GET     /streams/comet              controllers.Streams.comet

@@ -13,14 +13,17 @@ object People extends Controller{
     val personId = request.getQueryString("id").getOrElse("")
     val followed = Contact.findPersonByOwner(new ObjectId(personId)).isDefined;
     val person = User.findOneById(new ObjectId(personId)).get
-    Ok(views.html.post.avatarModal(person,followed))
+    val myself = user.id==person.id
+    Ok(views.html.post.avatarModal(person,followed,myself))
   }
 
   def follow = Action { request =>
     implicit val user = User.findOne(MongoDBObject("name" -> "admin")).get
     val now = new Date()
     val personId = request.getQueryString("id").getOrElse("")
-    Contact.save(Contact(owner = user.id,person = new ObjectId(personId),create_at = now))
+    Contact.findPersonByOwner(new ObjectId(personId)) match {
+      case None => Contact.save(Contact(owner = user.id,person = new ObjectId(personId),create_at = now))
+    }
     Ok
   }
 

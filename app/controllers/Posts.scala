@@ -30,7 +30,7 @@ object Posts extends Controller {
     val share_visibility = ShareVisibility(post = post.id,recipient = user.id,create_at = now,update_at = now)
     ShareVisibility.save(share_visibility)
     Post.save(post)
-    Ok
+    Ok(views.html.post.post(post))
   }
 
   def delete = Action { request =>

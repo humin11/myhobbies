@@ -1,0 +1,61 @@
+@(post:Post)
+<div class="row-fluid">
+    <div class="span4">
+        <div class="post row-fluid">
+            <i class="post-option"></i>
+            <div class="post-avatar"><img class="avatar-icon" uid="@(post.author)" src="@routes.Assets.at("images/avatar_small.png")"></img></div>
+            <div class="post-arrow-left"><div class="post-arrow-left-inner"></div></div>
+            <div class="post-header row-fluid">
+                <span class="post-header-author">@(User.findOneById(post.author).get.name)</span>
+                <span class="post-header-status">@post.create_at</span>
+                <span class="post-header-status divider">-</span>
+                <span class="post-header-status">公开</span>
+            </div>
+            <div class="post-body row-fluid">
+                <div class="post-title"></div>
+                <div class="post-content">
+                    <div class="post-message">
+                        <p>
+                            @if(post.content.length()>200){
+                                @post.content.substring(0,200)...
+                            }else{
+                                @post.content
+                            }
+                        </p>
+                        <span class="post-message-expand @("hide".when(post.content.length()<200))">展开此信息 ?</span>
+                    </div>
+                    <div class="post-photo">
+
+                    </div>
+                </div>
+            </div>
+            <div class="post-footer row-fluid">
+            </div>
+        </div>
+        <div class="comments row-fluid">
+            <div class="row-fluid comments-more @(" hide".when(Comment.findByPost(post.id).size<3))">
+                <div class="span2">@{Comment.findByPost(post.id).size}条评论</div>
+                <i class="icon-chevron-down"></i>
+            </div>
+            <div class="comments-list row-fluid">
+                @commentItems(Comment.findByPost(post.id).sortBy(_.create_at).takeRight(3))
+            </div>
+            <div class="post-inputable comments-new-noinput row-fluid" contenteditable="plaintext-only">添加评论...</div>
+            <div class="comments-new-section row-fluid hide">
+                <div class="row-fluid">
+                    <div class="span2 comments-avatar"></div>
+                    <div class="span10 post-inputable comments-new-input" contenteditable="plaintext-only"></div>
+                </div>
+                <div class="comments-new-btns row-fluid pull-left">
+                    <a class="btn btn-success btn-mini comment-addbtn" post="@post.id">发表评论</a>
+                    <a class="btn btn-mini comment-cancelbtn">取消</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@commentItems(comments:Seq[Comment]) = {
+    @for(c <- comments) {
+        @views.html.post.comment(c)
+    }
+}

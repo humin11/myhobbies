@@ -6,6 +6,7 @@
         this.postWidth = 400;
         this.anchor = options["anchor"];
         this.showtype = options["showtype"];
+        this.onPost = options["onPost"];
         this.initialize();
     }
 
@@ -120,6 +121,7 @@
             var shareBtn = $('<a class="btn btn-success"></a>');
             shareBtn.text('Share');
             var $el = this.$element;
+            var $this = this;
             var $url = this.createPostURL;
             shareBtn.click(function(){
                 if(!shareBtn.hasClass('disabled')){
@@ -127,7 +129,8 @@
                     var content = postContent.text();
                     var params = {};
                     params["content"] = content;
-                    $.post($url+'?'+$.param(params),function(){
+                    $.post($url+'?'+$.param(params),function(data){
+                        $this.onPost(data);
                         postContent.empty();
                         $el.hide();
                     });
