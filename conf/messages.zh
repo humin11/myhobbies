@@ -18,6 +18,8 @@ address = {0}地址
 businesshours = {0}营业时间
 telephone = 联系电话
 logo.new = 上传封面
+logo.change = 更改封面
+logo.remove = 移除更新
 
 name.help = 请输入{0}名称, 格式: xxxx
 address.help = 请输入位置信息，如：xx大街xx号

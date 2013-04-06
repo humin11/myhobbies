@@ -24,6 +24,7 @@ case class Court(
   opentime: Option[String] = None,
   closetime: Option[String] = None,
   businfo: Option[String] = None,
+  score: Long = 0,
   price: Seq[Price] = Seq.empty,
   tags: Seq[Tag] = Seq.empty,
   create_at: Option[Date] = None,

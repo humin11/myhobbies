@@ -35,10 +35,7 @@ object Courts extends Controller {
 	)
 
 	def index = Action {
-		val indexQuery = IndexQuery[IndexCourts]().withBuilder(QueryBuilders.matchQuery("name", "dF"))
-    	val results: IndexResults[IndexCourts] = IndexCourtsManager.search(indexQuery)
-    	println(results.totalCount)
-		Ok
+		Home
 	}
 
 	def list(page: Int, orderBy: Int, filter: String) = Action { implicit request =>

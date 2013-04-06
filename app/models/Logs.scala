@@ -13,18 +13,17 @@ import se.radley.plugin.salat._
 import se.radley.plugin.salat.Binders._
 import mongoContext._
 
-case class Tag(
+case class Logs(
 	id: ObjectId = new ObjectId,
-	name: String,
-	type_name: String,
-	object_id: ObjectId,
+	action: String,
+	content: String,
 	user: User,
  	create_at: Option[Date] = None,
  	update_at: Option[Date] = None
 )
 
-object Tag extends ModelCompanion[Tag, ObjectId]{
-  val collection = mongoCollection("tags")
-  val dao = new SalatDAO[Tag, ObjectId](collection = collection) {}
+object Logs extends ModelCompanion[Logs, ObjectId]{
+  val collection = mongoCollection("logs")
+  val dao = new SalatDAO[Logs, ObjectId](collection = collection) {}
 
 }
