@@ -26,6 +26,10 @@ function commentsMoreClickHandler(ele){
         var id = comments.parents('.post-row').attr('uid');
         $.post('/comments/list?id='+id+'&show=all',function(data){
             comments.find('.comments-list').html(data);
+            commentHoverHandler(comments.find('.comment'));
+            commentDelBtnClickHandler(comments.find('.comment-delbtn'));
+            commentReplyClickHandler(comments.find('.comment-reply'));
+            avatarHoverHandler(comments.find('.avatar-icon'));
         });
     });
     ele.next().click(function(){
@@ -35,6 +39,10 @@ function commentsMoreClickHandler(ele){
         var id = comments.parents('.post-row').attr('uid');
         $.post('/comments/list?id='+id+'&show=3',function(data){
             comments.find('.comments-list').html(data);
+            commentHoverHandler(comments.find('.comment'));
+            commentDelBtnClickHandler(comments.find('.comment-delbtn'));
+            commentReplyClickHandler(comments.find('.comment-reply'));
+            avatarHoverHandler(comments.find('.avatar-icon'));
         });
     });
 }
