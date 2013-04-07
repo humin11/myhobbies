@@ -23,6 +23,7 @@ object People extends Controller{
     val personId = request.getQueryString("id").getOrElse("")
     Contact.findPersonByOwner(new ObjectId(personId)) match {
       case None => Contact.save(Contact(owner = user.id,person = new ObjectId(personId),create_at = now))
+      case _ =>
     }
     Ok
   }

@@ -24,14 +24,16 @@ object User extends ModelCompanion[User, ObjectId]{
   val collection = mongoCollection("users")
   val dao = new SalatDAO[User, ObjectId](collection = collection) {}
 
-  def findContactUser(implicit user: User):Seq[User] = Contact.findByOwner.map{ contact => findOneById(contact.person).get }
+  def findContactUser(implicit user: User) = Contact.findByOwner.map{ contact => findOneById(contact.person).get }
 
-  def findOtherUsers(implicit user: User):Seq[User] = {
+  def findOtherUsers(implicit user: User) = {
     val contacts = findContactUser
     findAll().filterNot { user1 =>
       user1.equals(user) || contacts.contains(user1)
     }.toSeq
   }
+
+  def findSample = findOne(MongoDBObject("name" -> "admin")).get
 
 }
 

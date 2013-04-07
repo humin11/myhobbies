@@ -5,11 +5,15 @@
 # Home page
 GET     /                           controllers.Application.index
 POST    /posts/create               controllers.Posts.create
+POST    /posts/delete               controllers.Posts.delete
+POST    /posts/uploadify            controllers.Posts.uploadify
+POST    /posts/deleteTmpFiles       controllers.Posts.deleteTmpFiles
 POST	/people/avatar  			controllers.People.avatar
 POST	/people/follow  			controllers.People.follow
 POST	/people/unfollow  			controllers.People.unfollow
 POST    /comments/create            controllers.Comments.create
 POST    /comments/delete            controllers.Comments.delete
+POST    /comments/list              controllers.Comments.list
 GET     /streams/comet              controllers.Streams.comet
 
 # Court Page

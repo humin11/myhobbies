@@ -1,15 +1,15 @@
 @(comment:Comment)
 @author = @{User.findOneById(comment.author).get}
 <div class="row-fluid comment" uid="@comment.id">
-    <div class="span2">@views.html.post.avatar(comment.author,"images/avatar_mini.png")</div>
-    <div class="span10">
+    <div class="span2" style="margin:8px 0 0 15px">@views.html.post.avatar(comment.author,"images/avatar_mini.png")</div>
+    <div class="span8" style="margin-left: -18px">
         <div class="row-fluid">
             <div class="row-fluid">
-                <span class="post-header-author comment-author">@(author.name)</span>
+                <span class="post-header-author comment-author" style="font-weight:normal">@(author.name)</span>
                 <span class="post-header-status">@comment.create_at</span>
                 <span class="post-header-status">@("已编辑".when(comment.status=="UPDATE"))</span>
                 @if(author.name == "admin"){
-                    <div type="button" class="close pull-right hide comment-delbtn" style="margin-right: 15px">&times;</div>
+                    <div class="close pull-right hide comment-delbtn">&times;</div>
                 }else{
                     <span class="post-header-status hide comment-reply">回复</span>
                 }

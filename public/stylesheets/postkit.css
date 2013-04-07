@@ -86,10 +86,25 @@
     line-height: 14px;
     display: inline-block;
     vertical-align: text-top;
+    background-repeat: no-repeat;
 }
 
 .postkit-tool-photo {
     background-image: url("/assets/images/photoOut.png");
+}
+
+.uploadify {
+    float: left;
+}
+
+.uploadify:hover .uploadify-button {
+    background-image: url("/assets/images/photoIn.png");
+    cursor: pointer;
+}
+
+.uploadify:active .uploadify-button {
+    background-image: url("/assets/images/photoIn.png");
+    cursor: pointer;
 }
 
 .postkit-tool-photo:active {
@@ -150,3 +165,4 @@
     background-image: url("/assets/images/addPeopleIn.png");
     cursor: pointer;
 }
+

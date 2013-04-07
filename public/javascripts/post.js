@@ -1,3 +1,44 @@
+function postDelBtnClickHandler(ele){
+    ele.click(function(){
+        var post = $(this).parents('.post').parent().parent();
+        $.post('/posts/delete?id='+post.attr('uid'),function(){
+            post.remove();
+        });
+    });
+}
+
+function postExpandBtnClickHandler(ele){
+    ele.find('.post-message-expand').click(function(){
+        $(this).parent().hide();
+        $(this).parent().next().show();
+    });
+    ele.next().find('.post-message-collapse').click(function(){
+        $(this).parent().hide();
+        $(this).parent().prev().show();
+    });
+}
+
+function commentsMoreClickHandler(ele){
+    ele.click(function(){
+        $(this).hide();
+        $(this).next().show();
+        var comments = $(this).parents('.comments');
+        var id = comments.parents('.post-row').attr('uid');
+        $.post('/comments/list?id='+id+'&show=all',function(data){
+            comments.find('.comments-list').html(data);
+        });
+    });
+    ele.next().click(function(){
+        $(this).hide();
+        $(this).prev().show();
+        var comments = $(this).parents('.comments');
+        var id = comments.parents('.post-row').attr('uid');
+        $.post('/comments/list?id='+id+'&show=3',function(data){
+            comments.find('.comments-list').html(data);
+        });
+    });
+}
+
 function commentNoInputClickHandler(ele){
     ele.click(function(){
         $(this).hide();
@@ -7,9 +48,24 @@ function commentNoInputClickHandler(ele){
     });
 }
 
+function commentNewInputKeydownHandler(ele){
+    ele.on('keydown paste',function(){
+        var addbtn = $(this).parents('.comments-new-section').find('.comment-addbtn');
+        setTimeout(function() {
+            if(ele.text().length > 0){
+                addbtn.removeClass('disabled');
+            }else{
+                addbtn.addClass('disabled');
+            }
+        },100);
+    });
+}
+
 function commentAddBtnClickHandler(ele){
     ele.click(function(){
         var sendbtn = $(this);
+        if(sendbtn.hasClass('disabled'))
+            return false;
         var comments_list = sendbtn.parents('.comments').find('.comments-list');
         var postId = $(this).attr('post');
         var comment_input = $(this).parent().parent();
@@ -18,6 +74,12 @@ function commentAddBtnClickHandler(ele){
             content.text('');
             sendbtn.next().trigger('click');
             comments_list.append(data);
+            var comment_num = comments_list.prev().prev().find('.comments-num');
+            comment_num.text(parseInt(comment_num.text())+1);
+            if(parseInt(comment_num.text()) > 3){
+                comments_list.prev().prev().show();
+                comments_list.find('.comment:first').remove();
+            }
             var newComment = comments_list.find('.comment:last');
             commentHoverHandler(newComment);
             commentDelBtnClickHandler(newComment.find('.comment-delbtn'));
@@ -30,6 +92,7 @@ function commentAddBtnClickHandler(ele){
 function commentCancelBtnClickHandler(ele){
     ele.click(function(){
         var comment_input = $(this).parent().parent();
+        comment_input.find('.post-inputable').empty();
         comment_input.hide();
         var comment_input_fake = comment_input.prev();
         comment_input_fake.show();
@@ -53,8 +116,10 @@ function commentHoverHandler(ele){
 function commentDelBtnClickHandler(ele){
     ele.click(function(){
         var comment = $(this).parents('.comment');
+        var nums = comment.parents('.comments').find('.comments-num');
         $.post('/comments/delete?id='+comment.attr('uid'),function(){
             comment.remove();
+            nums.text(nums.text()-1);
         });
     });
 }
@@ -73,7 +138,7 @@ function avatarHoverHandler(ele){
     ele.hover(
         function(evt){
             var personId = $(this).attr('uid');
-            $('#avatarModal').css('left',evt.pageX);
+            $('#avatarModal').css('left',evt.pageX+10);
             $('#avatarModal').css('top',evt.pageY);
             $.post('/people/avatar?id='+personId,function(avatarData){
                 $('#avatarModal').html(avatarData);

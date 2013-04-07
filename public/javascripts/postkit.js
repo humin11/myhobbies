@@ -3,10 +3,14 @@
         this.options = options;
         this.$element = $(element);
         this.createPostURL = '/posts/create';
+        this.createTmpFilesURL = '/posts/uploadify';
+        this.deleteTmpFilesURL = '/posts/deleteTmpFiles';
         this.postWidth = 400;
+        this.id = options["id"];
         this.anchor = options["anchor"];
         this.showtype = options["showtype"];
-        this.onPost = options["onPost"];
+        this.afterPost = options["afterPost"];
+        this.tmpFiles = [];
         this.initialize();
     }
 
@@ -20,7 +24,7 @@
                 this.autoHide();
             }
             var tools = $('<div class="postkit-toolsbody"></div>');
-            this.addToolsBtn(tools);
+            var picContainer = this.addToolsBtn(tools);
 
             var particContainer = $('<div class="postkit-particbody"></div>');
             //this.addParticipationBtn(particContainer);
@@ -38,10 +42,18 @@
             var closeBtn = $('<div type="button" class="close">&times;</div>');
             closeBtn.css('position','absolute');
             closeBtn.css('left',this.postWidth-15);
-            var $el = this.$element;
+            var $this = this;
+
             closeBtn.click(function(){
+                if($this.tmpFiles.length > 0){
+                    var params = {};
+                    params["tmpfiles"] = $this.tmpFiles;
+                    $.post($this.deleteTmpFilesURL,params);
+                    $this.tmpFiles = [];
+                }
                 postMessage.empty();
-                $el.hide();
+                picContainer.empty();
+                $this.$element.hide();
                 shareBtn.addClass('disabled');
             });
             divBody.append(closeBtn);
@@ -129,8 +141,11 @@
                     var content = postContent.text();
                     var params = {};
                     params["content"] = content;
-                    $.post($url+'?'+$.param(params),function(data){
-                        $this.onPost(data);
+                    params["tmpfiles"] = $this.tmpFiles;
+                    $.post($url,params,function(data){
+                        $this.afterPost(data);
+                        $this.$element.find('.picContainer').empty();
+                        $this.tmpFiles = [];
                         postContent.empty();
                         $el.hide();
                     });
@@ -142,8 +157,34 @@
         },
 
         addToolsBtn: function(toolsContainer){
-            var picBtn = $('<span class="postkit-tool-photo"></span>');
+            var picBtn = $('<input type="file" name="pic" id="'+this.id+'_uploadify"/>');
+            var picContainer = $('<div class="picContainer"></div>');
+            var $tmpFiles = this.tmpFiles;
+            var $url = this.createTmpFilesURL;
+            picBtn.ready(function(){
+                picBtn.uploadify({
+                    swf: '/assets/img/uploadify.swf',
+                    uploader: $url,
+                    buttonClass: 'postkit-tool-photo',
+                    width: 18,
+                    height: 18,
+                    buttonText: '',
+                    method: 'post',
+                    auto: true,
+                    multi: false,
+                    onUploadProgress: function(file,bytesUploaded,bytesTotal,totalBytesUploaded,totalBytesTotal){
+
+                    },
+                    onUploadSuccess : function(file, data, response){
+                        $tmpFiles.push(data);
+                        var img = $('<img src="'+data+'" style="max-width:400px"/>');
+                        picContainer.append(img);
+                    }
+                });
+            });
             toolsContainer.append(picBtn);
+            toolsContainer.append(picContainer);
+            return picContainer;
         },
 
         addParticipationBtn: function(particContainer){
