@@ -158,7 +158,14 @@
 
         addToolsBtn: function(toolsContainer){
             var picBtn = $('<input type="file" name="pic" id="'+this.id+'_uploadify"/>');
+            var picProgressBar = $('<div class="progress progress-striped active hide pull-right"></div>');
+            picProgressBar.css('border-radius','2px');
+            picProgressBar.width(200);
+            picProgressBar.height(18);
+            var bar = $('<div class="bar" style="width: 0%;"></div>');
+            picProgressBar.append(bar);
             var picContainer = $('<div class="picContainer"></div>');
+            picContainer.css('text-align','center');
             var $tmpFiles = this.tmpFiles;
             var $url = this.createTmpFilesURL;
             picBtn.ready(function(){
@@ -171,18 +178,34 @@
                     buttonText: '',
                     method: 'post',
                     auto: true,
+                    fileTypeDesc : 'Image Files',
+                    fileTypeExts : '*.gif; *.jpg; *.png',
                     multi: false,
+                    overrideEvents : ['onSelect'],
+                    onUploadStart: function(){
+                        picProgressBar.show();
+                    },
+                    onUploadError: function(){
+                        setTimeout(picProgressBar.hide(),2000);
+                    },
                     onUploadProgress: function(file,bytesUploaded,bytesTotal,totalBytesUploaded,totalBytesTotal){
-
+                        bar.css('width',bytesUploaded/bytesTotal*100+'%');
+                        bar.text((bytesTotal/1024).toFixed(2)+' KB');
                     },
                     onUploadSuccess : function(file, data, response){
                         $tmpFiles.push(data);
-                        var img = $('<img src="'+data+'" style="max-width:400px"/>');
-                        picContainer.append(img);
+                        var img = $('<img src="'+data+'" style="max-width:400px;"/>');
+                        setTimeout(function(){
+                            picProgressBar.hide();
+                            picContainer.append(img)
+                            return false;
+                        },2000);
+                        return false;
                     }
                 });
             });
             toolsContainer.append(picBtn);
+            toolsContainer.append(picProgressBar);
             toolsContainer.append(picContainer);
             return picContainer;
         },

@@ -17,7 +17,9 @@ case class Post(
   author: ObjectId,
   content: String,
   create_at: Date,
-  update_at: Date
+  update_at: Date,
+  parent: Option[ObjectId] = None,
+  is_reshare: Boolean = false
 )
 
 object Post extends ModelCompanion[Post, ObjectId]{
@@ -35,4 +37,17 @@ object Post extends ModelCompanion[Post, ObjectId]{
       }
       .filter(_.isDefined).map(_.get).toSeq
   }
+
+  def findParentId(postId:ObjectId):ObjectId = findOne(MongoDBObject("id" -> postId)).get.parent match {
+    case p:Some[ObjectId] => p.get
+    case None => postId
+  }
+
+  def findParent(postId:ObjectId):Option[Post] = findOne(MongoDBObject("id" -> postId)).get.parent match {
+    case parentId:Some[ObjectId] => dao.findOneById(parentId.get)
+    case None => None
+  }
+
+  def reshareCounts(postId:ObjectId) = count(MongoDBObject("parent" -> postId))
+
 }

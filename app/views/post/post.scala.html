@@ -6,8 +6,8 @@
     }
 }
 @author = @{User.findOneById(post.author).get}
-@photos = @{Photo.findBySource(post.id)}
-<div class="row-fluid post-row" uid="@post.id">
+@photos = @{Photo.findByPost(post.id)}
+<div class="row-fluid post-row" uid="@post.id" style="margin-bottom: 10px">
     <div class="span4">
         <div class="post row-fluid">
             <i class="post-option"></i>
@@ -26,7 +26,6 @@
                 <div class="post-title"></div>
                 <div class="post-content">
                     <div class="post-message">
-
                             @if(post.content.length()>200){
                                 <div class="post-message-min">
                                     <p>
@@ -45,8 +44,10 @@
                                     @post.content
                                 </p>
                             }
-
                     </div>
+                    @if(post.is_reshare){
+                        @Post.findParent(post.id) match{case p:Some[Post] => views.html.post.reshare(p)}
+                    }
                     @if(!photos.isEmpty){
                         <div class="post-photo" >
                             <img src="@photos.head.path" style="max-height: 400px"/>
@@ -55,10 +56,18 @@
                 </div>
             </div>
             <div class="post-footer row-fluid">
+                <span class="post-actions">
+                    <span class="post-btn-likes"><i class="icon-heart"></i></span>
+                    <span class="post-btn-likes"><i class="icon-share-alt"></i></span>
+                </span>
+                <span class="pull-right post-totalnum">
+                    <span style="margin: 15px 10px 15px 10px;padding: 8px;"><i class="icon-heart"></i>@Like.counts(post.id)<span>
+                    <span style="margin: 15px 10px 15px 10px;padding: 8px;"><i class="icon-share-alt"></i>@Post.reshareCounts(post.id)<span>
+                </span>
             </div>
         </div>
         <div class="comments row-fluid">
-            <div class="row-fluid comments-more @(" hide".when(Comment.findByPost(post.id).size<3))">
+            <div class="row-fluid comments-more @(" hide".when(Comment.findByPost(post.id).size<4))">
                 <div class="span2" style="font-weight:bold"><span class="comments-num">@{Comment.findByPost(post.id).size}</span>条评论</div>
             </div>
             <div class="row-fluid comments-hidemore hide">

@@ -5,6 +5,7 @@ import models.{Contact, User}
 import com.mongodb.casbah.commons.MongoDBObject
 import java.util.Date
 import org.bson.types.ObjectId
+import play.Logger
 
 object People extends Controller{
 

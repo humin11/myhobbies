@@ -6,6 +6,9 @@
     background-color:#fff;
     padding: 10px;
     z-index: 1041;
+    -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
 }
 
 .postkit-arrow-top {

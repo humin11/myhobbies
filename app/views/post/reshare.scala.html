@@ -1,0 +1,2 @@
+@(parent:Post)
+@author = @{User.findOneById(parent.author).get}

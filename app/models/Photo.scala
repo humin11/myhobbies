@@ -15,7 +15,8 @@ import java.io.File
 
 case class Photo (
   id: ObjectId = new ObjectId,
-  source: ObjectId,
+  source_id: ObjectId,
+  source_type: String = "POST",
   author: ObjectId,
   path: String,
   name: String,
@@ -28,9 +29,13 @@ object Photo extends ModelCompanion[Photo, ObjectId]{
   val collection = mongoCollection("photos")
   val dao = new SalatDAO[Photo, ObjectId](collection = collection) {}
 
-  def removeBySource(source:ObjectId) = find(MongoDBObject("source" -> source)).foreach(Photo.remove(_))
+  def removeByPost(sourceId:ObjectId) = find(MongoDBObject("source_id" -> sourceId,"source_type" -> "POST")).foreach { photo =>
+    val img = new File(photo.path.replaceFirst("/assets","public"))
+    if(img.exists()) img.delete()
+    Photo.remove(photo)
+  }
 
-  def findBySource(source:ObjectId) = find(MongoDBObject("source" -> source))
+  def findByPost(sourceId:ObjectId) = find(MongoDBObject("source_id" -> sourceId,"source_type" -> "POST"))
     .filter { photo =>
       new File(photo.path.replaceFirst("/assets","public")).exists
     }.toSeq

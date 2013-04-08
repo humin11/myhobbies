@@ -14,6 +14,7 @@ import com.mongodb.casbah.commons.MongoDBObject
 import java.util
 import scala.Some
 import java.io.File
+import scala.util.Random
 
 object Posts extends Controller{
 
@@ -35,7 +36,7 @@ object Posts extends Controller{
     request.body.get("tmpfiles[]").map { pics =>
       pics.foreach { pic =>
         val photo = Photo(
-          source = post.id,
+          source_id = post.id,
           author = user.id,
           path = pic,
           name = "",
@@ -52,17 +53,18 @@ object Posts extends Controller{
   def delete = Action { request =>
     val id = request.getQueryString("id").getOrElse("")
     ShareVisibility.removeByPost(new ObjectId(id))
-    Photo.removeBySource(new ObjectId(id))
+    Photo.removeByPost(new ObjectId(id))
     Post.removeById(new ObjectId(id))
     Ok
   }
 
   def uploadify = Action(parse.multipartFormData) { request =>
     val pic = request.body.files(0)
-    val ext =pic.filename.drop(pic.filename.indexOf("."))
-    val tmpfile = new File("public"+File.separator+"tmp"+File.separator+pic.ref.file.getName+ext)
+    val ext = pic.filename.drop(pic.filename.lastIndexOf(".")).toLowerCase
+    val filename = pic.filename.substring(0,pic.filename.lastIndexOf("."))+System.currentTimeMillis()+Random.nextInt(1000)
+    val tmpfile = new File("public"+File.separator+"tmp"+File.separator+filename+ext)
     pic.ref.moveTo(tmpfile)
-    Ok("/assets/tmp/"+pic.ref.file.getName+ext)
+    Ok("/assets/tmp/"+filename+ext)
   }
 
   def deleteTmpFiles = Action(parse.urlFormEncoded) { request =>
@@ -74,6 +76,45 @@ object Posts extends Controller{
         }
       }
     }
+    Ok
+  }
+
+  def like = Action { request =>
+    implicit val user = User.findOne(MongoDBObject("name" -> "admin")).get
+    val id = request.getQueryString("id").getOrElse("")
+    val now = new Date()
+    if(Like.exists(new ObjectId(id))){
+
+    }else{
+      val like = Like(author = user.id,source_id = new ObjectId(id),create_at = now,update_at = now)
+      Like.insert(like)
+    }
+    Ok
+  }
+
+  def reshare = Action(parse.urlFormEncoded) { request =>
+    implicit val user = User.findOne(MongoDBObject("name" -> "admin")).get
+    val id = request.body.get("id").get(0)
+    val parentId = Post.findParentId(new ObjectId(id))
+    val now = new Date()
+    val post = Post(
+      author = user.id,
+      content = request.body.get("content").get(0),
+      create_at = now,
+      update_at = now,
+      parent = Some(parentId),
+      is_reshare = true
+    )
+    Contact.findByPerson.foreach { contact =>
+      val share_visibility = ShareVisibility(
+        post = post.id,
+        recipient = contact.owner,
+        create_at = now,
+        update_at = now
+      )
+      ShareVisibility.insert(share_visibility)
+    }
+    Post.insert(post)
     Ok
   }
 

@@ -84,7 +84,7 @@ function commentAddBtnClickHandler(ele){
             comments_list.append(data);
             var comment_num = comments_list.prev().prev().find('.comments-num');
             comment_num.text(parseInt(comment_num.text())+1);
-            if(parseInt(comment_num.text()) > 3){
+            if(parseInt(comment_num.text()) > 3 && comments_list.prev().is(":hidden")){
                 comments_list.prev().prev().show();
                 comments_list.find('.comment:first').remove();
             }
@@ -124,10 +124,18 @@ function commentHoverHandler(ele){
 function commentDelBtnClickHandler(ele){
     ele.click(function(){
         var comment = $(this).parents('.comment');
-        var nums = comment.parents('.comments').find('.comments-num');
+        var comments = comment.parents('.comments');
+        var nums = comments.find('.comments-num');
         $.post('/comments/delete?id='+comment.attr('uid'),function(){
+            nums.text(parseInt(nums.text())-1);
+            if(parseInt(nums.text()) == 3)
+                comments.find('.comments-more').trigger('click');
+            if(parseInt(nums.text()) < 4){
+
+                comments.find('.comments-more').hide();
+                comments.find('.comments-hidemore').hide();
+            }
             comment.remove();
-            nums.text(nums.text()-1);
         });
     });
 }
@@ -143,17 +151,23 @@ function commentReplyClickHandler(ele){
 }
 
 function avatarHoverHandler(ele){
+    var inHandler = null;
+    var outHandler = null;
     ele.hover(
         function(evt){
+            clearTimeout(outHandler);
             var personId = $(this).attr('uid');
-            $('#avatarModal').css('left',evt.pageX+10);
-            $('#avatarModal').css('top',evt.pageY);
-            $.post('/people/avatar?id='+personId,function(avatarData){
-                $('#avatarModal').html(avatarData);
-                $('#avatarModal').show();
-            });
+            inHandler = setTimeout(function(){
+                $('#avatarModal').css('left',evt.pageX+10);
+                $('#avatarModal').css('top',evt.pageY);
+                $.post('/people/avatar?id='+personId,function(avatarData){
+                    $('#avatarModal').html(avatarData);
+                    $('#avatarModal').show();
+                });
+            },1000);
         },function(evt){
-            setTimeout(function(){
+            clearTimeout(inHandler);
+            outHandler = setTimeout(function(){
                 var mouseX = evt.pageX;
                 var mouseY = evt.pageY;
                 if(mouseX < $('#avatarModal').offset().left
@@ -162,7 +176,7 @@ function avatarHoverHandler(ele){
                     || mouseY > $('#avatarModal').offset().top+$('#avatarModal').height()){
                     $('#avatarModal').hide();
                 }
-            },0);
+            },1000);
         }
     );
 }
