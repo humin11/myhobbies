@@ -127,9 +127,9 @@
 .post-actions-btnHover {
     background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
     background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
-    background-image: -o-linear-gradient(top, #db4e28, #d3411e);
+    background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
     background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
-    background-image: -moz-linear-gradient(top, #db4e28, #841f0d);
+    background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
     background-repeat: repeat-x;
     border: 1px solid #ccc;
     cursor: pointer;
@@ -344,3 +344,42 @@
     display: inline-block;
 }
 
+.leftpanel {
+    margin:5px;
+}
+
+.leftpanel-listrow {
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    color: #555;
+    font-size: 13px;
+    line-height: 1.4em;
+    margin-bottom: 4px;
+    padding: 5px 8px;
+    white-space: nowrap;
+}
+
+.leftpanel-listrow:hover {
+    background-color: #e8e8e8;
+}
+
+.leftpanel-listall {
+    -webkit-box-shadow: inset 0 0 5px 1px #b7b7b7;
+    box-shadow: inset 0 0 5px 1px #b7b7b7;
+    background-color: #bfbfbf;
+    color: #fff;
+}
+
+.messagebox-active {
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#db4e28), to(#d3411e));
+    background-image: -webkit-linear-gradient(top, #db4e28, #d3411e);
+    background-image: -o-linear-gradient(top, #db4e28, #d3411e);
+    background-image: linear-gradient(to bottom, #db4e28, #d3411e);
+    background-image: -moz-linear-gradient(top, #db4e28, #d3411e);
+    background-repeat: repeat-x;
+    border: 1px solid #841f0d;
+    cursor: pointer;
+    font-size: 14px;
+    color:#fff;
+    border-radius: 2px;
+}

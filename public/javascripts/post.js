@@ -210,7 +210,10 @@ function avatarHoverHandler(ele){
             clearTimeout(outHandler);
             var personId = $(this).attr('uid');
             inHandler = setTimeout(function(){
-                $('#avatarModal').css('left',evt.pageX+10);
+                if(evt.pageX+210 > $(document).width())
+                    $('#avatarModal').css('left',$(document).width()-280);
+                else
+                    $('#avatarModal').css('left',evt.pageX+10);
                 $('#avatarModal').css('top',evt.pageY);
                 $.post('/people/avatar?id='+personId,function(avatarData){
                     $('#avatarModal').html(avatarData);

@@ -10,6 +10,7 @@ POST    /posts/uploadify            controllers.Posts.uploadify
 POST    /posts/deleteTmpFiles       controllers.Posts.deleteTmpFiles
 POST    /posts/like                 controllers.Posts.like
 POST    /posts/reshare              controllers.Posts.reshare
+POST    /notifications/list         controllers.Notifications.list
 POST	/people/avatar  			controllers.People.avatar
 POST	/people/follow  			controllers.People.follow
 POST	/people/unfollow  			controllers.People.unfollow

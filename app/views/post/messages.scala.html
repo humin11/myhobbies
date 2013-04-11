@@ -1,0 +1,43 @@
+@(notifications:Seq[Notification])
+<div style="height: auto;">
+    <div class="messagebox-header">
+        <div class="messagebox-header-viewall">
+            <a href="/notifications/all">查看所有通知</a>
+        </div>
+    </div>
+    <div style="position: relative;">
+        <div style="overflow-y: auto;max-height: 324px;">
+            @for(i <- 0 to 10){
+                <div class="messagebox-row">
+                    <table cellspacing="0" cellpadding="0">
+                        <tbody>
+                            <tr>
+                                <td style="width: 7px">
+                                    <div class="messagebox-leftbtn"></div>
+                                </td>
+                                <td>
+                                    <div class="messagebox-title">Niko Hoo: 【年薪20万，招聘首席淫秽色情鉴定官】诚聘英才....</div>
+                                    <div class="messagebox-avatar">
+                                        <img src="@routes.Assets.at("images/humin_small.jpg")" class="messagebox-avatar-img"></img>
+                                    </div>
+                                    <div style="position: relative;">
+                                        <div class="messagebox-avatar-img1"></div>
+                                        <div class="messagebox-avatar-img2"></div>
+                                    </div>
+                                    <div class="messagebox-content">
+                                        <div style="max-height: 16px;overflow: hidden;">Humin ++++</div>
+                                        <span style="color: #777;margin-right: 15px;">赞了您的评论</span>
+                                    </div>
+                                </td>
+                                <td style="width: 16px;">
+                                    <div class="messagebox-rightbtn"></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>

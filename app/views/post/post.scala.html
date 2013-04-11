@@ -11,7 +11,7 @@
     <div class="span4">
         <div class="post row-fluid">
             <i class="post-option"></i>
-            <div class="post-avatar"><img class="avatar-icon" uid="@(post.author)" src="@routes.Assets.at("images/avatar_small.png")"></img></div>
+            <div class="post-avatar">@views.html.post.avatar(post.author)</div>
             <div class="post-arrow-left"><div class="post-arrow-left-inner"></div></div>
             <div class="post-header row-fluid">
                 <span class="post-header-author">@(User.findOneById(post.author).get.name)</span>
@@ -46,7 +46,7 @@
                             }
                     </div>
                     @if(post.is_reshare){
-                        @Post.findParent(post.id) match{case p:Some[Post] => views.html.post.reshare(p)}
+                        @Post.findParent(post.id) match{case p:Some[Post] => views.html.post.reshare(p) case None =>}
                     }
                     @if(!photos.isEmpty){
                         <div class="post-photo" >

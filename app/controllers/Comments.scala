@@ -23,6 +23,18 @@ object Comments extends Controller {
     val postId = request.body.get("postId").get(0)
     val content = request.body.get("content").get(0)
     val comment = Comment(post = new ObjectId(postId),author = user.id,content = content,create_at = now,update_at = now)
+    Post.findOneById(new ObjectId(postId)) match {
+      case post:Some[Post] => {
+        val notification = Notification(
+          source_id = comment.id,
+          recipient = post.get.author,
+          create_at = now,
+          update_at = now
+        )
+        Notification.insert(notification)
+      }
+      case None =>
+    }
     Comment.save(comment)
     Ok(html.post.comment(comment))
   }

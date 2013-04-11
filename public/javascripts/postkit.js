@@ -129,6 +129,10 @@
             this.$element.show();
         },
 
+        hide: function(){
+            this.$element.hide();
+        },
+
         addShareBtn: function(footContainer){
             var shareBtn = $('<a class="btn btn-success"></a>');
             shareBtn.text('Share');
