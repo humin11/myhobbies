@@ -8,6 +8,8 @@ POST    /posts/create               controllers.Posts.create
 POST    /posts/delete               controllers.Posts.delete
 POST    /posts/uploadify            controllers.Posts.uploadify
 POST    /posts/deleteTmpFiles       controllers.Posts.deleteTmpFiles
+POST    /posts/like                 controllers.Posts.like
+POST    /posts/reshare              controllers.Posts.reshare
 POST	/people/avatar  			controllers.People.avatar
 POST	/people/follow  			controllers.People.follow
 POST	/people/unfollow  			controllers.People.unfollow

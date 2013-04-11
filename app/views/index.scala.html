@@ -1,6 +1,15 @@
 @(message: String, posts: Seq[Post] = Nil, contacts: Seq[User] = Nil, recommendUsers: Seq[User] = Nil)
+@styles = {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/postkit.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/post.css")">
+}
+@scripts = {
+    <script src='@routes.Assets.at("javascripts/jquery.uploadify-3.1.min.js")' type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/postkit.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/post.js")" type="text/javascript"></script>
+}
 
-@row(list:Seq[User], num:Int = 5) = {
+@colums(list:Seq[User], num:Int = 5) = {
     <div class="row-fluid">
     @for(i <- 0 until list.size){
         @if(i>0 && i%5 == 0){
@@ -13,30 +22,35 @@
 }
 
 
-@main("Welcome to CGLQ") {
-    <script src='@routes.Assets.at("javascripts/jquery.uploadify-3.1.min.js")' type="text/javascript"></script>
+@main("Welcome to CGLQ",null,styles, scripts) {
     <div id="main-container" class="container">
         <div class="row-fluid">
             <a id="newBtn" class="btn pull-right"><i class="icon-pencil"></i>&nbsp;Share</a>
             <div id="postModal" class="hide"></div>
             <div id="avatarModal" class="postkit-wrapper hide"></div>
         </div>
-        <div class="row-fluid" style="background-color:#FFF">
+        <div class="row-fluid" style="background-color:#fff;min-height: 700px;padding-top: 20px">
             <div class="span3">
             </div>
-            <div id="post-list" class="span6">
+            <div id="post-list" class="span5">
                 @for(p <- posts) {
                     @views.html.post.post(p)
                 }
             </div>
-            <div id="right-panel" class="span3">
-                <div id="recommend-list" class="row-fluid" style="height:80px">
-                    推荐的人
-                    @row(recommendUsers)
+            <div id="right-panel" class="pull-left span4">
+                <div id="recommend-list">
+                    @views.html.post.recommendList("推荐的人",recommendUsers)
                 </div>
-                <div id="contact-list" class="row-fluid" style="height:80px">
-                    已关注的人
-                    @row(contacts)
+                <div id="contact-list" class="row-fluid" style="min-height:80px;width:230px;">
+                    <div class="row-fluid rightpanel-header">
+                        <h3 class="rightpanel-title"><span>已关注的人</span></h3>
+                        <span class="rightpanel-viewall ">查看全部</span>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="row-fluid">
+                            @colums(contacts)
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -49,6 +63,7 @@
             afterPost: function(data){
                 $('#post-list').prepend(data);
                 var newPost = $('#post-list:first');
+                postHoverHandler(newPost.find('.post-row'));
                 avatarHoverHandler(newPost.find('.avatar-icon'));
                 postDelBtnClickHandler(newPost.find('.post-delbtn'));
                 postExpandBtnClickHandler(newPost.find('.post-message-min'));
@@ -66,7 +81,12 @@
         $('#avatarModal').mouseleave(function(evt){
             $('#avatarModal').hide();
         });
+        rightPanelHoverHandler($('#recommend-list'));
+        rightPanelHoverHandler($('#contact-list'));
+        rightPanelRowHoverHandler($('.rightpanel-li'));
         avatarHoverHandler($('#main-container').find('.avatar-icon'));
+        likeBtnClickHandler($('.post-btn-likes'));
+        postHoverHandler($('.post-row'));
         postDelBtnClickHandler($('.post-delbtn'));
         postExpandBtnClickHandler($('.post-message-min'));
         commentsMoreClickHandler($('.comments-more'));

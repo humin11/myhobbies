@@ -97,7 +97,7 @@
 }
 
 .uploadify {
-    float: left;
+    float: right;
 }
 
 .uploadify:hover .uploadify-button {

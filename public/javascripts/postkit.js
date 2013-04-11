@@ -138,7 +138,7 @@
             shareBtn.click(function(){
                 if(!shareBtn.hasClass('disabled')){
                     var postContent = $($el.find('.postkit-message')[0]);
-                    var content = postContent.text();
+                    var content = postContent.html();
                     var params = {};
                     params["content"] = content;
                     params["tmpfiles"] = $this.tmpFiles;
@@ -160,13 +160,16 @@
             var picBtn = $('<input type="file" name="pic" id="'+this.id+'_uploadify"/>');
             var picProgressBar = $('<div class="progress progress-striped active hide pull-right"></div>');
             picProgressBar.css('border-radius','2px');
+            picProgressBar.css('margin-top','20px');
+            picProgressBar.css('margin-right','30px');
             picProgressBar.width(200);
             picProgressBar.height(18);
             var bar = $('<div class="bar" style="width: 0%;"></div>');
             picProgressBar.append(bar);
             var picContainer = $('<div class="picContainer"></div>');
             picContainer.css('text-align','center');
-            var $tmpFiles = this.tmpFiles;
+            picContainer.css('margin-top','20px');
+            var $this = this;
             var $url = this.createTmpFilesURL;
             picBtn.ready(function(){
                 picBtn.uploadify({
@@ -193,7 +196,7 @@
                         bar.text((bytesTotal/1024).toFixed(2)+' KB');
                     },
                     onUploadSuccess : function(file, data, response){
-                        $tmpFiles.push(data);
+                        $this.tmpFiles.push(data);
                         var img = $('<img src="'+data+'" style="max-width:400px;"/>');
                         setTimeout(function(){
                             picProgressBar.hide();

@@ -29,12 +29,13 @@ object Like extends ModelCompanion[Like, ObjectId]{
 
   def counts(postId:ObjectId,sourceType:String = "POST") = count(MongoDBObject("source_id" -> postId, "source_type" -> sourceType))
 
-  def exists(sourceId:ObjectId,sourceType:String = "POST")(implicit user: User) = findOne(
+  def findBySource(sourceId:ObjectId,sourceType:String = "POST")(implicit user: User) = findOne(
     MongoDBObject("source_id" -> sourceId, "source_type" -> sourceType, "author" -> user.id)
-  ) match {
-    case Some => true
+  )
+
+  def exists(sourceId:ObjectId,sourceType:String = "POST")(implicit user: User) = findBySource(sourceId,sourceType) match {
+    case Some(_) => true
     case None => false
   }
-
 
 }

@@ -2,7 +2,7 @@
 @author = @{User.findOneById(comment.author).get}
 <div class="row-fluid comment" uid="@comment.id">
     <div class="span2" style="margin:8px 0 0 15px">@views.html.post.avatar(comment.author,"images/avatar_mini.png")</div>
-    <div class="span8" style="margin-left: -18px">
+    <div class="span10" style="margin-left: -18px;">
         <div class="row-fluid">
             <div class="row-fluid">
                 <span class="post-header-author comment-author" style="font-weight:normal">@(author.name)</span>
@@ -14,7 +14,7 @@
                     <span class="post-header-status hide comment-reply">回复</span>
                 }
             </div>
-            <div class="post-message row-fluid">@comment.content</div>
+            <div class="post-message row-fluid">@Html(comment.content)</div>
         </div>
     </div>
 </div>

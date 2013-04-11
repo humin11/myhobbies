@@ -1,0 +1,25 @@
+@(title:String,displays:Seq[User])
+<div class="row-fluid" style="min-height:80px;width:230px;margin-bottom:55px">
+    <div class="row-fluid rightpanel-header">
+    <h3 class="rightpanel-title"><span>@title</span></h3>
+    <span class="rightpanel-viewall">查看全部</span>
+    </div>
+    <ul style="padding: 0;">
+        @for(row <- displays){
+            <li class="rightpanel-li">
+            <div class="span2 rightpanel-avatar">@views.html.post.avatar(row.id,"images/avatar_mini.png")</div>
+            <div class="span7 row-fluid" style="width: 132px;">
+            <div>@row.name</div>
+            <div class="rightpanel-sign">个性签名就名就是拽...</div>
+            </div>
+            <div class="span3 rightpanel-addbtn" style="padding-top:5px">
+            <button class="btn btn-small">添加</button>
+            </div>
+            <div class="rightpanel-deldiv">
+            <div class="rightpanel-delbtn"></div>
+            </div>
+            <div style="clear: left;"></div>
+            </li>
+        }
+    </ul>
+</div>

@@ -29,19 +29,19 @@
                             @if(post.content.length()>200){
                                 <div class="post-message-min">
                                     <p>
-                                        @post.content.substring(0,200)...
+                                        @Html(post.content.substring(0,200)+"...")
                                     </p>
                                     <span class="post-message-expand">展开此信息</span>
                                 </div>
                                 <div class="post-message-max hide">
                                     <p>
-                                        @post.content
+                                        @Html(post.content)
                                     </p>
                                     <span class="post-message-collapse">收拢此信息</span>
                                 </div>
                             }else{
                                 <p>
-                                    @post.content
+                                    @Html(post.content)
                                 </p>
                             }
                     </div>
@@ -55,15 +55,16 @@
                     }
                 </div>
             </div>
-            <div class="post-footer row-fluid">
-                <span class="post-actions">
-                    <span class="post-btn-likes"><i class="icon-heart"></i></span>
-                    <span class="post-btn-likes"><i class="icon-share-alt"></i></span>
-                </span>
-                <span class="pull-right post-totalnum">
-                    <span style="margin: 15px 10px 15px 10px;padding: 8px;"><i class="icon-heart"></i>@Like.counts(post.id)<span>
-                    <span style="margin: 15px 10px 15px 10px;padding: 8px;"><i class="icon-share-alt"></i>@Post.reshareCounts(post.id)<span>
-                </span>
+            <div class="row-fluid post-footer">
+                <div class="post-actions span8">
+                    <span class="post-actions-btn post-btn-likes"><i class="icon-heart"></i></span>
+                    <span class="post-actions-btn post-btn-reshares"><i class="icon-share-alt"></i></span>
+                </div>
+                <div class="pull-right post-totalnum span4">
+                    <span class="like-avatar @("hide".when(!Like.exists(post.id)(User.findSample)))"><img class="avatar-icon" src="@routes.Assets.at("images/avatar_mini.png")" style="width:20px;height:20px"></img></span>
+                    <span class="post-resharenum "><i class="icon-share-alt"></i>&nbsp;<span class="resharenum">@Post.reshareCounts(post.id)</span></span>
+                    <span class="post-likenum @("hide".when(Like.counts(post.id)==0))"><i class="icon-heart"></i>&nbsp;<span class="likenum">@Like.counts(post.id)</span></span>
+                </div>
             </div>
         </div>
         <div class="comments row-fluid">

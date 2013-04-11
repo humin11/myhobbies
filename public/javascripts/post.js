@@ -1,3 +1,53 @@
+function rightPanelHoverHandler(ele){
+    ele.hover(function(){
+        var viewall = $(this).find('.rightpanel-viewall');
+        viewall.fadeTo(100,1);
+    },function(){
+        var viewall = $(this).find('.rightpanel-viewall');
+        viewall.fadeTo(100,0);
+    });
+}
+
+function rightPanelRowHoverHandler(ele){
+    ele.hover(function(){
+        $(this).find('.rightpanel-delbtn').fadeTo(100,1);
+    },function(){
+        $(this).find('.rightpanel-delbtn').fadeTo(100,0);
+    });
+}
+
+function likeBtnClickHandler(ele){
+    ele.click(function(){
+        var post = $(this).parents('.post-row');
+        var likenum = $(this).parent().next().find('.likenum');
+        $.post('/posts/like?id='+post.attr('uid'),function(data){
+            likenum.text(data);
+            var likeAvatar = post.find('.like-avatar');
+            if(likeAvatar.is(":hidden"))
+                likeAvatar.show();
+            else
+                likeAvatar.hide();
+            if(data > 0){
+                post.find('.post-likenum').show();
+            }else{
+                post.find('.post-likenum').hide();
+            }
+        });
+    });
+}
+
+function postHoverHandler(ele){
+    ele.hover(function(){
+        var author = $(this).find('.post-header-author');
+        author.css('color','#2f63cf');
+        $(this).find('.post-actions-btn').addClass('post-actions-btnHover');
+    },function(){
+        var author = $(this).find('.post-header-author');
+        author.css('color','#000');
+        $(this).find('.post-actions-btn').removeClass('post-actions-btnHover');
+    });
+}
+
 function postDelBtnClickHandler(ele){
     ele.click(function(){
         var post = $(this).parents('.post').parent().parent();
@@ -78,7 +128,10 @@ function commentAddBtnClickHandler(ele){
         var postId = $(this).attr('post');
         var comment_input = $(this).parent().parent();
         var content = comment_input.find('.comments-new-input');
-        $.post('/comments/create?postId='+postId+'&content='+content.text(),function(data){
+        var params = {};
+        params["postId"] = postId;
+        params["content"] = content.html();
+        $.post('/comments/create',params,function(data){
             content.text('');
             sendbtn.next().trigger('click');
             comments_list.append(data);
@@ -131,7 +184,6 @@ function commentDelBtnClickHandler(ele){
             if(parseInt(nums.text()) == 3)
                 comments.find('.comments-more').trigger('click');
             if(parseInt(nums.text()) < 4){
-
                 comments.find('.comments-more').hide();
                 comments.find('.comments-hidemore').hide();
             }

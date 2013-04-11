@@ -17,11 +17,11 @@ import com.mongodb.casbah.commons.TypeImports.ObjectId
 
 object Comments extends Controller {
 
-  def create = Action { request =>
+  def create = Action(parse.urlFormEncoded) { request =>
     val user = {User.findOne(MongoDBObject("name" -> "admin")).get}
     val now = new Date()
-    val postId = request.getQueryString("postId").getOrElse("")
-    val content = request.getQueryString("content").getOrElse("")
+    val postId = request.body.get("postId").get(0)
+    val content = request.body.get("content").get(0)
     val comment = Comment(post = new ObjectId(postId),author = user.id,content = content,create_at = now,update_at = now)
     Comment.save(comment)
     Ok(html.post.comment(comment))

@@ -83,13 +83,16 @@ object Posts extends Controller{
     implicit val user = User.findOne(MongoDBObject("name" -> "admin")).get
     val id = request.getQueryString("id").getOrElse("")
     val now = new Date()
-    if(Like.exists(new ObjectId(id))){
-
-    }else{
-      val like = Like(author = user.id,source_id = new ObjectId(id),create_at = now,update_at = now)
-      Like.insert(like)
+    Like.findBySource(new ObjectId(id)) match {
+      case like:Some[Like] => {
+        Like.remove(like.get)
+      }
+      case None => {
+        val like = Like(author = user.id,source_id = new ObjectId(id),create_at = now,update_at = now)
+        Like.insert(like)
+      }
     }
-    Ok
+    Ok(Like.counts(new ObjectId(id)).toString)
   }
 
   def reshare = Action(parse.urlFormEncoded) { request =>
