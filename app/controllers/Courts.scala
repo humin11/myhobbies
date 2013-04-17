@@ -23,15 +23,17 @@ object Courts extends Controller {
 
 	 val Home = Redirect(routes.Courts.list(0, 2, ""))
 
-	def courtForm() = Form(
+	def courtForm(logo: Option[ObjectId] = null) = Form(
 		mapping(
 			"name" -> nonEmptyText,
-			"logo" -> optional(text),
+			"logo" -> ignored(logo),
 			"address" -> optional(text),
 			"telephone" -> optional(text),
-			"businfo" -> optional(text)
-		)((name, logo, address, telephone, businfo) => Court(name = name, logo = logo, address = address, telephone = telephone, businfo = businfo))
-      	((court) => Some(court.name, court.logo, court.address, court.telephone, court.businfo))
+			"businfo" -> optional(text),
+			"description" -> optional(text),
+			"alias" -> optional(text)
+		)((name, logo, address, telephone, businfo, description, alias) => Court(name = name, logo = logo, address = address, telephone = telephone, businfo = businfo, description = description, alias = alias))
+      	((court) => Some(court.name, court.logo, court.address, court.telephone, court.businfo, court.description, court.alias))
 	)
 
 	def index = Action {
@@ -58,8 +60,17 @@ object Courts extends Controller {
 		Ok(html.court.blank(courtForm()))
 	}
 	
-	def save = Action { implicit request => 
-		courtForm().bindFromRequest.fold (
+	def save = Action(parse.multipartFormData) { implicit request => 
+
+		var fileId:Option[ObjectId] = null
+		request.body.file("logo").map { picture =>
+			import java.io.File
+			val filename = picture.filename 
+			val contentType = picture.contentType
+			fileId = GridFS.save(picture.ref.file, filename, contentType)
+		}
+
+		courtForm(fileId).bindFromRequest.fold (
 		    formWithErrors => BadRequest(html.court.blank(formWithErrors)),
 		    {
 		    	court => {
