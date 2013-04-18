@@ -20,11 +20,24 @@ telephone = 联系电话
 logo.new = 上传封面
 logo.change = 更改封面
 logo.remove = 移除更新
+price = 人均价格
+park = 停车信息
+businfo = 公交信息
+description = {0}简介
 
 name.help = 请输入{0}名称, 格式: xxxx
 address.help = 请输入位置信息，如：xx大街xx号
 businesshours.help = 请输入{0}营业时间，格式: 00:00-24:00
 telephone.help = 请输入联系电话，格式: 010-12345678, 010-87654321
+price.help = 请输入人均价格，如 xx元/人
+park.help = 请输入停车信息，如停车15元/小时
+businfo.help = 请输入公交信息，如84路、345路直达
+description.help = 请输入{0}简介
+
+price.check = 收费场地
+price.free = 免费
+park.check = 停车收费
+park.free = 免费
 
 check.min = 至少需要输入{0}个字符数
 check.max = 最多需要输入{0}个字符数

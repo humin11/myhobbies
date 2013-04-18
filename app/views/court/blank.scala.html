@@ -12,6 +12,7 @@
   <script src="@routes.Assets.at("javascripts/date.js")" type="text/javascript"></script>
   <script src="@routes.Assets.at("javascripts/jquery-timeRangePicker.js")" type="text/javascript"></script>
   <script src="@routes.Assets.at("javascripts/court.js")" type="text/javascript"></script>
+  <script src="@routes.Assets.at("ckeditor/ckeditor.js")" type="text/javascript"></script>
   <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
 }
 
@@ -57,16 +58,50 @@
               </div>
               @inputText(courtForm("telephone"), 'class ->"input-block-level", '_label -> Messages("telephone", Messages("court")), '_help -> Messages("telephone.help", Messages("court")), 'placeholder -> Messages("telephone.help", Messages("court")))
               @inputText(courtForm("address"), 'class ->"input-block-level", '_label -> Messages("address", Messages("court")), '_showConstraints -> false, 'placeholder -> Messages("address.help", Messages("court")), 'required -> "required")
+              
               <div class="control-group">
-				<div class="controls">
-				  <div class="row-fluid">
-		        	<div class="span12" id="court_location">
-		            </div>
-		          </div>
-				  <input type="hidden" name="longitude" id="longitude" />
-				  <input type="hidden" name="latitude" id="latitude" />
-				</div>
-			</div>
+                <label class="control-label" for="price">
+                  @Messages("price", Messages("court"))
+                </label>
+                <div class="controls">
+                  <div class="input-prepend">
+                    <span class="add-on">
+                      <label class="checkbox">
+                        @Messages("price.check")<input type="checkbox" name="isprice" id="isprice" />
+                      </label>
+                    </span>
+                    <input type="text" name="price" id="price" placeholder="@Messages("price.help", Messages("court"))" value="@Messages("price.free")" readonly="true"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label" for="park">
+                  @Messages("park", Messages("court"))
+                </label>
+                <div class="controls">
+                  <div class="input-prepend">
+                    <span class="add-on">
+                      <label class="checkbox">
+                        @Messages("park.check")<input type="checkbox" name="ispark" id="ispark" />
+                      </label>
+                    </span>
+                    <input type="text" name="park" id="park" placeholder="@Messages("park.help", Messages("court"))"  value="@Messages("park.free")" readonly="true"/>
+                  </div>
+                </div>
+              </div>
+              @textarea(courtForm("businfo"), 'class ->"input-block-level", '_label -> Messages("businfo", Messages("court")), '_showConstraints -> false, 'placeholder -> Messages("businfo.help", Messages("court")))
+              @textarea(courtForm("description"), 'class ->"input-block-level", '_label -> Messages("description", Messages("court")), '_showConstraints -> false, 'placeholder -> Messages("description.help", Messages("court")))
+              <div class="control-group">
+        				<div class="controls">
+        				  <div class="row-fluid">
+        		        	<div class="span12" id="court_location">
+        		            </div>
+        		          </div>
+        				  <input type="hidden" name="longitude" id="longitude" />
+        				  <input type="hidden" name="latitude" id="latitude" />
+        				</div>
+        			</div>
             </div>
             <div class="span3">
               <div class="fileupload fileupload-new" data-provides="fileupload">
@@ -93,6 +128,8 @@
   </div>
 }
 <script type="text/javascript">
+  
+
 	var map = new BMap.Map("court_location");
 	map.addControl(new BMap.NavigationControl()); 
 	// 创建地址解析器实例
@@ -124,13 +161,26 @@
 			var _value = e.item.value;
 		    myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
 		    $("#address").val(myValue);
-		    setPlace();
+		    setPlace(false);
 		});
 
-		function setPlace(){
+    $("#address").blur(function() {
+      if(myValue==null){
+        myValue = $("#address").val();
+        setPlace(true); 
+      }
+    })
+
+		function setPlace(search){
 		    //map.clearOverlays();    //清除地图上所有覆盖物
 		    function myFun(){
 		        var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+            if(search){
+              myGeo.getLocation(pp, function(rs){
+                var addComp = rs.addressComponents;
+                $("#address").val(addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber);
+              });
+            }
 		        map.centerAndZoom(pp, 16);
 		        map.addOverlay(new BMap.Marker(pp));    //添加标注
 		        $("#longitude").val(pp.lng);
