@@ -1,9 +1,18 @@
+function photoInitHeightHandler(ele){
+    for(var i=0;i<ele.length;i++){
+        var img = $(ele[i]).find(':first-child');
+        img.load(function(){
+            $(this).parent().height($(this).height());
+        });
+    }
+}
+
 function rightPanelHoverHandler(ele){
     ele.hover(function(){
-        var viewall = $(this).find('.rightpanel-viewall');
+        var viewall = $(this).find('.listpanel-header-viewall');
         viewall.fadeTo(100,1);
     },function(){
-        var viewall = $(this).find('.rightpanel-viewall');
+        var viewall = $(this).find('.listpanel-header-viewall');
         viewall.fadeTo(100,0);
     });
 }
@@ -100,15 +109,15 @@ function commentsMoreClickHandler(ele){
 function commentNoInputClickHandler(ele){
     ele.click(function(){
         $(this).hide();
-        var comment_input = $(this).next();
+        var comment_input = $(this).parents('.comments').find('.comments-newinput-section');
         comment_input.show();
-        comment_input.find('.post-inputable').focus();
+        comment_input.find('.comments-newinput-text').focus();
     });
 }
 
 function commentNewInputKeydownHandler(ele){
     ele.on('keydown paste',function(){
-        var addbtn = $(this).parents('.comments-new-section').find('.comment-addbtn');
+        var addbtn = $(this).parents('.comments-newinput-section').find('.comment-addbtn');
         setTimeout(function() {
             if(ele.text().length > 0){
                 addbtn.removeClass('disabled');
@@ -124,10 +133,10 @@ function commentAddBtnClickHandler(ele){
         var sendbtn = $(this);
         if(sendbtn.hasClass('disabled'))
             return false;
-        var comments_list = sendbtn.parents('.comments').find('.comments-list');
+        var comments = sendbtn.parents('.comments');
+        var comments_list = comments.find('.comments-list');
         var postId = $(this).attr('post');
-        var comment_input = $(this).parent().parent();
-        var content = comment_input.find('.comments-new-input');
+        var content = $(this).parents('.comments-newinput-section').find('.comments-newinput-text');
         var params = {};
         params["postId"] = postId;
         params["content"] = content.html();
@@ -135,10 +144,10 @@ function commentAddBtnClickHandler(ele){
             content.text('');
             sendbtn.next().trigger('click');
             comments_list.append(data);
-            var comment_num = comments_list.prev().prev().find('.comments-num');
+            var comment_num = comments.find('.comments-num');
             comment_num.text(parseInt(comment_num.text())+1);
             if(parseInt(comment_num.text()) > 3 && comments_list.prev().is(":hidden")){
-                comments_list.prev().prev().show();
+                comments_list.prev().show();
                 comments_list.find('.comment:first').remove();
             }
             var newComment = comments_list.find('.comment:last');
@@ -152,11 +161,11 @@ function commentAddBtnClickHandler(ele){
 
 function commentCancelBtnClickHandler(ele){
     ele.click(function(){
-        var comment_input = $(this).parent().parent();
-        comment_input.find('.post-inputable').empty();
+        var comment_input = $(this).parents('.comments-newinput-section');
+        comment_input.find('.comments-new-content').empty();
         comment_input.hide();
-        var comment_input_fake = comment_input.prev();
-        comment_input_fake.show();
+        var comment_input_fake = comment_input.parents('.comments');
+        comment_input_fake.find('.comments-noinput-text').show();
     });
 }
 
@@ -197,8 +206,8 @@ function commentReplyClickHandler(ele){
         var comment = $(this).parents('.comment');
         var author = comment.find('.comment-author').text();
         var comments = comment.parents('.comments');
-        comments.find('.comments-new-noinput').trigger('click');
-        comments.find('.comments-new-input').text('+'+author);
+        comments.find('.comments-noinput-text').trigger('click');
+        comments.find('.comments-new-content').text('+'+author);
     });
 }
 

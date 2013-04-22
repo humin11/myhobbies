@@ -16,6 +16,7 @@
             this.$element.addClass('hide popup-wrapper');
             var arrow = $('<div class="popup-arrow-top"><div class="popup-arrow-top-inner"></div></div>');
             var content = $('<div class="popup-content"></div>');
+            var iframe = $('<iframe></iframe>');
             this.$element.append(arrow);
             this.$element.append(content);
             this.autoHide();

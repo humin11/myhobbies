@@ -12,6 +12,7 @@ object Notifications extends Controller {
 
   def list = Action { request=>
     implicit val user = User.findOne(MongoDBObject("name" -> "admin")).get
+    Logger.info("##############")
     Ok(views.html.post.messages(Notification.unreadByUser))
   }
 

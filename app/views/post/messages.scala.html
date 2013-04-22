@@ -1,12 +1,11 @@
 @(notifications:Seq[Notification])
-<div style="height: auto;">
+<div class="messagebox">
     <div class="messagebox-header">
         <div class="messagebox-header-viewall">
             <a href="/notifications/all">查看所有通知</a>
         </div>
     </div>
-    <div style="position: relative;">
-        <div style="overflow-y: auto;max-height: 324px;">
+        <div class="messagebox-body">
             @for(i <- 0 to 10){
                 <div class="messagebox-row">
                     <table cellspacing="0" cellpadding="0">
@@ -20,9 +19,9 @@
                                     <div class="messagebox-avatar">
                                         <img src="@routes.Assets.at("images/humin_small.jpg")" class="messagebox-avatar-img"></img>
                                     </div>
-                                    <div style="position: relative;">
-                                        <div class="messagebox-avatar-img1"></div>
-                                        <div class="messagebox-avatar-img2"></div>
+                                    <div class="messagebox-avatar-stack">
+                                        <div class="messagebox-avatar-s messagebox-avatar-s1"></div>
+                                        <div class="messagebox-avatar-s messagebox-avatar-s2"></div>
                                     </div>
                                     <div class="messagebox-content">
                                         <div style="max-height: 16px;overflow: hidden;">Humin ++++</div>
@@ -39,5 +38,4 @@
                 </div>
             }
         </div>
-    </div>
 </div>

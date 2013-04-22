@@ -1,0 +1,148 @@
+@import "common";
+
+.rightpanel {
+  margin-top: 27px;
+  margin-right: 10px;
+  display: inline-block;
+  padding-left: 10px;
+  white-space: normal;
+  width: 256px;
+}
+
+.listpanel {
+  margin-bottom: 55px;
+  width: 256px;
+  .listpanel-header {
+    border-bottom: 1px solid #e9e9e9;
+    color: #777;
+    font: bold 11px arial,sans-serif;
+    margin-bottom: 10px;
+    margin-top: -7px;
+    position: relative;
+    &:hover,
+    &:focus {
+      .color-transition;
+      color: #808080;
+    }
+    .listpanel-header-title {
+      display: inline-block;
+      font: bold 11px arial,sans-serif;
+      margin: 0;
+      max-width: 256px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      vertical-align: middle;
+      white-space: nowrap;
+      padding-right: 10px;
+      position: relative;
+      text-transform: uppercase;
+      background-color: #fff;
+      bottom: -7px;
+      margin: 0 0 3px;
+      font-weight: bold;
+    }
+    .listpanel-header-viewall {
+      background-color: #fff;
+      bottom: -7px;
+      padding-left: 10px;
+      position: absolute;
+      right: 0;
+      .opacity-transition;
+      filter: alpha(opacity=0);
+      opacity: 0;
+      cursor: pointer;
+    }
+  }
+  .listpanel-list {
+    margin-top: 19px;
+    ul {
+      display: block;
+      list-style-type: disc;
+      li {
+        position: relative;
+        list-style-type: none;
+        margin-top: 12px;
+        width: 256px;
+        display: list-item;
+        .listpanel-row {
+          display: block;
+          .listpanel-row-body {
+            .listpanel-row-avatar {
+              cursor: pointer;
+              float: left;
+              height: 32px;
+              margin-right: 10px;
+              width: 32px;
+              img {
+                cursor: pointer;
+                .rounded-corners(2px);
+                border: 0;
+                width: 32px;
+                height: 32px;
+              }
+            }
+            .listpanel-row-content {
+              width: 132px;
+              height: 32px;
+              float: left;
+              margin-top: -5px;
+              .listpanel-row-title {
+                max-width: 132px;
+                position: relative;
+                display: inline-block;
+                a {
+                  color: #4d4d4d;
+                  font-size: 13px;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                  width: 204px;
+                  cursor: pointer;
+                  text-decoration: none;
+                  position: relative;
+                  display: inline-block;
+                  width: auto;
+                  &:hover,
+                  &:focus {
+                    .color-transition;
+                    color: #36c;
+                    background-color: #fff;
+                    text-decoration: underline;
+                  }
+                }
+              }
+              .listpanel-row-text {
+                max-width: 132px;
+                color: #999;
+                font-size: 11px;
+                margin-top: 2px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                width: 204px;
+              }
+            }
+          }
+        }
+      }
+    }
+    .listpanel-avatars {
+      float: left;
+      margin-right: 4px;
+      line-height: 18px;
+      .listpanel-avatar {
+        margin-right: 4px;
+        margin-bottom: 4px;
+        position: relative;
+        display: inline-block;
+        img {
+          cursor: pointer;
+          .rounded-corners(3px);
+          border: 0;
+          width: 44px;
+          height: 44px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+@(title:String,displays:Seq[User])
+<div class="listpanel">
+<div class="listpanel-header">
+    <span class="listpanel-header-title">@title</span>
+    <span class="listpanel-header-viewall">查看全部</span>
+</div>
+<div class="listpanel-list">
+    <div class="listpanel-avatars">
+        @for(i <- 0 until displays.size){
+            <div class="listpanel-avatar" colindex="@i">
+                @views.html.post.avatar(displays(i).id)
+            </div>
+        }
+    </div>
+</div>
+</div>
