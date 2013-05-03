@@ -25,11 +25,11 @@ object GridFS {
 		gridFile._id
 	}
 
-	def get(objId: String) = {
-		files.findOne(objId)
+	def get(objId: Option[ObjectId]) =  objId match {
+		case Some(id) => files.findOne(id)
 	}
 
-	def delete(objId: String) = {
+	def delete(objId: ObjectId) = {
 		files.remove(objId)
 	}
 }

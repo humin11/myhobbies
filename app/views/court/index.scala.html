@@ -4,7 +4,7 @@
 @displayItem(court: Court) = {
 	<div class="row-fluid">
 			<div class="span3">
-				<a href="@routes.Courts.view(court.id)"><img src="@routes.Assets.at("images/court.demo.jpeg")"
+				<a href="@routes.Courts.view(court.id)"><img src="@routes.Gridfs.getLogo(court.logo)"
 					alt="北京理工大学篮球场" /></a>
 			</div>
 			<div class="span9">
