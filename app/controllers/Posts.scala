@@ -118,7 +118,7 @@ object Posts extends Controller{
       ShareVisibility.insert(share_visibility)
     }
     Post.insert(post)
-    Ok
+    Ok(views.html.post.post(post))
   }
 
 }

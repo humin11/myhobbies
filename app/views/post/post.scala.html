@@ -10,7 +10,8 @@
 
 <div class="post-row" uid="@post.id">
     <div class="post">
-        <span class="post-option"></span>
+        <span class="post-option">
+        </span>
         <div class="post-avatar">@views.html.post.avatar(post.author)</div>
         <div class="post-arrow"></div>
         <div class="post-header">
@@ -42,8 +43,11 @@
                     </p>
                 }
             </div>
+            @if(post.is_reshare){
+                @Post.findParent(post.id) match{case p:Some[Post] => @views.html.post.reshare(p.get)}
+            }
             @if(!photos.isEmpty){
-                <div  class="post-photos" >
+                <div class="post-photos" >
                     <div class="post-photo" >
                         <img src="@photos.head.path"/>
                     </div>

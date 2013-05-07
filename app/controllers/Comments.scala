@@ -56,7 +56,7 @@ object Comments extends Controller {
     val result = if(show == "all"){
       for(comment <- comments) yield html.post.comment(comment)
     }else{
-      for(comment <- comments.sortBy(_.create_at).takeRight(3)) yield html.post.comment(comment)
+      for(comment <- comments.sortBy(_.create_at).takeRight(show.toInt)) yield html.post.comment(comment)
     }
     Ok(result.reduceLeft(_ += _))
   }

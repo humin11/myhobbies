@@ -5,6 +5,7 @@
         this.width = 400;
         this.url = options["url"];
         this.anchor = options["anchor"];
+        this.afterLoad = options["afterLoad"];
         this.initialize();
     }
 
@@ -41,8 +42,10 @@
         show: function(){
             this.initPosition();
             var $ele = this.$element;
+            var $this = this;
             $.post(this.url,function(data){
                 $ele.find('.popup-content').html(data);
+                $this.afterLoad(data);
                 $ele.show();
             });
         },

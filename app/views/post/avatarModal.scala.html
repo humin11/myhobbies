@@ -20,28 +20,40 @@
     }
 </div>
 <script>
-    $('.btn-follow').click(function(){
-        var personId = $(this).attr('uid');
-        var $this = $(this);
-        $.post('/people/follow?id='+personId,function(){
-            $this.text('已关注');
-            $this.removeClass('btn-follow');
-            $this.addClass('btn-unfollow');
-            unfollowHoverHandler();
+    followClickHandler($('.btn-follow'));
+    unfollowClickHandler($('.btn-unfollow'));
+    unfollowHoverHandler($('.btn-unfollow'));
+    function followClickHandler(ele){
+        ele.click(function(){
+            var personId = $(this).attr('uid');
+            var $this = $(this);
+            $.post('/people/follow?id='+personId,function(){
+                $this.text('已关注');
+                $this.removeClass('btn-follow');
+                $this.addClass('btn-unfollow');
+                $this.off();
+                unfollowClickHandler($this);
+                unfollowHoverHandler($this);
+            });
         });
-    });
-    $('.btn-unfollow').click(function(){
-        var personId = $(this).attr('uid');
-        var $this = $(this);
-        $.post('/people/unfollow?id='+personId,function(){
-            $this.text('关注');
-            $this.removeClass('btn-unfollow');
-            $this.addClass('btn-follow');
+        return false;
+    }
+    function unfollowClickHandler(ele){
+        ele.click(function(){
+            var personId = $(this).attr('uid');
+            var $this = $(this);
+            $.post('/people/unfollow?id='+personId,function(){
+                $this.text('关注');
+                $this.removeClass('btn-unfollow');
+                $this.addClass('btn-follow');
+                $this.off();
+                followClickHandler($this);
+            });
+            return false;
         });
-    });
-    unfollowHoverHandler();
-    function unfollowHoverHandler(){
-        $('.btn-unfollow').hover(
+    }
+    function unfollowHoverHandler(ele){
+        ele.hover(
             function(){
                 if($(this).hasClass('btn-unfollow'))
                     $(this).text('取消关注');

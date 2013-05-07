@@ -1,4 +1,45 @@
 @import "common";
+.leftpanel {
+  padding-left:10px;padding-right:75px;
+  margin:5px;
+  .leftpanel-avatar{
+    width:230px;
+    border:1px solid #ccc;
+    border-bottom:0;
+    cursor:pointer;
+  }
+  .leftpanel-group {
+    width:220px;
+    background-color:#f8f8f8;
+    border:1px solid #ccc;
+    padding:5px;
+    a {
+      text-decoration: none!important;
+      cursor:pointer;
+      .leftpanel-listrow {
+        -webkit-border-radius: 3px;
+        border-radius: 3px;
+        color: #555;
+        font-size: 13px;
+        line-height: 1.4em;
+        margin-bottom: 4px;
+        padding: 5px 8px;
+        white-space: nowrap;
+        &:hover,
+        &:focus {
+          background-color: #e8e8e8;
+        }
+      }
+      .leftpanel-listall {
+        -webkit-box-shadow: inset 0 0 5px 1px #b7b7b7;
+        box-shadow: inset 0 0 5px 1px #b7b7b7;
+        background-color: #bfbfbf;
+        color: #fff;
+      }
+    }
+  }
+
+}
 
 .rightpanel {
   margin-top: 27px;
@@ -38,7 +79,6 @@
       text-transform: uppercase;
       background-color: #fff;
       bottom: -7px;
-      margin: 0 0 3px;
       font-weight: bold;
     }
     .listpanel-header-viewall {

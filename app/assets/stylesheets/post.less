@@ -45,6 +45,10 @@
       width: 13px;
       position: relative;
       z-index: 1;
+      &:hover,
+      &:focus {
+        background: no-repeat url(//ssl.gstatic.com/s2/oz/images/sprites/stream-e322ac53c0679530b4a6b20503220d8a.png) -23px -22px;
+      }
     }
     .post-avatar {
       img {
@@ -119,6 +123,32 @@
             clear: both;
             display: block;
             padding: 0;
+          }
+        }
+      }
+      .post-reshare {
+        border-top: 1px solid #ccc;
+        .post-reshare-title {
+          color: #999;
+          padding-bottom: 3px;
+          padding-top: 12px;
+          .post-reshare-avatar {
+            img {
+              float: left;
+              height: 32px;
+              margin: 3px 12px 12px 0;
+              width: 32px;
+              cursor: pointer;
+              .rounded-corners(3px);
+            }
+          }
+        }
+        .post-reshare-body {
+          padding-bottom: 12px;
+          .post-reshare-content {
+            min-height: 0;
+            padding: 0 0 0 0;
+            overflow: hidden;
           }
         }
       }

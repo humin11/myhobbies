@@ -19,32 +19,36 @@
         <div id="postModal" class="hide"></div>
         <div id="messageModal" class="hide" style="width:400px"></div>
         <div id="avatarModal" class="postkit-wrapper hide"></div>
+        <ul id="postOption" class="dropdown-menu" role="menu">
+            <li><a href="#" style="background-color: #fff;color: #000;border-width: 0px;">修改信息</a></li>
+            <li><a href="#" style="background-color: #fff;color: #000;border-width: 0px;">删除信息</a></li>
+            <li><a href="#" style="background-color: #fff;color: #000;border-width: 0px;">锁定信息</a></li>
+        </ul>
         <div class="row-fluid">
             <div style="float:right;margin-left:10px">@views.html.post.avatar(User.findSample.id,"images/avatar_mini.png")</div>
             <div style="float:right;margin-left:10px"><a id="newBtn" class="btn"><i class="icon-pencil"></i>&nbsp;Share</a></div>
             <div style="float:right;"><a id="messageBtn" class="btn messagebox-active">3</a></div>
         </div>
         <div class="row-fluid" style="background-color:#fff;min-height: 700px;padding-top: 20px">
-            <div class="span3" style="padding-left:10px;padding-right:75px;">
-                <div style="width:230px;border:1px solid #ccc;border-bottom:0;cursor:pointer">
+            <div class="span3 leftpanel">
+                <div class="leftpanel-avatar">
                     <img src="@routes.Assets.at("images/avatar_large.png")"></img>
                 </div>
-                <div style="width:220px;background-color:#f8f8f8;border:1px solid #ccc;padding:5px">
-                    <div>
-                        @for(i <- 0 to 10){
-                            <a target="_top" style="text-decoration: none!important;cursor:pointer">
-                                <div class="leftpanel-listrow @("leftpanel-listall".when(i == 0))">
-                                    <span>@if(i==0){全部}else{圈子@i}</span>
-                                </div>
-                            </a>
-                        }
-                    </div>
+                <div class="leftpanel-group">
+                    @for(i <- 0 to 10){
+                        <a target="_top">
+                            <div class="leftpanel-listrow @("leftpanel-listall".when(i == 0))">
+                                <span>@if(i==0){全部}else{圈子@i}</span>
+                            </div>
+                        </a>
+                    }
                 </div>
             </div>
             <div id="post-list" class="span6">
                 @for(p <- posts) {
                     @views.html.post.post(p)
                 }
+
             </div>
             <div id="right-panel" class="pull-right rightpanel">
                 <div id="recommend-list">
@@ -60,7 +64,10 @@
 
         $('#messageModal').popup({
             anchor:'messageBtn',
-            url:'/notifications/list'
+            url:'/notifications/list',
+            afterLoad: function(data){
+
+            }
         });
         $('#messageBtn').click(function(){
             $('#messageModal').popup('show');
@@ -73,8 +80,8 @@
                 $('#post-list').prepend(data);
                 var newPost = $('#post-list:first');
                 photoInitHeightHandler(newPost.find('.post-photo'));
-                postHoverHandler(newPost.find('.post-row'));
                 avatarHoverHandler(newPost.find('.avatar-icon'));
+                postHoverHandler(newPost.find('.post-row'));
                 postDelBtnClickHandler(newPost.find('.post-delbtn'));
                 postExpandBtnClickHandler(newPost.find('.post-message-min'));
                 commentNewInputKeydownHandler(newPost.find('.comments-newinput-text'));
@@ -92,26 +99,31 @@
             $('#avatarModal').hide();
         });
         photoInitHeightHandler($('.post-photo'));
-        rightPanelHoverHandler($('#recommend-list'));
-        rightPanelHoverHandler($('#contact-list'));
-        rightPanelRowHoverHandler($('.rightpanel-li'));
         avatarHoverHandler($('#main-container').find('.avatar-icon'));
         likeBtnClickHandler($('.post-btn-likes'));
         postHoverHandler($('.post-row'));
         postDelBtnClickHandler($('.post-delbtn'));
         postExpandBtnClickHandler($('.post-message-min'));
-
-        commentsMoreClickHandler($('.comments-num-show'));
         commentNewInputKeydownHandler($('.comments-newinput-text'));
         commentNoInputClickHandler($('.comments-noinput-text'));
         commentAddBtnClickHandler($('.comment-addbtn'));
         commentCancelBtnClickHandler($('.comment-cancelbtn'));
+        commentsMoreClickHandler($('.comments-num-show'));
         commentHoverHandler($('#post-list .comment'));
         commentDelBtnClickHandler($('#post-list .comment-delbtn'));
         commentReplyClickHandler($('#post-list .comment-reply'));
 
+        rightPanelHoverHandler($('#recommend-list'));
+        rightPanelHoverHandler($('#contact-list'));
+        rightPanelRowHoverHandler($('.rightpanel-li'));
 
         initComet();
+
+        $('.post-option').click(function(event){
+            $('#postOption').css('left',event.pageX);
+            $('#postOption').css('top',event.pageY);
+            $('#postOption').show();
+        });
 
         function initComet(){
             var cometFrame = $('<iframe id="cometFrame"></iframe>');

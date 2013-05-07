@@ -96,7 +96,7 @@ function commentsMoreClickHandler(ele){
         $(this).prev().show();
         var comments = $(this).parents('.comments');
         var id = comments.parents('.post-row').attr('uid');
-        $.post('/comments/list?id='+id+'&show=3',function(data){
+        $.post('/comments/list?id='+id+'&show=1',function(data){
             comments.find('.comments-list').html(data);
             commentHoverHandler(comments.find('.comment'));
             commentDelBtnClickHandler(comments.find('.comment-delbtn'));
