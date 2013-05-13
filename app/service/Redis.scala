@@ -3,7 +3,6 @@ package service
 import com.redis.RedisClientPool
 import org.codehaus.jackson.JsonNode
 import akka.pattern.ask
-import scala.actors.Actor
 
 object Redis {
 
@@ -22,7 +21,7 @@ object Redis {
     clients.withClient {
       client => {
         client.subscribe(channel) { message =>
-          CometActor ! ""
+
         }
       }
     }
@@ -30,7 +29,7 @@ object Redis {
 
 }
 
-object CometActor extends Actor {
+object CometActor {
   def act() {
 
   }

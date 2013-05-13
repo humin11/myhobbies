@@ -16,12 +16,14 @@
         </div>
     </div>
 </div>
-<div class="post-photos" >
-    <div class="post-photo" >
-        <img src="@photos.head.path"/>
+@if(!photos.isEmpty){
+    <div class="post-photos" >
+        <div class="post-photo" >
+            <img src="@photos.head.path"/>
+        </div>
+        <div class="post-photo-bt post-photo-tb"></div>
+        <div class="post-photo-bt post-photo-bb"></div>
+        <div class="post-photo-lr post-photo-lb"></div>
+        <div class="post-photo-lr post-photo-rb"></div>
     </div>
-    <div class="post-photo-bt post-photo-tb"></div>
-    <div class="post-photo-bt post-photo-bb"></div>
-    <div class="post-photo-lr post-photo-lb"></div>
-    <div class="post-photo-lr post-photo-rb"></div>
-</div>
+}
