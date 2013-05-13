@@ -21,8 +21,8 @@ object Streams extends Controller {
   }
   
   def comet = Action {
+
     Ok
   }
   
-
 }
