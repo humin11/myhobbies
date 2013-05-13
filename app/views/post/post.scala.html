@@ -44,7 +44,7 @@
                 }
             </div>
             @if(post.is_reshare){
-                @Post.findParent(post.id) match{case p:Some[Post] => @views.html.post.reshare(p.get)}
+                @views.html.post.reshare(Post.findParent(post.id).get)
             }
             @if(!photos.isEmpty){
                 <div class="post-photos" >

@@ -11,6 +11,8 @@ import se.radley.plugin.salat._
 import com.mongodb.casbah.commons.MongoDBObject
 import com.mongodb.casbah.Imports._
 import mongoContext._
+import play.api.libs.json._
+import play.api.libs.functional.syntax._
 
 case class Post(
   id: ObjectId = new ObjectId,
@@ -22,7 +24,9 @@ case class Post(
   is_reshare: Boolean = false
 )
 
-object Post extends ModelCompanion[Post, ObjectId]{
+object Post extends PostDAO with PostJson
+
+trait PostDAO extends ModelCompanion[Post, ObjectId]{
 
   val collection = mongoCollection("posts")
   val dao = new SalatDAO[Post, ObjectId](collection = collection) {}
@@ -50,4 +54,21 @@ object Post extends ModelCompanion[Post, ObjectId]{
 
   def reshareCounts(postId:ObjectId) = count(MongoDBObject("parent" -> postId))
 
+}
+
+trait PostJson {
+
+  implicit val postJsonWrite = new Writes[Post] {
+    def writes(post: Post): JsValue = {
+      Json.obj(
+        "id" -> post.id,
+        "author" -> post.author,
+        "content" -> post.content,
+        "create_at" -> post.create_at,
+        "update_at" -> post.update_at,
+        "parent" -> post.parent,
+        "is_reshare" -> post.is_reshare
+      )
+    }
+  }
 }
