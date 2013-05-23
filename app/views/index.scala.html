@@ -19,11 +19,11 @@
         <div id="postModal" class="hide"></div>
         <div id="messageModal" class="hide" style="width:400px"></div>
         <div id="avatarModal" class="postkit-wrapper hide"></div>
-        <ul id="postOption" class="dropdown-menu" role="menu">
-            <li><a href="#" style="background-color: #fff;color: #000;border-width: 0px;">修改信息</a></li>
-            <li><a href="#" style="background-color: #fff;color: #000;border-width: 0px;">删除信息</a></li>
-            <li><a href="#" style="background-color: #fff;color: #000;border-width: 0px;">锁定信息</a></li>
-        </ul>
+        <div id="postOptionModal" class="hide post-optionModal">
+            <div action="edit"><div>修改信息</div></div>
+            <div action="delete"><div>删除信息</div></div>
+            <div action="lock"><div>锁定信息</div></div>
+        </div>
         <div class="row-fluid">
             <div style="float:right;margin-left:10px">@views.html.post.avatar(User.findSample.id,"images/avatar_mini.png")</div>
             <div style="float:right;margin-left:10px"><a id="newBtn" class="btn"><i class="icon-pencil"></i>&nbsp;Share</a></div>
@@ -61,43 +61,26 @@
         </div>
     </div>
     <script>
-
+        var postOptionModal = $('#postOptionModal');
         $('#messageModal').popup({
             anchor:'messageBtn',
-            url:'/notifications/list',
-            afterLoad: function(data){
-
-            }
+            url:'/notifications/list'
         });
         $('#messageBtn').click(function(){
             $('#messageModal').popup('show');
         });
-        $('#postModal').postkit({
-            id:'newPost',
-            anchor:'newBtn',
-            showtype: 'popup',
-            afterPost: function(data){
-                $('#post-list').prepend(data);
-                var newPost = $('#post-list:first');
-                photoInitHeightHandler(newPost.find('.post-photo'));
-                avatarHoverHandler(newPost.find('.avatar-icon'));
-                postHoverHandler(newPost.find('.post-row'));
-                postDelBtnClickHandler(newPost.find('.post-delbtn'));
-                postExpandBtnClickHandler(newPost.find('.post-message-min'));
-                commentNewInputKeydownHandler(newPost.find('.comments-newinput-text'));
-                commentNoInputClickHandler(newPost.find('.comments-noinput-text'));
-                commentAddBtnClickHandler(newPost.find('.comment-addbtn'));
-                commentCancelBtnClickHandler(newPost.find('.comment-cancelbtn'));
-            }
-        });
 
+        $('#postModal').popup({
+            anchor:'newBtn',
+            url:'/posts/postkit?id=postModal'
+        });
         $('#newBtn').click(function(){
-            $('#postModal').postkit('show');
-            return false;
+            $('#postModal').popup('show');
         });
         $('#avatarModal').mouseleave(function(evt){
             $('#avatarModal').hide();
         });
+
         photoInitHeightHandler($('.post-photo'));
         avatarHoverHandler($('#main-container').find('.avatar-icon'));
         likeBtnClickHandler($('.post-btn-likes'));
@@ -117,13 +100,13 @@
         rightPanelHoverHandler($('#contact-list'));
         rightPanelRowHoverHandler($('.rightpanel-li'));
 
-        initComet();
+//        initComet();
+        postOptionClickHandler($('.post-option'),postOptionModal);
+        postOptionModalInit(postOptionModal);
 
-        $('.post-option').click(function(event){
-            $('#postOption').css('left',event.pageX);
-            $('#postOption').css('top',event.pageY);
-            $('#postOption').show();
-        });
+        function test(s){
+            alert(s);
+        }
 
         function initComet(){
             var cometFrame = $('<iframe id="cometFrame"></iframe>');
@@ -133,10 +116,11 @@
             cometFrame.width(1);
             cometFrame.height(1);
             $('body').append(cometFrame);
-            var url = "/streams/news?callback={cb}";
+            var url = "http://localhost:9000/streams/comet?callback={cb}";
+            var cb = "parent.test";
             var t = new Date().getTime();
             var content = '<body onload="var d=document,s=d.createElement(\'script\');s.src=\''
-                +url.replace(/{cb}/,'parent.window.alert')
+                +url.replace(/{cb}/,cb)
                 +'\';d.getElementsByTagName(\'head\')[0].appendChild(s)"></body>';
             var doc = cometFrame[0].contentWindow.document;
             doc.open().write(content);

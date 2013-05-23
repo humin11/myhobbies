@@ -12,7 +12,6 @@ import com.mongodb.casbah.commons.MongoDBObject
 import com.mongodb.casbah.Imports._
 import mongoContext._
 import play.api.libs.json._
-import play.api.libs.functional.syntax._
 
 case class Post(
   id: ObjectId = new ObjectId,

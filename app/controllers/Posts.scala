@@ -124,4 +124,9 @@ object Posts extends Controller{
     Ok(views.html.post.post(post))
   }
 
+  def postkit = Action { request =>
+    val id = request.getQueryString("id").getOrElse("")
+    Ok(views.html.post.postkit(id))
+  }
+
 }

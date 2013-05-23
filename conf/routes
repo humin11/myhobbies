@@ -18,6 +18,7 @@ POST    /comments/create            controllers.Comments.create
 POST    /comments/delete            controllers.Comments.delete
 POST    /comments/list              controllers.Comments.list
 GET     /streams/comet              controllers.Streams.comet
+POST    /posts/postkit              controllers.Posts.postkit
 
 # Court Page
 GET		/court    					controllers.Courts.index

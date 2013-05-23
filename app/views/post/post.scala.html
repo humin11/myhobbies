@@ -26,15 +26,15 @@
             <div class="post-message">
                 @if(post.content.length()>200){
                     <div class="post-message-min">
-                        <p>
-                            @Html(post.content.substring(0,200)+"...")
-                        </p>
+                        <div style="max-height: 72px;">
+                            @Html(post.content)
+                        </div>
                         <span class="post-message-expand">展开此信息</span>
                     </div>
                     <div class="post-message-max hide">
-                        <p>
+                        <div>
                             @Html(post.content)
-                        </p>
+                        </div>
                         <span class="post-message-collapse">收拢此信息</span>
                     </div>
                 }else{
