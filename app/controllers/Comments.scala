@@ -14,6 +14,7 @@ import com.mongodb.casbah.commons.MongoDBObject
 import com.mongodb.casbah.commons.TypeImports.ObjectId
 import org.bson.types.ObjectId
 import com.mongodb.casbah.commons.TypeImports.ObjectId
+import securesocial.core._
 
 object Comments extends Controller {
 

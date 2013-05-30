@@ -11,11 +11,12 @@ import se.radley.plugin.salat._
 import com.mongodb.casbah.commons.MongoDBObject
 import com.mongodb.casbah.Imports._
 import mongoContext._
+import securesocial.core._
 import com.mongodb.casbah.commons.TypeImports._
 
 case class Like(
   id: ObjectId = new ObjectId,
-  author: ObjectId,
+  author: UserId,
   source_id: ObjectId,
   source_type: String = "POST",
   create_at: Date,

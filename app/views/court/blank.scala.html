@@ -47,7 +47,19 @@
           
           <div class="row-fluid">
             <div class="span9">
-              @inputText(courtForm("name"), 'class ->"input-block-level", '_label -> Messages("name", Messages("court")), '_help -> Messages("name.help", Messages("court")), 'placeholder -> Messages("name.help", Messages("court")), 'minlength -> "2", 'maxlength -> "128", 'required -> "required")
+              <div class="control-group">
+                <label class="control-label" for="name">
+                  @Messages("name", Messages("court"))
+                </label>
+                <div class="controls">
+                  <input type="text" name="name" id="name" class="input-block-level" placeholder="@Messages("name.help", Messages("court"))" minlength="2" maxlength= "128" required="required" />
+                  <div class="alert fade in">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.
+                  </div>
+                </div>
+              </div>
+              
               <div class="control-group">
                 <label class="control-label" for="businesshours">
                   @Messages("businesshours", Messages("court"))
@@ -56,6 +68,7 @@
                 
                 </div>
               </div>
+
               @inputText(courtForm("telephone"), 'class ->"input-block-level", '_label -> Messages("telephone", Messages("court")), '_help -> Messages("telephone.help", Messages("court")), 'placeholder -> Messages("telephone.help", Messages("court")))
               @inputText(courtForm("address"), 'class ->"input-block-level", '_label -> Messages("address", Messages("court")), '_showConstraints -> false, 'placeholder -> Messages("address.help", Messages("court")), 'required -> "required")
               
@@ -163,13 +176,6 @@
 		    $("#address").val(myValue);
 		    setPlace(false);
 		});
-
-    $("#address").blur(function() {
-      if(myValue==null){
-        myValue = $("#address").val();
-        setPlace(true); 
-      }
-    })
 
 		function setPlace(search){
 		    //map.clearOverlays();    //清除地图上所有覆盖物

@@ -1,5 +1,5 @@
 @(currentPage: Page[(Court)], currentOrderBy: Int, currentFilter: String)
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=587e7896ed6d8c1bb9705bd8093732c2"></script>
 
 @displayItem(court: Court) = {
 	<div class="row-fluid">
@@ -53,6 +53,7 @@
 
 	<!--start list-->
 	<div class="container-fluid">
+
     @Option(currentPage.items).filterNot(_.isEmpty).map { courts =>
 		  @courts.map { court =>
         @displayItem(court)
@@ -171,14 +172,17 @@
 
 <script type="text/javascript">
 var map = new BMap.Map("court_location_list");
+
+map.centerAndZoom("北京",12);
 // 创建地址解析器实例
 var myGeo = new BMap.Geocoder();
 // 将地址解析结果显示在地图上,并调整地图视野
-myGeo.getPoint("朝阳区朝阳公园", function(point){
-  if (point) {
-    map.centerAndZoom(point, 16);
-    map.addOverlay(new BMap.Marker(point));
+@Option(currentPage.items).filterNot(_.isEmpty).map { courts =>
+  @courts.map { court =>
+    if(@court.longitude.isDefined){
+      var point = new BMap.Point("@court.longitude", "@court.latitude");
+      map.addOverlay(new BMap.Marker(point));
+    }
   }
-}, "北京市");
-
+}
 </script>

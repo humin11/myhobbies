@@ -24,6 +24,19 @@
   &:focus {
 
   }
+  &:before{
+      position:absolute;
+      display:block;
+      content:"";
+      top:48px;
+      bottom:-22px;
+      left:-44px;
+      width:1px;
+      max-width:1px;
+      background-color:#e1e6ed;
+      border:1px solid #d7dbdd;
+      border-width:0 1px
+    }
   .post {
     .rounded-corners(3px);
     .box-shadow(0 2px 4px,.05);
@@ -36,6 +49,7 @@
     vertical-align: top;
     position: relative;
     z-index: 1;
+    
     .post-option {
       background: no-repeat url(//ssl.gstatic.com/s2/oz/images/sprites/stream-b3eefa4b142f6e5c83ef89875666931b.png) -80px -149px;
       cursor: pointer;

@@ -10,12 +10,13 @@ import play.api.libs.json._
 import play.api.libs.functional.syntax._
 import se.radley.plugin.salat._
 import se.radley.plugin.salat.Binders._
+import securesocial.core._
 import mongoContext._
 
 case class Contact (
   id: ObjectId = new ObjectId,
-  owner: ObjectId,
-  person: ObjectId,
+  owner: UserId,
+  person: UserId,
   create_at: Date
 )
 

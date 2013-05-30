@@ -3,17 +3,17 @@
 <div class="comment" uid="@comment.id">
     <div class="comment-avatar">@views.html.post.avatar(comment.author,"images/avatar_mini.png")</div>
     <div class="comment-body">
-        <a class="comment-author">@(author.name)</a>
+        <a class="comment-author">@(author.firstName + " " + author.lastName)</a>
         <span class="comment-status">
             <span class="comment-date">@comment.create_at</span>
-            @if(author.name == "admin"){
+            @if(author.lastName == "admin"){
                 <span class="comment-edit">编辑</span>
             }else{
                 <span class="comment-reply">回复</span>
             }
             <span class="comment-like"></span>
             <span class="comment-rightbtn">
-                @if(author.name == "admin"){
+                @if(author.lastName == "admin"){
                     <div class="close hide comment-delbtn">&times;</div>
                 }else{
 

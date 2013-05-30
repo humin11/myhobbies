@@ -23,6 +23,7 @@ GET     /streams/comet              controllers.Streams.comet
 GET		/court    					controllers.Courts.index
 GET		/court/list					controllers.Courts.list(p:Int ?= 0, s:Int ?= 2, f ?= "")
 GET		/court/blank				controllers.Courts.blank
+GET 	/court/search				controllers.Courts.search
 POST 	/court/new					controllers.Courts.save
 POST 	/court/upload				controllers.Courts.upload
 GET		/court/:id					controllers.Courts.view(id: ObjectId)

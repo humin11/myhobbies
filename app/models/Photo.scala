@@ -2,6 +2,7 @@ package models
 
 import play.api.Play.current
 import java.util.Date
+import java.io.File
 import com.novus.salat.annotations._
 import se.radley.plugin.salat.Binders._
 import org.bson.types.ObjectId
@@ -10,14 +11,16 @@ import com.novus.salat.dao.{SalatDAO, ModelCompanion}
 import se.radley.plugin.salat._
 import com.mongodb.casbah.commons.MongoDBObject
 import com.mongodb.casbah.Imports._
+import securesocial.core._
+
 import mongoContext._
-import java.io.File
+
 
 case class Photo (
   id: ObjectId = new ObjectId,
   source_id: ObjectId,
   source_type: String = "POST",
-  author: ObjectId,
+  author: UserId,
   path: String,
   name: String,
   create_at: Date,

@@ -4,6 +4,7 @@ import play.api._
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
+import play.api.libs.json._
 import com.mongodb.casbah.Imports._
 import java.util.{Date}
 import models._
@@ -15,6 +16,8 @@ import com.github.cleverage.elasticsearch.ScalaHelpers._
 import play.api.libs.concurrent.Execution.Implicits._
 import com.github.cleverage.elasticsearch.ScalaHelpers.IndexQuery
 import play.api.libs.iteratee.Enumerator
+import indexing.{IndexCourtsManager, IndexCourts}
+import concurrent.Future
 
 object Courts extends Controller {
 
@@ -28,9 +31,11 @@ object Courts extends Controller {
 			"telephone" -> optional(text),
 			"businfo" -> optional(text),
 			"description" -> optional(text),
+			"longitude" -> optional(text),
+			"latitude" -> optional(text),
 			"alias" -> optional(text)
-		)((name, logo, address, telephone, businfo, description, alias) => Court(name = name, logo = logo, address = address, telephone = telephone, businfo = businfo, description = description, alias = alias))
-      	((court) => Some(court.name, court.logo, court.address, court.telephone, court.businfo, court.description, court.alias))
+		)((name, logo, address, telephone, businfo, description, longitude, latitude, alias) => Court(name = name, logo = logo, address = address, telephone = telephone, businfo = businfo, description = description, longitude=longitude, latitude=latitude, alias = alias))
+      	((court) => Some(court.name, court.logo, court.address, court.telephone, court.businfo, court.description, court.longitude, court.latitude, court.alias))
 	)
 
 	def index = Action {
@@ -43,6 +48,14 @@ object Courts extends Controller {
 	      orderBy, filter
 	    ))
 	}
+
+  def searchByName(page: Int, orderBy: Int, filter: String) = Action { implicit request =>
+      var items = Court.searchByName(page, orderBy, filter).toList
+      render {
+        case Accepts.Html() => Ok(html.court.blank(courtForm()))
+        case Accepts.Json() => Ok(Json.toJson(items))
+      }
+  }
 	
 	def view(id: ObjectId) = Action {
 		Court.findById(id).map(court => 
@@ -80,4 +93,20 @@ object Courts extends Controller {
 
 	def upload = TODO
 	
+	def search = Action {
+		//val indexQuery = IndexQuery[IndexCourts]().withBuilder(QueryBuilders.matchQuery("name", "test1234"))
+
+		val indexQuery = IndexCourtsManager.query.withBuilder(QueryBuilders.matchQuery("name", "test1234"))
+
+    	val results: Future[(IndexResults[IndexCourts])] = IndexCourtsManager.searchAsync(indexQuery)
+
+    	 Logger.info("IndexTestManager.search()" + results)
+    	Async {
+    	results.map { case (r1) =>
+        Ok("IndexTestManager.search()" + r1.totalCount)
+    }
+      }
+
+      	
+	}	
 }

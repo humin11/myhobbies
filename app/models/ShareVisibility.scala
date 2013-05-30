@@ -10,12 +10,13 @@ import com.novus.salat.dao.{SalatDAO, ModelCompanion}
 import se.radley.plugin.salat._
 import com.mongodb.casbah.commons.MongoDBObject
 import com.mongodb.casbah.Imports._
+import securesocial.core._
 import mongoContext._
 
 case class ShareVisibility(
   id: ObjectId = new ObjectId,
   post: ObjectId,
-  recipient: ObjectId,
+  recipient: UserId,
   hidden: Boolean = false,
   create_at: Date,
   update_at: Date

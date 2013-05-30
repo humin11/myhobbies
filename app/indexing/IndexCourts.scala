@@ -10,7 +10,7 @@ case class IndexCourts(id: String, name: String) extends Indexable
 object IndexCourtsManager extends IndexableManager[IndexCourts] {
   import play.api.libs.json._
 
-  val indexType = "courts"
+  val indexType = "nameidx"
   val reads: Reads[IndexCourts] = Json.reads[IndexCourts]
   val writes: Writes[IndexCourts] = Json.writes[IndexCourts]
 }

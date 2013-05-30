@@ -1,28 +1,30 @@
-package models;
+package models
 
+import securesocial.core.providers.Token
+import securesocial.core._
 import play.api.Play.current
-import java.util.Date
+import com.novus.salat._
 import com.novus.salat.annotations._
-import se.radley.plugin.salat.Binders._
-import org.bson.types.ObjectId
-import se.radley.plugin.salat.Binders.ObjectId
-import com.novus.salat.dao.{SalatDAO, ModelCompanion}
-import se.radley.plugin.salat._
-import com.mongodb.casbah.commons.MongoDBObject
+import com.novus.salat.dao._
 import com.mongodb.casbah.Imports._
+import se.radley.plugin.salat._
+import com.mongodb.casbah.query.dsl._
 import mongoContext._
 
-case class User(
-  id: ObjectId = new ObjectId,
-  email: Option[String] = None,
-  name: String,
-  password: Option[String] = None
-)
+case class User(id: UserId, name: String, firstName: String, lastName: String, fullName: String, email: Option[String],
+                avatarUrl: Option[String], authMethod: AuthenticationMethod,
+                oAuth1Info: Option[OAuth1Info] = None,
+                oAuth2Info: Option[OAuth2Info] = None,
+                passwordInfo: Option[PasswordInfo] = None) extends Identity
 
-object User extends ModelCompanion[User, ObjectId]{
-
-  val collection = mongoCollection("users")
-  val dao = new SalatDAO[User, ObjectId](collection = collection) {}
+object User extends ModelCompanion[User, UserId] {
+  def apply(i: Identity): User = {
+    User(i.id, i.firstName+" "+i.lastName, i.firstName, i.lastName, i.fullName,
+      i.email, i.avatarUrl, i.authMethod, i.oAuth1Info,
+      i.oAuth2Info, i.passwordInfo
+    )
+  }
+  val dao = new SalatDAO[User, UserId](collection = mongoCollection("users")) {}
 
   def findContactUser(implicit user: User) = Contact.findByOwner.map{ contact => findOneById(contact.person).get }
 
@@ -35,5 +37,20 @@ object User extends ModelCompanion[User, ObjectId]{
 
   def findSample = findOne(MongoDBObject("name" -> "admin")).get
 
+  def findOneBySocialId(socialId:UserId):Option[User] = dao.findOne(MongoDBObject("_id._id" -> socialId.id, "_id.providerId" -> socialId.providerId))
+  def findOneByEmailAndProvider(email: String, providerId:String): Option[User] = dao.findOne(MongoDBObject("email" -> email, "authMethod.method" -> providerId))
+}
+
+
+object TokenDAO extends ModelCompanion[Token, String] {
+  val dao = new SalatDAO[Token, String](collection = mongoCollection("tokens")) {}
+
+  def findToken(uuid:String):Option[Token] = dao.findOne(MongoDBObject("uuid" -> uuid))
+  def deleteExpiredTokens() {
+    val now = new _root_.java.util.Date()
+    dao.find("expirationTime" $lte now).foreach(
+      TokenDAO.remove(_)
+    )
+  }
 }
 

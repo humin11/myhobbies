@@ -12,7 +12,8 @@ object ApplicationBuild extends Build {
      "org.mindrot" % "jbcrypt" % "0.3m",
     "securesocial" %% "securesocial" % "master-SNAPSHOT",
     "se.radley" %% "play-plugins-salat" % "1.2",
-    "com.clever-age" % "play2-elasticsearch" % "0.5.4"
+    "com.clever-age" % "play2-elasticsearch" % "0.5-SNAPSHOT",
+    "com.feth" %% "play-easymail" % "0.2-SNAPSHOT"
   )
 
 
@@ -23,6 +24,8 @@ object ApplicationBuild extends Build {
       routesImport += "se.radley.plugin.salat.Binders._",
       templatesImport += "org.bson.types.ObjectId",
       resolvers += Resolver.sonatypeRepo("snapshots"),
+      resolvers += Resolver.url("play-easymail (release)", url("http://joscha.github.com/play-easymail/repo/releases/"))(Resolver.ivyStylePatterns),
+      resolvers += Resolver.url("play-easymail (snapshot)", url("http://joscha.github.com/play-easymail/repo/snapshots/"))(Resolver.ivyStylePatterns),
       resolvers += Resolver.url("play-plugin-releases", new URL("http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/"))(Resolver.ivyStylePatterns),
       resolvers += Resolver.url("play-plugin-snapshots", new URL("http://repo.scala-sbt.org/scalasbt/sbt-plugin-snapshots/"))(Resolver.ivyStylePatterns)
   )

@@ -10,13 +10,14 @@ import com.novus.salat.dao.{SalatDAO, ModelCompanion}
 import se.radley.plugin.salat._
 import com.mongodb.casbah.commons.MongoDBObject
 import com.mongodb.casbah.Imports._
+import securesocial.core._
 import mongoContext._
 
 case class Notification(
   id: ObjectId = new ObjectId,
   source_id: ObjectId,
   source_type: String = "COMMENT",
-  recipient: ObjectId,
+  recipient: UserId,
   unread: Boolean = true,
   create_at: Date,
   update_at: Date
