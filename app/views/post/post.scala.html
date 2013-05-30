@@ -10,7 +10,8 @@
 
 <div class="post-row" uid="@post.id">
     <div class="post">
-        <span class="post-option"></span>
+        <span class="post-option">
+        </span>
         <div class="post-avatar">@views.html.post.avatar(post.author)</div>
         <div class="post-arrow"></div>
         <div class="post-header">
@@ -25,15 +26,15 @@
             <div class="post-message">
                 @if(post.content.length()>200){
                     <div class="post-message-min">
-                        <p>
-                            @Html(post.content.substring(0,200)+"...")
-                        </p>
+                        <div style="max-height: 72px;">
+                            @Html(post.content)
+                        </div>
                         <span class="post-message-expand">展开此信息</span>
                     </div>
                     <div class="post-message-max hide">
-                        <p>
+                        <div>
                             @Html(post.content)
-                        </p>
+                        </div>
                         <span class="post-message-collapse">收拢此信息</span>
                     </div>
                 }else{
@@ -42,8 +43,11 @@
                     </p>
                 }
             </div>
+            @if(post.is_reshare){
+                @views.html.post.reshare(Post.findParent(post.id).get)
+            }
             @if(!photos.isEmpty){
-                <div  class="post-photos" >
+                <div class="post-photos" >
                     <div class="post-photo" >
                         <img src="@photos.head.path"/>
                     </div>

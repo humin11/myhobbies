@@ -6,7 +6,52 @@
 @post-fontUnusedColor: #999;
 @post-borderColor: #ccc;
 @comment-Color: #f8f8f8;
+.avatar-modal {
+  position:absolute;
+  border: 1px solid #CCC;
+  border-width: 1px;
+  border-radius: 3px;
+  background-color:#fff;
+  padding: 10px;
+  z-index: 1041;
+  -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+}
+.post-optionModal {
+  .box-shadow(0 2px 40px,.4);
+  .rounded-corners(3px);
+  position: absolute;
+  max-width: 200px;
+  z-index: 20000;
+  font-size: 13px;
+  margin: 0;
+  outline: none;
+  padding: 6px 0;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.2);
+  div {
+    position: relative;
+    color: #333;
+    cursor: pointer;
+    list-style: none;
+    margin: 0;
+    padding: 6px 8em 6px 30px;
+    white-space: nowrap;
+    &:hover,
+    &:focus {
+      background-color: #f5f5f5;
+      border-color: #eee;
+      border-style: dotted;
+      border-width: 1px 0;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+    div {
 
+    }
+  }
+}
 .post-row {
   .box-sizing;
   font-size: @post-font;
@@ -59,6 +104,10 @@
       width: 13px;
       position: relative;
       z-index: 1;
+      &:hover,
+      &:focus {
+        background: no-repeat url(//ssl.gstatic.com/s2/oz/images/sprites/stream-e322ac53c0679530b4a6b20503220d8a.png) -23px -22px;
+      }
     }
     .post-avatar {
       img {
@@ -133,6 +182,32 @@
             clear: both;
             display: block;
             padding: 0;
+          }
+        }
+      }
+      .post-reshare {
+        border-top: 1px solid #ccc;
+        .post-reshare-title {
+          color: #999;
+          padding-bottom: 3px;
+          padding-top: 12px;
+          .post-reshare-avatar {
+            img {
+              float: left;
+              height: 32px;
+              margin: 3px 12px 12px 0;
+              width: 32px;
+              cursor: pointer;
+              .rounded-corners(3px);
+            }
+          }
+        }
+        .post-reshare-body {
+          padding-bottom: 12px;
+          .post-reshare-content {
+            min-height: 0;
+            padding: 0 0 0 0;
+            overflow: hidden;
           }
         }
       }

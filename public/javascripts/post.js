@@ -1,3 +1,35 @@
+function postOptionClickHandler(ele,modal){
+    ele.click(function(event){
+        modal.selectedEle = $(this);
+        modal.css('left',event.pageX-modal.width());
+        modal.css('top',event.pageY);
+        modal.show();
+        return false;
+    });
+}
+
+function postOptionModalInit(modal){
+    modal.find("div[action='delete']").click(function(){
+        var postrow = modal.selectedEle.parents('.post-row');
+        var postId = postrow.attr('uid');
+        $.post('/posts/delete?id='+postId,function(){
+            postrow.remove();
+            modal.hide();
+            modal.mouseIn = false;
+        });
+    });
+    modal.mouseenter(function(){
+        modal.mouseIn = true;
+    });
+    modal.mouseleave(function(){
+        modal.mouseIn = false;
+    });
+    $(document.body).click(function(){
+        if(modal.is(":visible") && !modal.mouseIn){
+            modal.hide();
+        }
+    });
+}
 function photoInitHeightHandler(ele){
     for(var i=0;i<ele.length;i++){
         var img = $(ele[i]).find(':first-child');
@@ -96,7 +128,7 @@ function commentsMoreClickHandler(ele){
         $(this).prev().show();
         var comments = $(this).parents('.comments');
         var id = comments.parents('.post-row').attr('uid');
-        $.post('/comments/list?id='+id+'&show=3',function(data){
+        $.post('/comments/list?id='+id+'&show=1',function(data){
             comments.find('.comments-list').html(data);
             commentHoverHandler(comments.find('.comment'));
             commentDelBtnClickHandler(comments.find('.comment-delbtn'));

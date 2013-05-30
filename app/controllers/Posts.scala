@@ -15,6 +15,8 @@ import java.util
 import scala.Some
 import java.io.File
 import scala.util.Random
+import service.Redis
+import play.api.libs.json.Json
 
 object Posts extends Controller{
 
@@ -47,6 +49,7 @@ object Posts extends Controller{
       }
     }
     Post.insert(post)
+    Redis.publish("user_"+user.id,Post.postJsonWrite.writes(post))
     Ok(views.html.post.post(post))
   }
 
@@ -118,7 +121,12 @@ object Posts extends Controller{
       ShareVisibility.insert(share_visibility)
     }
     Post.insert(post)
-    Ok
+    Ok(views.html.post.post(post))
+  }
+
+  def postkit = Action { request =>
+    val id = request.getQueryString("id").getOrElse("")
+    Ok(views.html.post.postkit(id))
   }
 
 }

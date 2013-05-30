@@ -1,2 +1,29 @@
 @(parent:Post)
 @author = @{User.findOneById(parent.author).get}
+@photos = @{Photo.findByPost(parent.id)}
+<div class="post-reshare">
+    <div class="post-reshare-title">
+        <div class="post-reshare-avatar">
+            @views.html.post.avatar(parent.author,"images/avatar_mini.png")
+        </div>
+        此信息最初是由
+        @(User.findOneById(parent.author).get.name)
+        分享的
+    </div>
+    <div class="post-reshare-body">
+        <div class="post-reshare-content">
+            @Html(parent.content)
+        </div>
+    </div>
+</div>
+@if(!photos.isEmpty){
+    <div class="post-photos" >
+        <div class="post-photo" >
+            <img src="@photos.head.path"/>
+        </div>
+        <div class="post-photo-bt post-photo-tb"></div>
+        <div class="post-photo-bt post-photo-bb"></div>
+        <div class="post-photo-lr post-photo-lb"></div>
+        <div class="post-photo-lr post-photo-rb"></div>
+    </div>
+}

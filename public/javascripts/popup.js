@@ -5,6 +5,7 @@
         this.width = 400;
         this.url = options["url"];
         this.anchor = options["anchor"];
+        this.afterLoad = options["afterLoad"];
         this.initialize();
     }
 
@@ -16,9 +17,9 @@
             this.$element.addClass('hide popup-wrapper');
             var arrow = $('<div class="popup-arrow-top"><div class="popup-arrow-top-inner"></div></div>');
             var content = $('<div class="popup-content"></div>');
-            var iframe = $('<iframe></iframe>');
             this.$element.append(arrow);
             this.$element.append(content);
+            this.$element.width(this.width);
             this.autoHide();
         },
 
@@ -41,6 +42,7 @@
         show: function(){
             this.initPosition();
             var $ele = this.$element;
+            var $this = this;
             $.post(this.url,function(data){
                 $ele.find('.popup-content').html(data);
                 $ele.show();

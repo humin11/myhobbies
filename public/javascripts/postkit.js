@@ -8,8 +8,7 @@
         this.postWidth = 400;
         this.id = options["id"];
         this.anchor = options["anchor"];
-        this.showtype = options["showtype"];
-        this.afterPost = options["afterPost"];
+        this.afterLoad = options["afterLoad"];
         this.tmpFiles = [];
         this.initialize();
     }
@@ -19,15 +18,15 @@
         constructor: Postkit,
 
         initialize: function(){
-            if(this.showtype == 'popup'){
-                this.initPopup();
-                this.autoHide();
-            }
+            this.$element.addClass('hide postkit-wrapper');
+            var kitArrow = $('<div class="postkit-arrow-top"><div class="postkit-arrow-top-inner"></div></div>');
+            var kitContent = $('<div class="postkit-content"></div>');
+            this.$element.append(kitArrow);
+            this.$element.append(kitContent);
+            this.autoHide();
             var tools = $('<div class="postkit-toolsbody"></div>');
             var picContainer = this.addToolsBtn(tools);
 
-            var particContainer = $('<div class="postkit-particbody"></div>');
-            //this.addParticipationBtn(particContainer);
 
             var divFooter = $('<div class="postkit-footer"></div>');
             var shareBtn = this.addShareBtn(divFooter);
@@ -68,18 +67,10 @@
                     }
                 },100);
             });
-            if(this.showtype == 'popup'){
-                var kitContent = $(this.$element.find('.postkit-content')[0]);
-                kitContent.append(divBody);
-                kitContent.append(tools);
-                kitContent.append(particContainer);
-                kitContent.append(divFooter);
-            }else{
-                this.$element.append(divBody);
-                this.$element.append(tools);
-                this.$element.append(particContainer);
-                this.$element.append(divFooter);
-            }
+            var kitContent = $(this.$element.find('.postkit-content')[0]);
+            kitContent.append(divBody);
+            kitContent.append(tools);
+            kitContent.append(divFooter);
             this.$element.width(this.postWidth);
         },
 
@@ -96,14 +87,6 @@
                     $ele.hide();
                 }
             });
-        },
-
-        initPopup: function(){
-            this.$element.addClass('hide postkit-wrapper');
-            var kitArrow = $('<div class="postkit-arrow-top"><div class="postkit-arrow-top-inner"></div></div>');
-            var kitContent = $('<div class="postkit-content"></div>');
-            this.$element.append(kitArrow);
-            this.$element.append(kitContent);
         },
 
         initPosition: function(){
@@ -123,9 +106,7 @@
         },
 
         show: function(){
-            if(this.showtype == 'popup'){
-                this.initPosition();
-            }
+            this.initPosition();
             this.$element.show();
         },
 
@@ -147,7 +128,7 @@
                     params["content"] = content;
                     params["tmpfiles"] = $this.tmpFiles;
                     $.post($url,params,function(data){
-                        $this.afterPost(data);
+                        $this.afterLoad(data);
                         $this.$element.find('.picContainer').empty();
                         $this.tmpFiles = [];
                         postContent.empty();
@@ -215,17 +196,6 @@
             toolsContainer.append(picProgressBar);
             toolsContainer.append(picContainer);
             return picContainer;
-        },
-
-        addParticipationBtn: function(particContainer){
-            var particBtn = $('<div class="postkit-partic-content span10"></div>');
-            particBtn.attr('contenteditable',true);
-            particBtn.click(function(){
-
-            });
-            particContainer.append(particBtn);
-            var addBtn = $('<div class="span2"><div class="postkit-partic-addicon"></div></div>');
-            particContainer.append(addBtn);
         }
 
     }
