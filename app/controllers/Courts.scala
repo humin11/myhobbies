@@ -19,7 +19,7 @@ import play.api.libs.iteratee.Enumerator
 import indexing.{IndexCourtsManager, IndexCourts}
 import concurrent.Future
 
-object Courts extends Controller {
+object Courts extends Controller with securesocial.core.SecureSocial {
 
 	 val Home = Redirect(routes.Courts.list(0, 2, ""))
 
@@ -63,7 +63,7 @@ object Courts extends Controller {
 		).getOrElse(NotFound)
 	}
 	
-	def blank = Action {
+	def blank = SecuredAction { implicit request =>
 		/*
 		 * court list
 		 */
@@ -108,5 +108,5 @@ object Courts extends Controller {
       }
 
       	
-	}	
+	}
 }

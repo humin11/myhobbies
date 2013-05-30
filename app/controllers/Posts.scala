@@ -17,6 +17,7 @@ import java.io.File
 import scala.util.Random
 import service.Redis
 import play.api.libs.json.Json
+import utils.formaters.ObjectIdFormatter._
 
 object Posts extends Controller{
 

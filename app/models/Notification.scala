@@ -12,6 +12,7 @@ import com.mongodb.casbah.commons.MongoDBObject
 import com.mongodb.casbah.Imports._
 import securesocial.core._
 import mongoContext._
+import utils.formaters.ObjectIdFormatter._
 
 case class Notification(
   id: ObjectId = new ObjectId,

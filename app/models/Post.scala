@@ -13,6 +13,7 @@ import com.mongodb.casbah.Imports._
 import securesocial.core._
 import mongoContext._
 import play.api.libs.json._
+import utils.formaters.ObjectIdFormatter._
 
 case class Post(
   id: ObjectId = new ObjectId,
@@ -62,7 +63,7 @@ trait PostJson {
     def writes(post: Post): JsValue = {
       Json.obj(
         "id" -> post.id,
-        "author" -> post.author,
+        "author" -> post.author.id,
         "content" -> post.content,
         "create_at" -> post.create_at,
         "update_at" -> post.update_at,
