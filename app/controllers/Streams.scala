@@ -11,29 +11,28 @@ import akka.pattern.ask
 import akka.util.Timeout
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.Comet
+import securesocial.core.SecureSocial
 
 
-object Streams extends Controller {
-  
-  def list = Action { request =>
-    implicit val user = {User.findOne(MongoDBObject("name" -> "admin")).get}
-    val posts = Post.findShares()
-    Ok(html.index("",posts))
-  }
+object Streams extends Controller with SecureSocial {
 
-  def comet = Action { request =>
+  def comet = UserAwareAction { request =>
     AsyncResult {
-      implicit val user = {User.findOne(MongoDBObject("name" -> "admin")).get}
-      val cometJS = request.getQueryString("callback").getOrElse("")
-      for(followed <- User.findContactUser){
-        Redis.subscribe("user_"+user.id)
+      request.user match {
+        case Some(user) => {
+          val cometJS = request.getQueryString("callback").getOrElse("")
+          for(followed <- User.findContactUser(user)){
+            Redis.subscribe("user_"+user.id)
+          }
+          implicit val timeout = Timeout(5,TimeUnit.SECONDS)
+          val cometFuture = (CometActor.ref ? Connect(user,cometJS)).mapTo[Enumerator[String]]
+          cometFuture.map { chunks =>
+            Console.println("***********"+chunks)
+            Ok.stream(chunks >>> Enumerator.eof).as(JAVASCRIPT)
+          }
+        }
       }
-      implicit val timeout = Timeout(5,TimeUnit.SECONDS)
-      val cometFuture = (CometActor.ref ? Connect(user,cometJS)).mapTo[Enumerator[String]]
-      cometFuture.map { chunks =>
-        Console.println("***********"+chunks)
-        Ok.stream(chunks >>> Enumerator.eof).as(JAVASCRIPT)
-      }
+
     }
   }
 

@@ -1,4 +1,4 @@
-@(message: String, posts: Seq[Post] = Nil, contacts: Seq[User] = Nil, recommendUsers: Seq[User] = Nil)
+@(user:securesocial.core.Identity, message: String, posts: Seq[Post] = Nil, contacts: Seq[User] = Nil, recommendUsers: Seq[User] = Nil)
 @styles = {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/postkit.css")">
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/post.css")">
@@ -25,7 +25,7 @@
             <div action="lock"><div>锁定信息</div></div>
         </div>
         <div class="row-fluid">
-            <div style="float:right;margin-left:10px">@views.html.post.avatar(User.findSample.id,"images/avatar_mini.png")</div>
+            <div style="float:right;margin-left:10px">@views.html.post.avatar(user.id,"images/avatar_mini.png")</div>
             <div style="float:right;margin-left:10px"><a id="newBtn" class="btn"><i class="icon-pencil"></i>&nbsp;Share</a></div>
             <div style="float:right;"><a id="messageBtn" class="btn messagebox-active">3</a></div>
         </div>
@@ -46,7 +46,7 @@
             </div>
             <div id="post-list" class="span6">
                 @for(p <- posts) {
-                    @views.html.post.post(p)
+                    @views.html.post.post(user,p)
                 }
 
             </div>

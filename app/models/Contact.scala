@@ -27,10 +27,10 @@ object Contact extends ModelCompanion[Contact, ObjectId]{
 
   collection.ensureIndex(MongoDBObject("owner" -> 1,"person" -> 2), "contact_person", unique = true)
 
-  def findByOwner(implicit owner: User):Seq[Contact] = find(MongoDBObject("owner" -> owner.id)).toSeq
+  def findByOwner(implicit owner: Identity):Seq[Contact] = find(MongoDBObject("owner" -> owner.id)).toSeq
 
-  def findByPerson(implicit person: User):Seq[Contact] = find(MongoDBObject("person" -> person.id)).toSeq
+  def findByPerson(implicit person: Identity):Seq[Contact] = find(MongoDBObject("person" -> person.id)).toSeq
 
-  def findPersonByOwner(personId: ObjectId)(implicit owner: User) = findOne(MongoDBObject("owner" -> owner.id,"person" -> personId))
+  def findPersonByOwner(personId: ObjectId)(implicit owner: Identity) = findOne(MongoDBObject("owner" -> owner.id,"person" -> personId))
 
 }
