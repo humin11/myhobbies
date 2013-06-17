@@ -2956,9 +2956,9 @@ button.btn.btn-mini, input[type="submit"].btn.btn-mini {
   /* Opera 11.10+ */
   background-image: linear-gradient(top, white, #f2f2f2);
   border: 1px solid #d4d4d4;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
   -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
   /* FF3.5+ */
   -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);

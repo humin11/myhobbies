@@ -31,9 +31,22 @@
         </div>
         <div class="row-fluid" style="background-color:#fff;min-height: 700px;padding-top: 20px">
             <div class="span3 leftpanel">
-                <div class="leftpanel-avatar">
-                    <img src="@routes.Assets.at("images/avatar_large.png")"></img>
-                </div>
+                <div class="account-container">
+                
+                    <div class="account-avatar">
+                        <img src="@routes.Assets.at("images/avatar_large.png")" alt="" class="thumbnail" />
+                    </div> <!-- /account-avatar -->
+                    <div class="account-details">
+                        <span class="account-name">Rod Howard</span>
+                        <span class="account-role">Administrator</span>
+                        <span class="account-actions">
+                            <a href="javascript:;">Profile</a> |
+                            <a href="javascript:;">Edit Settings</a>
+                        </span>
+                    </div> <!-- /account-details -->
+                </div> <!-- /account-container -->
+
+                <br>
                 <div class="leftpanel-group">
                     @for(i <- 0 to 10){
                         <a target="_top">

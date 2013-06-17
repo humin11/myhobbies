@@ -67,6 +67,7 @@ object Courts extends Controller with securesocial.core.SecureSocial {
 		/*
 		 * court list
 		 */
+		println(request.user)
 		Ok(html.court.blank(courtForm()))
 	}
 	
