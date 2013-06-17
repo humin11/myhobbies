@@ -32,7 +32,7 @@ trait PostDAO extends ModelCompanion[Post, ObjectId]{
   val collection = mongoCollection("posts")
   val dao = new SalatDAO[Post, ObjectId](collection = collection) {}
 
-  def findShares(pageNum:Int = 0,maxRow:Int = 15)(implicit user:User) = {
+  def findShares(pageNum:Int = 0,maxRow:Int = 15)(implicit user:Identity) = {
     ShareVisibility.find(MongoDBObject("recipient" -> user.id, "hidden" -> false))
       .sort(MongoDBObject("create_at" -> -1))
       .skip(pageNum*maxRow)

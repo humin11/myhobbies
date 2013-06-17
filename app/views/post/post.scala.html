@@ -1,11 +1,11 @@
-@(post:Post)
+@(user:securesocial.core.Identity,post:Post)
 @import org.bson.types.ObjectId
 @commentItems(comments:Seq[Comment]) = {
     @for(c <- comments) {
         @views.html.post.comment(c)
     }
 }
-@author = @{User.findOneById(post.author).get}
+@author = @{User.findOneBySocialId(post.author).get}
 @photos = @{Photo.findByPost(post.id)}
 
 <div class="post-row" uid="@post.id">
@@ -15,7 +15,7 @@
         <div class="post-avatar">@views.html.post.avatar(post.author)</div>
         <div class="post-arrow"></div>
         <div class="post-header">
-            <span><a class="post-author">@(User.findOneById(post.author).get.name)</a></span>
+            <span><a class="post-author">@(User.findOneBySocialId(post.author).get.name)</a></span>
             <span class="post-status">
                 <span>@post.create_at</span>
                     &nbsp;-&nbsp;
@@ -62,7 +62,7 @@
             <div class="post-actionbtn"><span><i class="icon-heart"></i></span></div>
             <div class="post-actionbtn"><span><i class="icon-share-alt"></i></span></div>
             <div class="post-actiondetail">
-                <div class="like-avatar @("hide".when(!Like.exists(post.id)(User.findSample)))">
+                <div class="like-avatar @("hide".when(!Like.exists(post.id)(user)))">
                     <img src="@routes.Assets.at("images/avatar_mini.png")"></img>
                 </div>
                 <div class="post-totalnum post-resharenum">
@@ -90,7 +90,7 @@
                 @commentItems(Comment.findByPost(post.id).sortBy(_.create_at).takeRight(3))
             </div>
             <div class="comments-newinput-section hide">
-                <div class="comment-avatar">@views.html.post.avatar(User.findSample.id,"images/avatar_mini.png")</div>
+                <div class="comment-avatar">@views.html.post.avatar(user.id,"images/avatar_mini.png")</div>
                 <div class="comments-newinput">
                     <div>
                         <div class="comments-newinput-text" contenteditable="plaintext-only"></div>

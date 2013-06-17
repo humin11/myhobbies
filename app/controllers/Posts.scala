@@ -18,40 +18,47 @@ import scala.util.Random
 import service.Redis
 import play.api.libs.json.Json
 import utils.formaters.ObjectIdFormatter._
+import securesocial.core.SecureSocial
 
-object Posts extends Controller{
+object Posts extends Controller with SecureSocial{
 
-  def create = Action(parse.urlFormEncoded) { implicit request =>
-    implicit val user = User.findOne(MongoDBObject("name" -> "admin")).get
-    val now = new Date()
-    val post = Post(author = user.id,content = request.body.get("content").get(0),create_at = now,update_at = now)
-    Contact.findByPerson.foreach { contact =>
-      val share_visibility = ShareVisibility(
-        post = post.id,
-        recipient = contact.owner,
-        create_at = now,
-        update_at = now
-      )
-      ShareVisibility.insert(share_visibility)
-    }
-    val share_visibility = ShareVisibility(post = post.id,recipient = user.id,create_at = now,update_at = now)
-    ShareVisibility.insert(share_visibility)
-    request.body.get("tmpfiles[]").map { pics =>
-      pics.foreach { pic =>
-        val photo = Photo(
-          source_id = post.id,
-          author = user.id,
-          path = pic,
-          name = "",
-          create_at = now,
-          update_at = now
-        )
-        Photo.insert(photo)
+  def create = UserAwareAction(parse.urlFormEncoded) { implicit request =>
+    request.user match {
+      case Some(user) => {
+        val now = new Date()
+        val post = Post(author = user.id,content = request.body.get("content").get(0),create_at = now,update_at = now)
+        Contact.findByPerson(user).foreach { contact =>
+          val share_visibility = ShareVisibility(
+            post = post.id,
+            recipient = contact.owner,
+            create_at = now,
+            update_at = now
+          )
+          ShareVisibility.insert(share_visibility)
+        }
+        val share_visibility = ShareVisibility(post = post.id,recipient = user.id,create_at = now,update_at = now)
+        ShareVisibility.insert(share_visibility)
+        request.body.get("tmpfiles[]").map { pics =>
+          pics.foreach { pic =>
+            val photo = Photo(
+              source_id = post.id,
+              author = user.id,
+              path = pic,
+              name = "",
+              create_at = now,
+              update_at = now
+            )
+            Photo.insert(photo)
+          }
+        }
+        Post.insert(post)
+        Redis.publish("user_"+user.id,Post.postJsonWrite.writes(post))
+        Ok(views.html.post.post(user,post))
       }
+      case _ => Ok
     }
-    Post.insert(post)
-    Redis.publish("user_"+user.id,Post.postJsonWrite.writes(post))
-    Ok(views.html.post.post(post))
+
+
   }
 
   def delete = Action { request =>
@@ -83,46 +90,63 @@ object Posts extends Controller{
     Ok
   }
 
-  def like = Action { request =>
-    implicit val user = User.findOne(MongoDBObject("name" -> "admin")).get
-    val id = request.getQueryString("id").getOrElse("")
-    val now = new Date()
-    Like.findBySource(new ObjectId(id)) match {
-      case like:Some[Like] => {
-        Like.remove(like.get)
+  def like = UserAwareAction { request =>
+    request.user match {
+      case Some(user) => {
+        val id = request.getQueryString("id").getOrElse("")
+        val now = new Date()
+        Like.findBySource(new ObjectId(id))(user) match {
+          case like:Some[Like] => {
+            Like.remove(like.get)
+          }
+          case None => {
+            val like = Like(author = user.id,source_id = new ObjectId(id),create_at = now,update_at = now)
+            Like.insert(like)
+          }
+        }
+        Ok(Like.counts(new ObjectId(id)).toString)
       }
-      case None => {
-        val like = Like(author = user.id,source_id = new ObjectId(id),create_at = now,update_at = now)
-        Like.insert(like)
-      }
+      case _ => Ok
     }
-    Ok(Like.counts(new ObjectId(id)).toString)
   }
 
-  def reshare = Action(parse.urlFormEncoded) { request =>
-    implicit val user = User.findOne(MongoDBObject("name" -> "admin")).get
-    val id = request.body.get("id").get(0)
-    val parentId = Post.findParentId(new ObjectId(id))
-    val now = new Date()
-    val post = Post(
-      author = user.id,
-      content = request.body.get("content").get(0),
-      create_at = now,
-      update_at = now,
-      parent = Some(parentId),
-      is_reshare = true
-    )
-    Contact.findByPerson.foreach { contact =>
-      val share_visibility = ShareVisibility(
-        post = post.id,
-        recipient = contact.owner,
-        create_at = now,
-        update_at = now
-      )
-      ShareVisibility.insert(share_visibility)
+  def test = UserAwareAction(parse.urlFormEncoded) { request =>
+    request.user match {
+      case Some(user) => {
+        Ok
+      }
+      case _ => Ok
     }
-    Post.insert(post)
-    Ok(views.html.post.post(post))
+  }
+
+  def reshare = UserAwareAction(parse.urlFormEncoded) { request =>
+    request.user match {
+      case Some(user) => {
+        val id = request.body.get("id").get(0)
+        val parentId = Post.findParentId(new ObjectId(id))
+        val now = new Date()
+        val post = Post(
+          author = user.id,
+          content = request.body.get("content").get(0),
+          create_at = now,
+          update_at = now,
+          parent = Some(parentId),
+          is_reshare = true
+        )
+        Contact.findByPerson(user).foreach { contact =>
+          val share_visibility = ShareVisibility(
+            post = post.id,
+            recipient = contact.owner,
+            create_at = now,
+            update_at = now
+          )
+          ShareVisibility.insert(share_visibility)
+        }
+        Post.insert(post)
+        Ok(views.html.post.post(user,post))
+      }
+      case _ => Ok
+    }
   }
 
   def postkit = Action { request =>

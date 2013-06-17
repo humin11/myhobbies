@@ -11,6 +11,7 @@ import play.api.libs.json._
 import play.api.libs.iteratee._
 import scala.concurrent.duration._
 import play.api.libs.iteratee.{Concurrent, Enumerator}
+import securesocial.core.Identity
 
 object Redis {
 
@@ -70,6 +71,6 @@ object CometActor {
 
 }
 
-case class Connect(user:User,cometJS:String)
-case class Disconnect(user:User)
+case class Connect(user:Identity,cometJS:String)
+case class Disconnect(user:Identity)
 case class PushMessage(msg:String)
