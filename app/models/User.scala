@@ -34,7 +34,7 @@ object User extends ModelCompanion[User, UserId] {
       user1.equals(user) || contacts.contains(user1)
     }.toSeq
   }
-
+  def findOneByStringId(id:String):Option[User] = dao.findOne(MongoDBObject("_id._id" -> id))
   def findOneBySocialId(socialId:UserId):Option[User] = dao.findOne(MongoDBObject("_id._id" -> socialId.id, "_id.providerId" -> socialId.providerId))
   def findOneByEmailAndProvider(email: String, providerId:String): Option[User] = dao.findOne(MongoDBObject("email" -> email, "authMethod.method" -> providerId))
 }

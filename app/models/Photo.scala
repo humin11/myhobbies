@@ -12,7 +12,6 @@ import se.radley.plugin.salat._
 import com.mongodb.casbah.commons.MongoDBObject
 import com.mongodb.casbah.Imports._
 import securesocial.core._
-
 import mongoContext._
 
 

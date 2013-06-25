@@ -11,7 +11,6 @@ import views._
 import org.bson.types.ObjectId
 import com.mongodb.casbah.Imports._
 import com.mongodb.casbah.commons.MongoDBObject
-import java.util
 import scala.Some
 import java.io.File
 import scala.util.Random
@@ -19,6 +18,7 @@ import service.Redis
 import play.api.libs.json.Json
 import utils.formaters.ObjectIdFormatter._
 import securesocial.core.SecureSocial
+import org.joda.time.DateTime
 
 object Posts extends Controller with SecureSocial{
 
