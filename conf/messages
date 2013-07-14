@@ -3,6 +3,8 @@ title = 草根运动
 
 scrollup = 回顶部
 
+create = 创建{0}
+
 # Navigation
 home = 主页
 about = 关于我
@@ -11,8 +13,10 @@ court = 场地
 brand = 品牌
 store = 集市
 events = 活动
-communites = 圈子
+communites = 圈子中心
+community=圈子
 ask = 问答中心
+index=首页
 
 name = {0}名称
 address = {0}地址
