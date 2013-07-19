@@ -15,11 +15,15 @@
         overflow: scroll;
         outline: none;
     }
+    .drag-header{
+        cursor: move;
+    }
 </style>
 <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
 <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
 
 <div class="row-fluid" style="padding: 10px">
+    <div class="drag-header" style="height:20px;width:100%"></div>
     <div class="btn-toolbar" data-role="editor-toolbar" data-target="#@{uid}_editor">
         <div class="btn-group">
             <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font"><i class="icon-font"></i><b class="caret"></b></a>

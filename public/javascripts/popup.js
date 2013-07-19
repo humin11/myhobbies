@@ -22,8 +22,13 @@
                 this.$element.append(arrow);
             this.$element.append(content);
             this.$element.width(this.width);
-            if(this.ah == undefined || this.ah != false)
+            if(this.ah == undefined || this.ah != false){
                 this.autoHide();
+            }else{
+                this.$element.draggable({
+                    handle: ".drag-header"
+                });
+            }
         },
 
         initPosition: function(){
