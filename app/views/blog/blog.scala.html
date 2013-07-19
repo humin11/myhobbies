@@ -1,0 +1,15 @@
+@(user:securesocial.core.Identity,blog:Blog)
+@commentItems(comments:Seq[Comment]) = {
+    @for(c <- comments) {
+        @views.html.blog.comment(c)
+    }
+}
+@author = @{User.findOneBySocialId(blog.author).get}
+
+<div class="blog-row" uid="@blog.id">
+    <div class="blog">
+        <div class="blog-title"></div>
+        <div class="blog-body"></div>
+        <div class="blog-footer"></div>
+    </div>
+</div>

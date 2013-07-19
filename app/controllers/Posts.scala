@@ -20,7 +20,6 @@ import utils.formaters.ObjectIdFormatter._
 import securesocial.core.SecureSocial
 import org.joda.time.DateTime
 import java.net.ConnectException
-import com.mongodb.casbah.commons.conversions.scala.DeregisterJodaTimeConversionHelpers
 
 object Posts extends Controller with SecureSocial{
 

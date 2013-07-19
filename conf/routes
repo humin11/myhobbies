@@ -3,61 +3,62 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index
-POST    /posts/create               controllers.Posts.create
-POST    /posts/delete               controllers.Posts.delete
-POST    /posts/uploadify            controllers.Posts.uploadify
-POST    /posts/deleteTmpFiles       controllers.Posts.deleteTmpFiles
-POST    /posts/like                 controllers.Posts.like
-POST    /posts/reshare              controllers.Posts.reshare
-POST    /notifications/list         controllers.Notifications.list
-POST	/people/avatar  			controllers.People.avatar
-POST	/people/follow  			controllers.People.follow
-POST	/people/unfollow  			controllers.People.unfollow
-POST    /comments/create            controllers.Comments.create
-POST    /comments/delete            controllers.Comments.delete
-POST    /comments/list              controllers.Comments.list
-GET     /streams/comet              controllers.Streams.comet
-POST    /posts/postkit              controllers.Posts.postkit
+GET         /                              controllers.Application.index
+POST        /posts/create                  controllers.Posts.create
+POST        /posts/delete                  controllers.Posts.delete
+POST        /posts/uploadify               controllers.Posts.uploadify
+POST        /posts/deleteTmpFiles          controllers.Posts.deleteTmpFiles
+POST        /posts/like                    controllers.Posts.like
+POST        /posts/reshare                 controllers.Posts.reshare
+POST        /notifications/list            controllers.Notifications.list
+POST        /people/avatar                 controllers.People.avatar
+POST        /people/follow                 controllers.People.follow
+POST        /people/unfollow               controllers.People.unfollow
+POST        /comments/create               controllers.Comments.create
+POST        /comments/delete               controllers.Comments.delete
+POST        /comments/list                 controllers.Comments.list
+GET         /streams/comet                 controllers.Streams.comet
+POST        /posts/postkit                 controllers.Posts.postkit
+POST        /blogs/blogkit                 controllers.Blogs.blogkit
 
 # Court Page
-GET		/court    					controllers.Courts.index
-GET		/court/list					controllers.Courts.list(p:Int ?= 0, s:Int ?= 2, f ?= "")
-GET		/court/blank				controllers.Courts.blank
-GET 	/court/search				controllers.Courts.search
-POST 	/court/new					controllers.Courts.save
-POST 	/court/upload				controllers.Courts.upload
-GET		/court/:id					controllers.Courts.view(id: ObjectId)
+GET         /court                         controllers.Courts.index
+GET         /court/list                    controllers.Courts.list(p:Int ?= 0, s:Int ?= 2, f ?= "")
+GET         /court/blank                   controllers.Courts.blank
+GET         /court/search                  controllers.Courts.search
+POST        /court/new                     controllers.Courts.save
+POST        /court/upload                  controllers.Courts.upload
+GET         /court/:id                     controllers.Courts.view(id: ObjectId)
 
 # Communites Page
-GET 	/communites 				controllers.Communites.index
+GET         /communites                    controllers.Communites.index
 
 # Events Page
-GET 	/events 					controllers.Events.index
+GET         /events                        controllers.Events.index
 
 # GridFS 
-GET		/gridfs	 					controllers.Gridfs.getLogo(file: Option[ObjectId])
+GET         /gridfs                        controllers.Gridfs.getLogo(file: Option[ObjectId])
 
 # Login page
-GET     /login                      securesocial.controllers.LoginPage.login
-GET     /logout                     securesocial.controllers.LoginPage.logout
+GET         /login                         securesocial.controllers.LoginPage.login
+GET         /logout                        securesocial.controllers.LoginPage.logout
 
 # User Registration and password handling 
-GET     /signup                     securesocial.controllers.Registration.startSignUp
-POST    /signup                     securesocial.controllers.Registration.handleStartSignUp
-GET     /signup/:token              securesocial.controllers.Registration.signUp(token)
-POST    /signup/:token              securesocial.controllers.Registration.handleSignUp(token)
-GET     /reset                      securesocial.controllers.Registration.startResetPassword
-POST    /reset                      securesocial.controllers.Registration.handleStartResetPassword
-GET     /reset/:token               securesocial.controllers.Registration.resetPassword(token)
-POST    /reset/:token               securesocial.controllers.Registration.handleResetPassword(token)
-GET     /password                   securesocial.controllers.PasswordChange.page
-POST    /password                   securesocial.controllers.PasswordChange.handlePasswordChange
+GET         /signup                        securesocial.controllers.Registration.startSignUp
+POST        /signup                        securesocial.controllers.Registration.handleStartSignUp
+GET         /signup/:token                 securesocial.controllers.Registration.signUp(token)
+POST        /signup/:token                 securesocial.controllers.Registration.handleSignUp(token)
+GET         /reset                         securesocial.controllers.Registration.startResetPassword
+POST        /reset                         securesocial.controllers.Registration.handleStartResetPassword
+GET         /reset/:token                  securesocial.controllers.Registration.resetPassword(token)
+POST        /reset/:token                  securesocial.controllers.Registration.handleResetPassword(token)
+GET         /password                      securesocial.controllers.PasswordChange.page
+POST        /password                      securesocial.controllers.PasswordChange.handlePasswordChange
 
 # Providers entry points
-GET     /authenticate/:provider     securesocial.controllers.ProviderController.authenticate(provider)
-POST    /authenticate/:provider     securesocial.controllers.ProviderController.authenticateByPost(provider)
-GET     /not-authorized             securesocial.controllers.ProviderController.notAuthorized
+GET         /authenticate/:provider        securesocial.controllers.ProviderController.authenticate(provider)
+POST        /authenticate/:provider        securesocial.controllers.ProviderController.authenticateByPost(provider)
+GET         /not-authorized                securesocial.controllers.ProviderController.notAuthorized
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET         /assets/*file                  controllers.Assets.at(path="/public", file)

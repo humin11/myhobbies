@@ -17,6 +17,7 @@
 @main("Welcome to CGLQ",null,styles, scripts) {
     <div id="main-container" class="container">
         <div id="postModal" class="hide"></div>
+        <div id="blogModal" class="hide"></div>
         <div id="messageModal" class="hide" style="width:400px"></div>
         <div id="avatarModal" class="avatar-modal hide"></div>
         <div id="postOptionModal" class="hide post-optionModal">
@@ -27,6 +28,7 @@
         <div class="row-fluid">
             <div style="float:right;margin-left:10px">@views.html.post.avatar(user.id,"images/avatar_mini.png")</div>
             <div style="float:right;margin-left:10px"><a id="newBtn" class="btn"><i class="icon-pencil"></i>&nbsp;Share</a></div>
+            <div style="float:right;margin-left:10px"><a id="blogBtn" class="btn"><i class="icon-pencil"></i>&nbsp;Blog</a></div>
             <div style="float:right;"><a id="messageBtn" class="btn messagebox-active">3</a></div>
         </div>
         <div class="row-fluid" style="background-color:#fff;min-height: 700px;padding-top: 20px">
@@ -89,6 +91,15 @@
         });
         $('#newBtn').click(function(){
             $('#postModal').popup('show');
+        });
+
+        $('#blogModal').popup({
+            width:700,
+            autoHide:false,
+            url:'/blogs/blogkit?id=blogModal'
+        });
+        $('#blogBtn').click(function(){
+            $('#blogModal').popup('show');
         });
         $('#avatarModal').mouseleave(function(evt){
             $('#avatarModal').hide();

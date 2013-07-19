@@ -14,34 +14,36 @@ import securesocial.core._
 import mongoContext._
 import play.api.libs.json._
 import utils.formaters.ObjectIdFormatter._
+import org.joda.time.DateTime
 
-case class Article(
+case class Blog(
   id: ObjectId = new ObjectId,
   author: UserId,
   content: String,
-  create_at: Date,
-  update_at: Date
+  create_at: DateTime,
+  update_at: DateTime,
+  locked: Boolean
 )
 
-object Article extends ArticleDAO with ArticleJson
+object Blog extends BlogDAO with BlogJson
 
-trait ArticleDAO extends ModelCompanion[Article, ObjectId]{
+trait BlogDAO extends ModelCompanion[Blog, ObjectId]{
 
-  val collection = mongoCollection("articles")
-  val dao = new SalatDAO[Article, ObjectId](collection = collection) {}
+  val collection = mongoCollection("blogs")
+  val dao = new SalatDAO[Blog, ObjectId](collection = collection) {}
 
 }
 
-trait ArticleJson {
+trait BlogJson {
 
-  implicit val articleJsonWrite = new Writes[Article] {
-    def writes(article: Article): JsValue = {
+  implicit val blogJsonWrite = new Writes[Blog] {
+    def writes(blog: Blog): JsValue = {
       Json.obj(
-        "id" -> article.id,
-        "author" -> article.author.id,
-        "content" -> article.content,
-        "create_at" -> article.create_at,
-        "update_at" -> article.update_at
+        "id" -> blog.id,
+        "author" -> blog.author.id,
+        "content" -> blog.content,
+        "create_at" -> blog.create_at,
+        "update_at" -> blog.update_at
       )
     }
   }
