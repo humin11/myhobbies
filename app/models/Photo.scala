@@ -13,6 +13,7 @@ import com.mongodb.casbah.commons.MongoDBObject
 import com.mongodb.casbah.Imports._
 import securesocial.core._
 import mongoContext._
+import org.joda.time.DateTime
 
 
 case class Photo (
@@ -22,8 +23,8 @@ case class Photo (
   author: UserId,
   path: String,
   name: String,
-  create_at: Date,
-  update_at: Date
+  create_at: DateTime,
+  update_at: DateTime
 )
 
 object Photo extends ModelCompanion[Photo, ObjectId]{

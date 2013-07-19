@@ -12,14 +12,15 @@ import com.mongodb.casbah.commons.MongoDBObject
 import com.mongodb.casbah.Imports._
 import securesocial.core._
 import mongoContext._
+import org.joda.time.DateTime
 
 case class ShareVisibility(
   id: ObjectId = new ObjectId,
   post: ObjectId,
   recipient: UserId,
   hidden: Boolean = false,
-  create_at: Date,
-  update_at: Date
+  create_at: DateTime,
+  update_at: DateTime
 )
 
 object ShareVisibility extends ModelCompanion[ShareVisibility, ObjectId]{

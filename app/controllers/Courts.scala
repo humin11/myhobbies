@@ -1,5 +1,6 @@
 package controllers;
 
+import _root_.models._
 import play.api._
 import play.api.mvc._
 import play.api.data._
@@ -7,7 +8,6 @@ import play.api.data.Forms._
 import play.api.libs.json._
 import com.mongodb.casbah.Imports._
 import java.util.{Date}
-import models._
 import views._
 import views.html.court._
 import indexing.{IndexCourtsManager, IndexCourts}

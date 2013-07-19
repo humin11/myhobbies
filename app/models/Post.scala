@@ -14,13 +14,14 @@ import securesocial.core._
 import mongoContext._
 import play.api.libs.json._
 import utils.formaters.ObjectIdFormatter._
+import org.joda.time.DateTime
 
 case class Post(
   id: ObjectId = new ObjectId,
   author: UserId,
   content: String,
-  create_at: Date,
-  update_at: Date,
+  create_at: DateTime,
+  update_at: DateTime,
   parent: Option[ObjectId] = None,
   is_reshare: Boolean = false
 )
@@ -33,7 +34,7 @@ trait PostDAO extends ModelCompanion[Post, ObjectId]{
   val dao = new SalatDAO[Post, ObjectId](collection = collection) {}
 
   def findShares(pageNum:Int = 0,maxRow:Int = 15)(implicit user:Identity) = {
-    ShareVisibility.find(MongoDBObject("recipient" -> user.id, "hidden" -> false))
+    ShareVisibility.find(MongoDBObject("recipient._id" -> user.id.id, "hidden" -> false))
       .sort(MongoDBObject("create_at" -> -1))
       .skip(pageNum*maxRow)
       .limit(maxRow)

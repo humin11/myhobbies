@@ -1,12 +1,12 @@
 package controllers;
 
+import _root_.models._
 import play.api.Play.current
 import play.api._
 import play.api.mvc._
 import data._
 import play.api.data.Forms._
 import java.util.{Date}
-import models._
 import views._
 import org.bson.types.ObjectId
 import com.mongodb.casbah.Imports._
@@ -19,13 +19,15 @@ import play.api.libs.json.Json
 import utils.formaters.ObjectIdFormatter._
 import securesocial.core.SecureSocial
 import org.joda.time.DateTime
+import java.net.ConnectException
+import com.mongodb.casbah.commons.conversions.scala.DeregisterJodaTimeConversionHelpers
 
 object Posts extends Controller with SecureSocial{
 
   def create = UserAwareAction(parse.urlFormEncoded) { implicit request =>
     request.user match {
       case Some(user) => {
-        val now = new Date()
+        val now = DateTime.now()
         val post = Post(author = user.id,content = request.body.get("content").get(0),create_at = now,update_at = now)
         Contact.findByPerson(user).foreach { contact =>
           val share_visibility = ShareVisibility(
@@ -124,7 +126,7 @@ object Posts extends Controller with SecureSocial{
       case Some(user) => {
         val id = request.body.get("id").get(0)
         val parentId = Post.findParentId(new ObjectId(id))
-        val now = new Date()
+        val now = DateTime.now()
         val post = Post(
           author = user.id,
           content = request.body.get("content").get(0),

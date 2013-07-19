@@ -12,30 +12,46 @@ import play.api.libs.iteratee._
 import scala.concurrent.duration._
 import play.api.libs.iteratee.{Concurrent, Enumerator}
 import securesocial.core.Identity
+import java.net.{ConnectException, Socket}
 
 object Redis {
 
-  val pubClients = new RedisClientPool("localhost", 6379)
-  val subClients = new RedisClientPool("localhost", 6379)
+  val host:String = "localhost"
+  val port:Int = 6379
+  lazy val testSocket:Socket = new Socket(host, port)
+  lazy val pubClients = new RedisClientPool(host, port)
+  lazy val subClients = new RedisClientPool(host, port)
+
+  def connected = {
+    try {
+      testSocket != null && testSocket.isConnected
+    } catch {
+      case ex:ConnectException => false
+    }
+  }
 
   def publish(channel: String,data: JsValue) = {
-    pubClients.withClient {
-      client => {
-        client.publish(channel,data.toString())
+    if(connected){
+      pubClients.withClient {
+        client => {
+          client.publish(channel,data.toString())
+        }
       }
     }
   }
 
   def subscribe(channel: String) = {
-    subClients.withClient {
-      client => {
-        client.subscribe(channel) { message =>
-          message match {
-            case S(channel, no) =>
-            case U(channel, no) =>
-            case E(exception) =>
-            case M(channel, msg) => {
-              CometActor.ref ! PushMessage(msg)
+    if(connected){
+      subClients.withClient {
+        client => {
+          client.subscribe(channel) { message =>
+            message match {
+              case S(channel, no) =>
+              case U(channel, no) =>
+              case E(exception) =>
+              case M(channel, msg) => {
+                CometActor.ref ! PushMessage(msg)
+              }
             }
           }
         }
