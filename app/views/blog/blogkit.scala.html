@@ -92,7 +92,8 @@
     </div>
 </div>
 <script>
-    $('#@{uid}_editor').wysiwyg();
+    var uid = '@{uid}';
+    $('#'+uid+'_editor').wysiwyg();
     $(function(){
         function initToolbarBootstrapBindings() {
             var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
@@ -113,11 +114,16 @@
             });
         };
         initToolbarBootstrapBindings();
-        $('#@{uid}_savebtn').click(function(){
-            alert($('#@{uid}_editor').html());
+        $('#'+uid+'_savebtn').click(function(){
+            var content = $('#'+uid+'_editor').html();
+            var params = {};
+            params["content"] = content;
+            $.post('/blogs/create',params,function(data){
+                $('#'+uid).hide();
+            });
         });
-        $('#@{uid}_cancelbtn').click(function(){
-            $('#@{uid}').hide();
+        $('#'+uid+'_cancelbtn').click(function(){
+            $('#'+uid).hide();
         });
     });
 </script>

@@ -23,6 +23,18 @@ import java.net.ConnectException
 
 object Blogs extends Controller with SecureSocial{
 
+  def create = UserAwareAction(parse.urlFormEncoded) { implicit request =>
+    request.user match {
+      case Some(user) => {
+        val now = DateTime.now()
+        val blog = Blog(author = user.id,content = request.body.get("content").get(0),create_at = now,update_at = now)
+        Blog.insert(blog)
+        Ok(views.html.blog.blog(user,blog))
+      }
+      case _ => Ok
+    }
+  }
+
   def blogkit = Action { request =>
     val id = request.getQueryString("id").getOrElse("")
     Ok(views.html.blog.blogkit(id))

@@ -20,7 +20,7 @@ POST        /comments/list                 controllers.Comments.list
 GET         /streams/comet                 controllers.Streams.comet
 POST        /posts/postkit                 controllers.Posts.postkit
 POST        /blogs/blogkit                 controllers.Blogs.blogkit
-
+POST        /blogs/create                  controllers.Blogs.create
 # Court Page
 GET         /court                         controllers.Courts.index
 GET         /court/list                    controllers.Courts.list(p:Int ?= 0, s:Int ?= 2, f ?= "")

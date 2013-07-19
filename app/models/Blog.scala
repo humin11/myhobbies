@@ -22,7 +22,7 @@ case class Blog(
   content: String,
   create_at: DateTime,
   update_at: DateTime,
-  locked: Boolean
+  locked: Boolean = false
 )
 
 object Blog extends BlogDAO with BlogJson
