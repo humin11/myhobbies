@@ -3,6 +3,15 @@ title = 草根运动
 
 scrollup = 回顶部
 
+close = 关闭
+save = 保存
+
+community.style.select=选择您想创建的圈子的类型
+community.public=公共圈子
+community.public.description=向所有用户公开的圈子
+community.private=私有圈子
+community.private.description=只有邀请加入该圈子的成员才能看到共享的内容
+
 create = 创建{0}
 
 # Navigation
