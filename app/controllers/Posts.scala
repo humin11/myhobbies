@@ -43,7 +43,12 @@ object Posts extends Controller with SecureSocial{
           )
           ShareVisibility.insert(share_visibility)
         }
-        val share_visibility = ShareVisibility(post = post.id,recipient = user.id,create_at = now,update_at = now)
+        val share_visibility = ShareVisibility(
+          post = post.id,
+          recipient = user.id,
+          create_at = now,
+          update_at = now
+        )
         ShareVisibility.insert(share_visibility)
         request.body.get("tmpfiles[]").map { pics =>
           pics.foreach { pic =>

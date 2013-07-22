@@ -26,7 +26,7 @@ object User extends ModelCompanion[User, UserId] {
   }
   val dao = new SalatDAO[User, UserId](collection = mongoCollection("users")) {}
 
-  def findContactUser(implicit user: Identity) = Contact.findByOwner.map{ contact => findOneById(contact.person).get }
+  def findContactUser(implicit user: Identity) = Contact.findByOwner.map{ contact => findOneBySocialId(contact.person).get }
 
   def findOtherUsers(implicit user: Identity) = {
     val contacts = findContactUser

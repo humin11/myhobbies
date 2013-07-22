@@ -24,8 +24,9 @@ object People extends Controller with SecureSocial{
     implicit val user = request.user
     val now = DateTime.now()
     val personId = request.getQueryString("id").getOrElse("")
+    val person = User.findOneByStringId(personId).get.id
     Contact.findPersonByOwner(personId) match {
-      case None => Contact.save(Contact(owner = user.id,person = new UserId(personId, null),create_at = now))
+      case None => Contact.save(Contact(owner = user.id,person = person,create_at = now))
       case _ =>
     }
     Ok
