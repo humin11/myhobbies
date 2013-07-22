@@ -115,7 +115,7 @@ function commentsMoreClickHandler(ele){
         $(this).next().show();
         var comments = $(this).parents('.comments');
         var id = comments.parents('.post-row').attr('uid');
-        $.post('/comments/list?id='+id+'&show=all',function(data){
+        $.post('/comments/list?source_id='+id+'&show=all',function(data){
             comments.find('.comments-list').html(data);
             commentHoverHandler(comments.find('.comment'));
             commentDelBtnClickHandler(comments.find('.comment-delbtn'));
@@ -128,7 +128,7 @@ function commentsMoreClickHandler(ele){
         $(this).prev().show();
         var comments = $(this).parents('.comments');
         var id = comments.parents('.post-row').attr('uid');
-        $.post('/comments/list?id='+id+'&show=1',function(data){
+        $.post('/comments/list?source_id='+id+'&show=1',function(data){
             comments.find('.comments-list').html(data);
             commentHoverHandler(comments.find('.comment'));
             commentDelBtnClickHandler(comments.find('.comment-delbtn'));
@@ -167,10 +167,11 @@ function commentAddBtnClickHandler(ele){
             return false;
         var comments = sendbtn.parents('.comments');
         var comments_list = comments.find('.comments-list');
-        var postId = $(this).attr('post');
+        var source_id = $(this).attr('source_id');
         var content = $(this).parents('.comments-newinput-section').find('.comments-newinput-text');
         var params = {};
-        params["postId"] = postId;
+        params["source_id"] = source_id;
+        params["source_type"] = 'POST';
         params["content"] = content.html();
         $.post('/comments/create',params,function(data){
             content.text('');

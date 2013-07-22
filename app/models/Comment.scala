@@ -13,7 +13,8 @@ import org.joda.time.DateTime
 
 case class Comment(
   id: ObjectId = new ObjectId,
-  post: ObjectId,
+  source_id: ObjectId,
+  source_type: String = "POST",
   author: UserId,
   content: String,
   status: String = "NEW",
@@ -26,6 +27,6 @@ object Comment extends ModelCompanion[Comment, ObjectId]{
   val collection = mongoCollection("comments")
   val dao = new SalatDAO[Comment, ObjectId](collection = collection) {}
 
-  def findByPost(postId:ObjectId) = find(MongoDBObject("post" -> postId)).toSeq
+  def findBySource(source_id:ObjectId,source_type:String="POST") = find(MongoDBObject("source_id" -> source_id, "source_type" -> source_type)).toSeq
 
 }

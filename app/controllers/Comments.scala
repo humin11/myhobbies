@@ -18,48 +18,60 @@ import securesocial.core._
 import org.joda.time.DateTime
 
 
-object Comments extends Controller {
+object Comments extends Controller with SecureSocial{
 
-  def create = Action(parse.urlFormEncoded) { request =>
-    val user = {User.findOne(MongoDBObject("name" -> "admin")).get}
-    val now = DateTime.now()
-    val postId = request.body.get("postId").get(0)
-    val content = request.body.get("content").get(0)
-    val comment = Comment(post = new ObjectId(postId),author = user.id,content = content,create_at = now,update_at = now)
-    Post.findOneById(new ObjectId(postId)) match {
-      case post:Some[Post] => {
-        val notification = Notification(
-          source_id = comment.id,
-          recipient = post.get.author,
+  def create = UserAwareAction(parse.urlFormEncoded) { request =>
+    request.user match {
+      case Some(user) => {
+        val now = DateTime.now()
+        val source_id = request.body.get("source_id").get(0)
+        val source_type = request.body.get("source_type") match {
+          case s:Some[Seq[String]] => s.get(0)
+          case None => "POST"
+        }
+        val content = request.body.get("content").get(0)
+        val comment = Comment(
+          source_id = new ObjectId(source_id),
+          source_type = source_type,
+          author = user.id,
+          content = content,
           create_at = now,
           update_at = now
         )
-        Notification.insert(notification)
+        Post.findOneById(new ObjectId(source_id)) match {
+          case post:Some[Post] => {
+            val notification = Notification(
+              source_id = comment.id,
+              recipient = post.get.author,
+              create_at = now,
+              update_at = now
+            )
+            Notification.insert(notification)
+          }
+          case None =>
+        }
+        Comment.save(comment)
+        Ok(html.post.comment(user,comment))
       }
-      case None =>
+      case _ => Ok
     }
-    Comment.save(comment)
-    Ok(html.post.comment(comment))
   }
     
   def delete = Action { request =>
-    val user = {User.findOne(MongoDBObject("name" -> "admin")).get}
-    val now = new Date()
     val id = request.getQueryString("id").getOrElse("")
     Comment.removeById(new ObjectId(id))
     Ok
   }
 
-  def list = Action { request =>
-    val user = {User.findOne(MongoDBObject("name" -> "admin")).get}
-    val now = new Date()
-    val id = request.getQueryString("id").getOrElse("")
+  def list = SecuredAction { request =>
+    val source_id = request.getQueryString("source_id").getOrElse("")
+    val source_type = request.getQueryString("source_type").getOrElse("POST")
     val show = request.getQueryString("show").getOrElse("")
-    val comments = Comment.findByPost(new ObjectId(id))
+    val comments = Comment.findBySource(new ObjectId(source_id),source_type)
     val result = if(show == "all"){
-      for(comment <- comments) yield html.post.comment(comment)
+      for(comment <- comments) yield html.post.comment(request.user,comment)
     }else{
-      for(comment <- comments.sortBy(_.create_at).takeRight(show.toInt)) yield html.post.comment(comment)
+      for(comment <- comments.sortBy(_.create_at).takeRight(show.toInt)) yield html.post.comment(request.user,comment)
     }
     Ok(result.reduceLeft(_ += _))
   }

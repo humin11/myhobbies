@@ -1,15 +1,83 @@
 @(user:securesocial.core.Identity,blog:Blog)
+@import org.bson.types.ObjectId
+@import utils.ordering.JodaDateTimeOrdering._
 @commentItems(comments:Seq[Comment]) = {
-    @for(c <- comments) {
-        @views.html.blog.comment(c)
-    }
+@for(c <- comments) {
+    @views.html.blog.comment(user,c)
+}
 }
 @author = @{User.findOneBySocialId(blog.author).get}
 
-<div class="blog-row" uid="@blog.id">
-    <div class="blog">
-        <div class="blog-title"></div>
-        <div class="blog-body"></div>
-        <div class="blog-footer"></div>
+<div class="post-row" uid="@blog.id">
+    <div class="post">
+        <span class="post-option">
+    </span>
+        <div class="post-avatar">@views.html.post.avatar(blog.author)</div>
+        <div class="post-arrow"></div>
+        <div class="post-header">
+            <span><a class="post-author">@(User.findOneBySocialId(blog.author).get.name)</a></span>
+            <span class="post-status">
+                <span>@blog.create_at</span>
+                    &nbsp;-&nbsp;
+                <span>公开</span>
+            </span>
+        </div>
+        <div class="post-body">
+            <div class="post-message">
+            @if(blog.content.length()>200){
+                <div class="post-message-min">
+                    <div style="max-height: 72px;">
+                    @Html(blog.content)
+                    </div>
+                    <span class="post-message-expand">展开此信息</span>
+                </div>
+                <div class="post-message-max hide">
+                    <div>
+                    @Html(blog.content)
+                    </div>
+                    <span class="post-message-collapse">收拢此信息</span>
+                </div>
+            }else{
+                <p>
+                @Html(blog.content)
+                </p>
+            }
+            </div>
+        </div>
+        <div class="post-footer">
+        </div>
     </div>
+    <div class="comments">
+        <div style="padding-bottom: 18px;"></div>
+        <div class="comments-body">
+            <div class="comments-showall @("hide".when(Comment.findBySource(blog.id,"BLOG").size<4))">
+                <div class="comment-num-border">
+                    <span class="comments-num-btn comments-num-show">
+                        <span class="comments-num">@{Comment.findBySource(blog.id,"BLOG").size}</span>
+                        <span>条评论</span>
+                    </span>
+                    <span class="comments-num-btn comments-num-hide hide">隐藏评论</span>
+                </div>
+            </div>
+            <div class="comments-list">
+            @commentItems(Comment.findBySource(blog.id).sortBy(_.create_at).takeRight(3))
+            </div>
+            <div class="comments-newinput-section hide">
+                <div class="comment-avatar">@views.html.post.avatar(user.id,"images/avatar_mini.png")</div>
+                <div class="comments-newinput">
+                    <div>
+                        <div class="comments-newinput-text" contenteditable="plaintext-only"></div>
+                    </div>
+                </div>
+                <span class="comments-btngroup">
+                    <a class="btn btn-success btn-mini comment-addbtn disabled" source_id="@blog.id">发表评论</a>
+                    <a class="btn btn-mini comment-cancelbtn">取消</a>
+                </span>
+            </div>
+        </div>
+        <div class="comments-noinput-section">
+            <div class="comments-noinput-text">添加评论...</div>
+        </div>
+    </div>
+
 </div>

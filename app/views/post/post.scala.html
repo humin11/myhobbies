@@ -3,7 +3,7 @@
 @import utils.ordering.JodaDateTimeOrdering._
 @commentItems(comments:Seq[Comment]) = {
     @for(c <- comments) {
-        @views.html.post.comment(c)
+        @views.html.post.comment(user,c)
     }
 }
 @author = @{User.findOneBySocialId(post.author).get}
@@ -78,17 +78,17 @@
     <div class="comments">
         <div style="padding-bottom: 18px;"></div>
         <div class="comments-body">
-            <div class="comments-showall @("hide".when(Comment.findByPost(post.id).size<4))">
+            <div class="comments-showall @("hide".when(Comment.findBySource(post.id).size<4))">
                 <div class="comment-num-border">
                     <span class="comments-num-btn comments-num-show">
-                        <span class="comments-num">@{Comment.findByPost(post.id).size}</span>
+                        <span class="comments-num">@{Comment.findBySource(post.id).size}</span>
                         <span>条评论</span>
                     </span>
                     <span class="comments-num-btn comments-num-hide hide">隐藏评论</span>
                 </div>
             </div>
             <div class="comments-list">
-                @commentItems(Comment.findByPost(post.id).sortBy(_.create_at).takeRight(3))
+                @commentItems(Comment.findBySource(post.id).sortBy(_.create_at).takeRight(3))
             </div>
             <div class="comments-newinput-section hide">
                 <div class="comment-avatar">@views.html.post.avatar(user.id,"images/avatar_mini.png")</div>
@@ -98,7 +98,7 @@
                     </div>
                 </div>
                 <span class="comments-btngroup">
-                    <a class="btn btn-success btn-mini comment-addbtn disabled" post="@post.id">发表评论</a>
+                    <a class="btn btn-success btn-mini comment-addbtn disabled" source_id="@post.id">发表评论</a>
                     <a class="btn btn-mini comment-cancelbtn">取消</a>
                 </span>
             </div>
