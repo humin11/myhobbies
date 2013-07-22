@@ -12,12 +12,13 @@ import se.radley.plugin.salat._
 import se.radley.plugin.salat.Binders._
 import securesocial.core._
 import mongoContext._
+import org.joda.time.DateTime
 
 case class Contact (
   id: ObjectId = new ObjectId,
   owner: UserId,
   person: UserId,
-  create_at: Date
+  create_at: DateTime
 )
 
 object Contact extends ModelCompanion[Contact, ObjectId]{

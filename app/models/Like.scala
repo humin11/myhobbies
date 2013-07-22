@@ -13,14 +13,15 @@ import com.mongodb.casbah.Imports._
 import mongoContext._
 import securesocial.core._
 import com.mongodb.casbah.commons.TypeImports._
+import org.joda.time.DateTime
 
 case class Like(
   id: ObjectId = new ObjectId,
   author: UserId,
   source_id: ObjectId,
   source_type: String = "POST",
-  create_at: Date,
-  update_at: Date
+  create_at: DateTime,
+  update_at: DateTime
 )
 
 object Like extends ModelCompanion[Like, ObjectId]{

@@ -49,6 +49,7 @@
             var content = postContent.html();
             var params = {};
             params["content"] = content;
+            params["raw"] = postContent.text();
             params["tmpfiles"] = tmpFiles;
             $.post('/posts/create',params,function(data){
                 $('#post-list').prepend(data);

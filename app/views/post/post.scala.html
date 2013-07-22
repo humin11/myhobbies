@@ -1,5 +1,6 @@
 @(user:securesocial.core.Identity,post:Post)
 @import org.bson.types.ObjectId
+@import utils.ordering.JodaDateTimeOrdering._
 @commentItems(comments:Seq[Comment]) = {
     @for(c <- comments) {
         @views.html.post.comment(c)

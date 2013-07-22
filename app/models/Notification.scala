@@ -13,6 +13,7 @@ import com.mongodb.casbah.Imports._
 import securesocial.core._
 import mongoContext._
 import utils.formaters.ObjectIdFormatter._
+import org.joda.time.DateTime
 
 case class Notification(
   id: ObjectId = new ObjectId,
@@ -20,8 +21,8 @@ case class Notification(
   source_type: String = "COMMENT",
   recipient: UserId,
   unread: Boolean = true,
-  create_at: Date,
-  update_at: Date
+  create_at: DateTime,
+  update_at: DateTime
 )
 
 object Notification extends ModelCompanion[Notification, ObjectId]{

@@ -27,7 +27,13 @@ object Posts extends Controller with SecureSocial{
     request.user match {
       case Some(user) => {
         val now = DateTime.now()
-        val post = Post(author = user.id,content = request.body.get("content").get(0),create_at = now,update_at = now)
+        val post = Post(
+          author = user.id,
+          content = request.body.get("content").get(0),
+          raw_text = request.body.get("raw").get(0),
+          create_at = now,
+          update_at = now
+        )
         Contact.findByPerson(user).foreach { contact =>
           val share_visibility = ShareVisibility(
             post = post.id,
@@ -95,7 +101,7 @@ object Posts extends Controller with SecureSocial{
     request.user match {
       case Some(user) => {
         val id = request.getQueryString("id").getOrElse("")
-        val now = new Date()
+        val now = DateTime.now()
         Like.findBySource(new ObjectId(id))(user) match {
           case like:Some[Like] => {
             Like.remove(like.get)
@@ -129,6 +135,7 @@ object Posts extends Controller with SecureSocial{
         val post = Post(
           author = user.id,
           content = request.body.get("content").get(0),
+          raw_text = request.body.get("raw").get(0),
           create_at = now,
           update_at = now,
           parent = Some(parentId),

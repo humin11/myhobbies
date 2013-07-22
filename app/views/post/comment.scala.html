@@ -1,5 +1,5 @@
 @(comment:Comment)
-@author = @{User.findOneById(comment.author).get}
+@author = @{User.findOneByStringId(comment.author.id).get}
 <div class="comment" uid="@comment.id">
     <div class="comment-avatar">@views.html.post.avatar(comment.author,"images/avatar_mini.png")</div>
     <div class="comment-body">

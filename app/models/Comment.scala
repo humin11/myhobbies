@@ -9,6 +9,7 @@ import com.novus.salat.dao.{SalatDAO, ModelCompanion}
 import se.radley.plugin.salat._
 import securesocial.core._
 import mongoContext._
+import org.joda.time.DateTime
 
 case class Comment(
   id: ObjectId = new ObjectId,
@@ -16,8 +17,8 @@ case class Comment(
   author: UserId,
   content: String,
   status: String = "NEW",
-  create_at: Date,
-  update_at: Date
+  create_at: DateTime,
+  update_at: DateTime
 )
 
 object Comment extends ModelCompanion[Comment, ObjectId]{

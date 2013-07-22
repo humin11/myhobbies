@@ -20,6 +20,7 @@ case class Blog(
   id: ObjectId = new ObjectId,
   author: UserId,
   content: String,
+  raw_text: String,
   create_at: DateTime,
   update_at: DateTime,
   locked: Boolean = false
@@ -42,6 +43,7 @@ trait BlogJson {
         "id" -> blog.id,
         "author" -> blog.author.id,
         "content" -> blog.content,
+        "raw_text" -> blog.raw_text,
         "create_at" -> blog.create_at,
         "update_at" -> blog.update_at
       )

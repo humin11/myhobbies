@@ -5,7 +5,7 @@ import play.api._
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
-
+import utils.ordering.JodaDateTimeOrdering._
 import java.util.{Date}
 
 import views._
@@ -15,12 +15,14 @@ import com.mongodb.casbah.commons.TypeImports.ObjectId
 import org.bson.types.ObjectId
 import com.mongodb.casbah.commons.TypeImports.ObjectId
 import securesocial.core._
+import org.joda.time.DateTime
+
 
 object Comments extends Controller {
 
   def create = Action(parse.urlFormEncoded) { request =>
     val user = {User.findOne(MongoDBObject("name" -> "admin")).get}
-    val now = new Date()
+    val now = DateTime.now()
     val postId = request.body.get("postId").get(0)
     val content = request.body.get("content").get(0)
     val comment = Comment(post = new ObjectId(postId),author = user.id,content = content,create_at = now,update_at = now)

@@ -7,6 +7,7 @@ import java.util.Date
 import org.bson.types.ObjectId
 import securesocial.core._
 import play.Logger
+import org.joda.time.DateTime
 
 object People extends Controller with SecureSocial{
 
@@ -21,7 +22,7 @@ object People extends Controller with SecureSocial{
 
   def follow = SecuredAction { request =>
     implicit val user = request.user
-    val now = new Date()
+    val now = DateTime.now()
     val personId = request.getQueryString("id").getOrElse("")
     Contact.findPersonByOwner(personId) match {
       case None => Contact.save(Contact(owner = user.id,person = new UserId(personId, null),create_at = now))
