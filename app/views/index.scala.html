@@ -96,10 +96,12 @@
             autoHide:false,
             url:'/blogs/blogkit?id=blogModal',
             afterShow:function(ele){
-                $('#post-list').animate({marginTop:'+='+ele.height()},1000);
+                $('#post-list').animate({marginTop:'+='+(ele.height()+50)},500);
+                $('#post-list').animate({marginTop:'-=50'},300);
             },
             afterHide:function(ele){
-                $('#post-list').animate({marginTop:'-='+ele.height()},1000);
+                $('#post-list').animate({marginTop:'-='+(ele.height()+50)},500);
+                $('#post-list').animate({marginTop:'+=50'},300);
             }
         });
         $('#blogBtn').click(function(){
