@@ -96,8 +96,20 @@
             autoHide:false,
             url:'/blogs/blogkit?id=blogModal',
             afterShow:function(ele){
-                $('#post-list').animate({marginTop:'+='+(ele.height()+50)},500);
-                $('#post-list').animate({marginTop:'-=50'},300);
+                var w = ele.width();
+                var h = ele.height();
+                ele.width(1);
+                ele.height(1);
+                ele.animate({width:w,height:h},{
+                    duration:500,
+                    step:function(now,tween){
+                        $('#post-list').css('marginTop',$(tween.elem).height());
+                    },
+                    complete:function(){
+                        $('#post-list').animate({marginTop:'+=50'},300);
+                        $('#post-list').animate({marginTop:'-=50'},300);
+                    }
+                });
             },
             afterHide:function(ele){
                 $('#post-list').animate({marginTop:'-='+(ele.height()+50)},500);
