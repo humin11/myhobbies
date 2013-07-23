@@ -69,8 +69,6 @@ object Posts extends Controller with SecureSocial{
       }
       case _ => Ok
     }
-
-
   }
 
   def delete = Action { request =>

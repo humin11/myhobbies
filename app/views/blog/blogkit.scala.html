@@ -45,11 +45,19 @@
             <a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="icon-underline"></i></a>
         </div>
         <div class="btn-group">
-            <a class="btn" data-edit="insertunorderedlist" title="Bullet list"><i class="icon-list-ul"></i></a>
-            <a class="btn" data-edit="insertorderedlist" title="Number list"><i class="icon-list-ol"></i></a>
-            <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="icon-indent-left"></i></a>
-            <a class="btn" data-edit="indent" title="Indent (Tab)"><i class="icon-indent-right"></i></a>
+            <a class="btn dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i class="icon-link"></i></a>
+            <div class="dropdown-menu input-append">
+                <input class="span2" placeholder="URL" type="text" data-edit="createLink"/>
+                <button class="btn" type="button">Add</button>
+            </div>
+            <a class="btn" data-edit="unlink" title="Remove Hyperlink"><i class="icon-cut"></i></a>
         </div>
+        <div class="btn-group">
+            <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="icon-undo"></i></a>
+            <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="icon-repeat"></i></a>
+        </div>
+    </div>
+    <div class="btn-toolbar" data-role="editor-toolbar" data-target="#@{uid}_editor">
         <div class="btn-group">
             <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="icon-align-left"></i></a>
             <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="icon-align-center"></i></a>
@@ -57,25 +65,16 @@
             <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="icon-align-justify"></i></a>
         </div>
         <div class="btn-group">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i class="icon-link"></i></a>
-            <div class="dropdown-menu input-append">
-                <input class="span2" placeholder="URL" type="text" data-edit="createLink"/>
-                <button class="btn" type="button">Add</button>
-            </div>
-            <a class="btn" data-edit="unlink" title="Remove Hyperlink"><i class="icon-cut"></i></a>
-
+            <a class="btn" data-edit="insertunorderedlist" title="Bullet list"><i class="icon-list-ul"></i></a>
+            <a class="btn" data-edit="insertorderedlist" title="Number list"><i class="icon-list-ol"></i></a>
+            <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="icon-indent-left"></i></a>
+            <a class="btn" data-edit="indent" title="Indent (Tab)"><i class="icon-indent-right"></i></a>
         </div>
-
         <div class="btn-group">
             <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="icon-picture"></i></a>
             <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" />
         </div>
-        <div class="btn-group">
-            <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="icon-undo"></i></a>
-            <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="icon-repeat"></i></a>
-        </div>
     </div>
-
     <div id="@{uid}_editor" class="wtsuwtg-editor">
 
     </div>
@@ -128,7 +127,7 @@
         });
     });
     $('#'+uid+'_cancelbtn').click(function(){
-        $('#'+uid).hide();
+        $('#'+uid).popup('hide');
     });
     $('#'+uid).draggable({
         handle: ".drag-header"

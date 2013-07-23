@@ -34,7 +34,6 @@
         <div class="row-fluid" style="background-color:#fff;min-height: 700px;padding-top: 20px">
             <div class="span3 leftpanel">
                 <div class="account-container">
-                
                     <div class="account-avatar">
                         <img src="@routes.Assets.at("images/avatar_large.png")" alt="" class="thumbnail" />
                     </div> <!-- /account-avatar -->
@@ -63,7 +62,6 @@
                 @for(p <- posts) {
                     @views.html.post.post(user,p)
                 }
-
             </div>
             <div id="right-panel" class="pull-right rightpanel">
                 <div id="recommend-list">
@@ -94,9 +92,15 @@
         });
 
         $('#blogModal').popup({
-            width:700,
+            width:500,
             autoHide:false,
-            url:'/blogs/blogkit?id=blogModal'
+            url:'/blogs/blogkit?id=blogModal',
+            afterShow:function(ele){
+                $('#post-list').animate({marginTop:'+='+ele.height()},1000);
+            },
+            afterHide:function(ele){
+                $('#post-list').animate({marginTop:'-='+ele.height()},1000);
+            }
         });
         $('#blogBtn').click(function(){
             $('#blogModal').popup('show');

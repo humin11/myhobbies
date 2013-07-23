@@ -5,7 +5,8 @@
         this.width = options["width"]|400;
         this.url = options["url"];
         this.anchor = options["anchor"];
-        this.afterLoad = options["afterLoad"];
+        this.afterShow = options["afterShow"];
+        this.afterHide = options["afterHide"];
         this.ah = options["autoHide"];
         this.initialize();
     }
@@ -56,7 +57,13 @@
                 $ele.find('.popup-content').html(data);
                 $ele.show();
                 $this.initPosition();
+                $this.afterShow($ele);
             });
+        },
+
+        hide: function(){
+            this.$element.hide();
+            this.afterHide(this.$element);
         },
 
         autoHide: function(){
