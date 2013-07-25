@@ -1,4 +1,4 @@
-@(user:securesocial.core.Identity, message: String, posts: Seq[Post] = Nil, contacts: Seq[User] = Nil, recommendUsers: Seq[User] = Nil)
+@(user:securesocial.core.Identity, message: String, shareables: Seq[Product] = Nil, contacts: Seq[User] = Nil, recommendUsers: Seq[User] = Nil)
 @styles = {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/postkit.css")">
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/post.css")">
@@ -58,9 +58,16 @@
                     }
                 </div>
             </div>
-            <div id="post-list" class="span6">
-                @for(p <- posts) {
-                    @views.html.post.post(user,p)
+            <div id="stream-list" class="span6">
+                @for(s <- shareables) {
+                    @s match {
+                       case p:Post => {
+                           @views.html.post.post(user,p)
+                       }
+                       case b:Blog => {
+                           @views.html.blog.blog(user,b)
+                       }
+                    }
                 }
             </div>
             <div id="right-panel" class="pull-right rightpanel">
@@ -103,17 +110,17 @@
                 ele.animate({width:w,height:h},{
                     duration:500,
                     step:function(now,tween){
-                        $('#post-list').css('marginTop',$(tween.elem).height());
+                        $('#stream-list').css('marginTop',$(tween.elem).height());
                     },
                     complete:function(){
-                        $('#post-list').animate({marginTop:'+=50'},300);
-                        $('#post-list').animate({marginTop:'-=50'},300);
+                        $('#stream-list').animate({marginTop:'+=50'},300);
+                        $('#stream-list').animate({marginTop:'-=50'},300);
                     }
                 });
             },
             afterHide:function(ele){
-                $('#post-list').animate({marginTop:'-='+(ele.height()+50)},500);
-                $('#post-list').animate({marginTop:'+=50'},300);
+                $('#stream-list').animate({marginTop:'-='+(ele.height()+50)},500);
+                $('#stream-list').animate({marginTop:'+=50'},300);
             }
         });
         $('#blogBtn').click(function(){
@@ -134,9 +141,9 @@
         commentAddBtnClickHandler($('.comment-addbtn'));
         commentCancelBtnClickHandler($('.comment-cancelbtn'));
         commentsMoreClickHandler($('.comments-num-show'));
-        commentHoverHandler($('#post-list .comment'));
-        commentDelBtnClickHandler($('#post-list .comment-delbtn'));
-        commentReplyClickHandler($('#post-list .comment-reply'));
+        commentHoverHandler($('#stream-list .comment'));
+        commentDelBtnClickHandler($('#stream-list .comment-delbtn'));
+        commentReplyClickHandler($('#stream-list .comment-reply'));
 
         rightPanelHoverHandler($('#recommend-list'));
         rightPanelHoverHandler($('#contact-list'));

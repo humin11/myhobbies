@@ -8,10 +8,21 @@
 }
 @author = @{User.findOneBySocialId(blog.author).get}
 
+<style>
+    .blog-option {
+        cursor: pointer;
+        float: right;
+        height: 13px;
+        margin: 16px 16px 0 0;
+        width: 13px;
+        position: relative;
+        z-index: 1;
+    }
+</style>
+
 <div class="post-row" uid="@blog.id">
     <div class="post">
-        <span class="post-option">
-    </span>
+        <span class="blog-option"><i class="icon-fire"></i></span>
         <div class="post-avatar">@views.html.post.avatar(blog.author)</div>
         <div class="post-arrow"></div>
         <div class="post-header">
@@ -26,7 +37,7 @@
             <div class="post-message">
             @if(blog.content.length()>200){
                 <div class="post-message-min">
-                    <div style="max-height: 72px;">
+                    <div style="max-height: 78px;">
                     @Html(blog.content)
                     </div>
                     <span class="post-message-expand">展开此信息</span>

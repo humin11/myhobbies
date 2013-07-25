@@ -34,22 +34,6 @@ object Posts extends Controller with SecureSocial{
           create_at = now,
           update_at = now
         )
-        Contact.findByPerson(user).foreach { contact =>
-          val share_visibility = ShareVisibility(
-            post = post.id,
-            recipient = contact.owner,
-            create_at = now,
-            update_at = now
-          )
-          ShareVisibility.insert(share_visibility)
-        }
-        val share_visibility = ShareVisibility(
-          post = post.id,
-          recipient = user.id,
-          create_at = now,
-          update_at = now
-        )
-        ShareVisibility.insert(share_visibility)
         request.body.get("tmpfiles[]").map { pics =>
           pics.foreach { pic =>
             val photo = Photo(
@@ -64,6 +48,7 @@ object Posts extends Controller with SecureSocial{
           }
         }
         Post.insert(post)
+        ShareVisibility.share(now,post.id,"POST")(user)
         Redis.publish("user_"+user.id,Post.postJsonWrite.writes(post))
         Ok(views.html.post.post(user,post))
       }
@@ -146,7 +131,7 @@ object Posts extends Controller with SecureSocial{
         )
         Contact.findByPerson(user).foreach { contact =>
           val share_visibility = ShareVisibility(
-            post = post.id,
+            source_id = post.id,
             recipient = contact.owner,
             create_at = now,
             update_at = now

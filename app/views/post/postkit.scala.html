@@ -52,8 +52,8 @@
             params["raw"] = postContent.text();
             params["tmpfiles"] = tmpFiles;
             $.post('/posts/create',params,function(data){
-                $('#post-list').prepend(data);
-                var newPost = $('#post-list:first');
+                $('#stream-list').prepend(data);
+                var newPost = $('#stream-list:first');
                 photoInitHeightHandler(newPost.find('.post-photo'));
                 avatarHoverHandler(newPost.find('.avatar-icon'));
                 postOptionClickHandler(newPost.find('.post-option'),postOptionModal);

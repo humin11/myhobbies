@@ -35,6 +35,7 @@ object Blogs extends Controller with SecureSocial{
           update_at = now
         )
         Blog.insert(blog)
+        ShareVisibility.share(now,blog.id,"BLOG")(user)
         Ok(views.html.blog.blog(user,blog))
       }
       case _ => Ok

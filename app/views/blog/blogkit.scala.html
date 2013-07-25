@@ -134,6 +134,10 @@
         params["content"] = editor.html();
         params["raw"] = editor.text();
         $.post('/blogs/create',params,function(data){
+            $('#stream-list').prepend(data);
+            var newBlog = $('#stream-list:first');
+            avatarHoverHandler(newBlog.find('.avatar-icon'));
+            postExpandBtnClickHandler(newBlog.find('.post-message-min'));
             $('#'+uid).popup('hide');
         });
     });

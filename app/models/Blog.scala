@@ -23,7 +23,9 @@ case class Blog(
   raw_text: String,
   create_at: DateTime,
   update_at: DateTime,
-  locked: Boolean = false
+  locked: Boolean = false,
+  category:String = "",
+  read_count:Int = 0
 )
 
 object Blog extends BlogDAO with BlogJson

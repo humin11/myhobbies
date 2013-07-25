@@ -22,10 +22,10 @@ object Application extends Controller with SecureSocial{
 
   def index = SecuredAction { implicit request =>
     implicit val user = request.user
-    val posts = Post.findShares()
+    val shareables = ShareVisibility.findShares()
     val contacts = User.findContactUser
     val recommendUsers = User.findOtherUsers
-    Ok(html.index(user,"",posts,contacts,recommendUsers))
+    Ok(html.index(user,"",shareables,contacts,recommendUsers))
   }
 
 }
