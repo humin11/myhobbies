@@ -16,7 +16,7 @@ object People extends Controller with SecureSocial{
     val personId = request.getQueryString("id").getOrElse("")
     val followed = Contact.findPersonByOwner(personId).isDefined;
     val person = User.findOneByStringId(personId).get
-    val myself = user.id==person.id
+    val myself = user.identityId==person.id
     Ok(views.html.post.avatarModal(person,followed,myself))
   }
 
@@ -26,7 +26,7 @@ object People extends Controller with SecureSocial{
     val personId = request.getQueryString("id").getOrElse("")
     val person = User.findOneByStringId(personId).get.id
     Contact.findPersonByOwner(personId) match {
-      case None => Contact.save(Contact(owner = user.id,person = person,create_at = now))
+      case None => Contact.save(Contact(owner = user.identityId,person = person,create_at = now))
       case _ =>
     }
     Ok

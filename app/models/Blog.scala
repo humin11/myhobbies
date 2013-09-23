@@ -18,7 +18,7 @@ import org.joda.time.DateTime
 
 case class Blog(
   id: ObjectId = new ObjectId,
-  author: UserId,
+  author: IdentityId,
   content: String,
   raw_text: String,
   create_at: DateTime,
@@ -43,7 +43,7 @@ trait BlogJson {
     def writes(blog: Blog): JsValue = {
       Json.obj(
         "id" -> blog.id,
-        "author" -> blog.author.id,
+        "author" -> blog.author.userId,
         "content" -> blog.content,
         "raw_text" -> blog.raw_text,
         "create_at" -> blog.create_at,

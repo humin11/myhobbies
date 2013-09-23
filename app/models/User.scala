@@ -1,7 +1,8 @@
 package models
 
-import securesocial.core.providers.Token
 import securesocial.core._
+import securesocial.core.providers.Token
+import securesocial.core.IdentityId
 import play.api.Play.current
 import com.novus.salat._
 import com.novus.salat.annotations._
@@ -11,20 +12,20 @@ import se.radley.plugin.salat._
 import com.mongodb.casbah.query.dsl._
 import mongoContext._
 
-case class User(id: UserId, name: String, firstName: String, lastName: String, fullName: String, email: Option[String],
+case class User(id: IdentityId, name: String, firstName: String, lastName: String, fullName: String, email: Option[String],
                 avatarUrl: Option[String], authMethod: AuthenticationMethod,
                 oAuth1Info: Option[OAuth1Info] = None,
                 oAuth2Info: Option[OAuth2Info] = None,
                 passwordInfo: Option[PasswordInfo] = None) extends Identity
 
-object User extends ModelCompanion[User, UserId] {
+object User extends ModelCompanion[User, IdentityId] {
   def apply(i: Identity): User = {
-    User(i.id, i.firstName+" "+i.lastName, i.firstName, i.lastName, i.fullName,
+    User(i.identityId, i.firstName+" "+i.lastName, i.firstName, i.lastName, i.fullName,
       i.email, i.avatarUrl, i.authMethod, i.oAuth1Info,
       i.oAuth2Info, i.passwordInfo
     )
   }
-  val dao = new SalatDAO[User, UserId](collection = mongoCollection("users")) {}
+  val dao = new SalatDAO[User, IdentityId](collection = mongoCollection("users")) {}
 
   def findContactUser(implicit user: Identity) = Contact.findByOwner.map{ contact => findOneBySocialId(contact.person).get }
 
@@ -35,7 +36,7 @@ object User extends ModelCompanion[User, UserId] {
     }.toSeq
   }
   def findOneByStringId(id:String):Option[User] = dao.findOne(MongoDBObject("_id._id" -> id))
-  def findOneBySocialId(socialId:UserId):Option[User] = dao.findOne(MongoDBObject("_id._id" -> socialId.id, "_id.providerId" -> socialId.providerId))
+  def findOneBySocialId(socialId:IdentityId):Option[User] = dao.findOne(MongoDBObject("_id._id" -> socialId.userId, "_identityId.userId" -> socialId.providerId))
   def findOneByEmailAndProvider(email: String, providerId:String): Option[User] = dao.findOne(MongoDBObject("email" -> email, "authMethod.method" -> providerId))
 }
 

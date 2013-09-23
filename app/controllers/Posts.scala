@@ -28,7 +28,7 @@ object Posts extends Controller with SecureSocial{
       case Some(user) => {
         val now = DateTime.now()
         val post = Post(
-          author = user.id,
+          author = user.identityId,
           content = request.body.get("content").get(0),
           raw_text = request.body.get("raw").get(0),
           create_at = now,
@@ -38,7 +38,7 @@ object Posts extends Controller with SecureSocial{
           pics.foreach { pic =>
             val photo = Photo(
               source_id = post.id,
-              author = user.id,
+              author = user.identityId,
               path = pic,
               name = "",
               create_at = now,
@@ -49,7 +49,7 @@ object Posts extends Controller with SecureSocial{
         }
         Post.insert(post)
         ShareVisibility.share(now,post.id,"POST")(user)
-        Redis.publish("user_"+user.id,Post.postJsonWrite.writes(post))
+        Redis.publish("user_"+user.identityId,Post.postJsonWrite.writes(post))
         Ok(views.html.post.post(user,post))
       }
       case _ => Ok
@@ -95,7 +95,7 @@ object Posts extends Controller with SecureSocial{
             Like.remove(like.get)
           }
           case None => {
-            val like = Like(author = user.id,source_id = new ObjectId(id),create_at = now,update_at = now)
+            val like = Like(author = user.identityId,source_id = new ObjectId(id),create_at = now,update_at = now)
             Like.insert(like)
           }
         }
@@ -121,7 +121,7 @@ object Posts extends Controller with SecureSocial{
         val parentId = Post.findParentId(new ObjectId(id))
         val now = DateTime.now()
         val post = Post(
-          author = user.id,
+          author = user.identityId,
           content = request.body.get("content").get(0),
           raw_text = request.body.get("raw").get(0),
           create_at = now,

@@ -1,6 +1,6 @@
 package services
 
-import securesocial.core.{Identity, UserId, UserServicePlugin}
+import securesocial.core.{Identity, IdentityId, UserServicePlugin}
 import play.api.Application
 import models.{User,TokenDAO}
 import securesocial.core.providers.Token
@@ -10,10 +10,10 @@ class UserService(application: Application) extends UserServicePlugin(applicatio
   /**
    * Finds a user that matches the specified id
    *
-   * @param id the user id
+   * @param id the user.identityId
    * @return an optional user
    */
-  def find(id: UserId):Option[Identity] = {
+  def find(id: IdentityId):Option[Identity] = {
     User.findOneBySocialId(id)
   }
 

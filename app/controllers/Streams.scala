@@ -12,6 +12,7 @@ import akka.util.Timeout
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.Comet
 import securesocial.core.SecureSocial
+import scala.concurrent._
 
 
 object Streams extends Controller with SecureSocial {
@@ -22,7 +23,7 @@ object Streams extends Controller with SecureSocial {
         case Some(user) => {
           val cometJS = request.getQueryString("callback").getOrElse("")
           for(followed <- User.findContactUser(user)){
-            Redis.subscribe("user_"+user.id)
+            Redis.subscribe("user_"+user.identityId)
           }
           implicit val timeout = Timeout(5,TimeUnit.SECONDS)
           val cometFuture = (CometActor.ref ? Connect(user,cometJS)).mapTo[Enumerator[String]]
@@ -31,6 +32,7 @@ object Streams extends Controller with SecureSocial {
             Ok.stream(chunks >>> Enumerator.eof).as(JAVASCRIPT)
           }
         }
+		case None => Future.successful(NotFound)
       }
 
     }

@@ -19,7 +19,7 @@ case class Notification(
   id: ObjectId = new ObjectId,
   source_id: ObjectId,
   source_type: String = "COMMENT",
-  recipient: UserId,
+  recipient: IdentityId,
   unread: Boolean = true,
   create_at: DateTime,
   update_at: DateTime
@@ -30,6 +30,6 @@ object Notification extends ModelCompanion[Notification, ObjectId]{
   val collection = mongoCollection("notifications")
   val dao = new SalatDAO[Notification, ObjectId](collection = collection) {}
 
-  def unreadByUser(implicit user:User) = find(MongoDBObject("unread" -> true,"recipient" -> user.id)).toSeq
+  def unreadByUser(implicit user:User) = find(MongoDBObject("unread" -> true,"recipient" -> user.identityId)).toSeq
 
 }

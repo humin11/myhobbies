@@ -18,7 +18,7 @@ case class ShareVisibility(
   id: ObjectId = new ObjectId,
   source_id: ObjectId,
   source_type: String = "POST",
-  recipient: UserId,
+  recipient: IdentityId,
   hidden: Boolean = false,
   create_at: DateTime,
   update_at: DateTime
@@ -44,7 +44,7 @@ object ShareVisibility extends ModelCompanion[ShareVisibility, ObjectId]{
       val share_visibility = ShareVisibility(
         source_id = source_id,
         source_type = source_type,
-        recipient = user.id,
+        recipient = user.identityId,
         create_at = now,
         update_at = now
       )
@@ -53,7 +53,7 @@ object ShareVisibility extends ModelCompanion[ShareVisibility, ObjectId]{
   }
 
   def findShares(pageNum:Int = 0, maxRow:Int = 15)(implicit user:Identity) = {
-    ShareVisibility.find(MongoDBObject("recipient._id" -> user.id.id, "hidden" -> false))
+    ShareVisibility.find(MongoDBObject("recipient._id" -> user.identityId.userId, "hidden" -> false))
       .sort(MongoDBObject("create_at" -> -1))
       .skip(pageNum*maxRow)
       .limit(maxRow)

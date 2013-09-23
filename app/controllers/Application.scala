@@ -33,6 +33,6 @@ object Application extends Controller with SecureSocial{
 
 case class WithProvider(provider: String) extends Authorization {
 	  def isAuthorized(user: Identity) = {
-	    user.id.providerId == provider
+	    user.identityId.userId == provider
 	  }
 }

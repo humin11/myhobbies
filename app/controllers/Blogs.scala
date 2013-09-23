@@ -28,7 +28,7 @@ object Blogs extends Controller with SecureSocial{
       case Some(user) => {
         val now = DateTime.now()
         val blog = Blog(
-          author = user.id,
+          author = user.identityId,
           content = request.body.get("content").get(0),
           raw_text = request.body.get("raw").get(0),
           create_at = now,

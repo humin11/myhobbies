@@ -27,6 +27,7 @@ object GridFS {
 
 	def get(objId: Option[ObjectId]) =  objId match {
 		case Some(id) => files.findOne(id)
+		case None => None
 	}
 
 	def delete(objId: ObjectId) = {

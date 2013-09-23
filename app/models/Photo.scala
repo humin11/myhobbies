@@ -20,7 +20,7 @@ case class Photo (
   id: ObjectId = new ObjectId,
   source_id: ObjectId,
   source_type: String = "POST",
-  author: UserId,
+  author: IdentityId,
   path: String,
   name: String,
   create_at: DateTime,

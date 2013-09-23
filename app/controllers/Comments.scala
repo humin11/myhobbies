@@ -33,7 +33,7 @@ object Comments extends Controller with SecureSocial{
         val comment = Comment(
           source_id = new ObjectId(source_id),
           source_type = source_type,
-          author = user.id,
+          author = user.identityId,
           content = content,
           create_at = now,
           update_at = now

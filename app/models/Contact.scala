@@ -16,8 +16,8 @@ import org.joda.time.DateTime
 
 case class Contact (
   id: ObjectId = new ObjectId,
-  owner: UserId,
-  person: UserId,
+  owner: IdentityId,
+  person: IdentityId,
   create_at: DateTime
 )
 
@@ -28,10 +28,10 @@ object Contact extends ModelCompanion[Contact, ObjectId]{
 
   collection.ensureIndex(MongoDBObject("owner" -> 1,"person" -> 2), "contact_person", unique = true)
 
-  def findByOwner(implicit owner: Identity):Seq[Contact] = find(MongoDBObject("owner._id" -> owner.id.id)).toSeq
+  def findByOwner(implicit owner: Identity):Seq[Contact] = find(MongoDBObject("owner._id" -> owner.identityId.userId)).toSeq
 
-  def findByPerson(implicit person: Identity):Seq[Contact] = find(MongoDBObject("person._id" -> person.id.id)).toSeq
+  def findByPerson(implicit person: Identity):Seq[Contact] = find(MongoDBObject("person._id" -> person.identityId.userId)).toSeq
 
-  def findPersonByOwner(personId: String)(implicit owner: Identity) = findOne(MongoDBObject("owner._id" -> owner.id.id,"person._id" -> personId))
+  def findPersonByOwner(personId: String)(implicit owner: Identity) = findOne(MongoDBObject("owner._id" -> owner.identityId.userId,"person._id" -> personId))
 
 }

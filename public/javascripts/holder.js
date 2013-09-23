@@ -126,7 +126,7 @@ function fluid(el, holder, src) {
 	fluid.className = el.className + " holderjs-fluid";
 	fluid.style.width = holder.dimensions.width + (holder.dimensions.width.indexOf("%")>0?"":"px");
 	fluid.style.height = holder.dimensions.height + (holder.dimensions.height.indexOf("%")>0?"":"px");
-	fluid.id = el.id;
+	fluidentityId.userId = el.id;
 
 	el.style.width=0;
 	el.style.height=0;

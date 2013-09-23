@@ -18,7 +18,7 @@ import org.joda.time.DateTime
 
 case class Post(
   id: ObjectId = new ObjectId,
-  author: UserId,
+  author: IdentityId,
   content: String,
   raw_text: String,
   create_at: DateTime,
@@ -35,7 +35,7 @@ trait PostDAO extends ModelCompanion[Post, ObjectId]{
   val dao = new SalatDAO[Post, ObjectId](collection = collection) {}
 
   def findShares(pageNum:Int = 0,maxRow:Int = 15)(implicit user:Identity) = {
-    ShareVisibility.find(MongoDBObject("recipient._id" -> user.id.id,"source_type" -> "POST", "hidden" -> false))
+    ShareVisibility.find(MongoDBObject("recipient._id" -> user.identityId.userId,"source_type" -> "POST", "hidden" -> false))
       .sort(MongoDBObject("create_at" -> -1))
       .skip(pageNum*maxRow)
       .limit(maxRow)
@@ -65,7 +65,7 @@ trait PostJson {
     def writes(post: Post): JsValue = {
       Json.obj(
         "id" -> post.id,
-        "author" -> post.author.id,
+        "author" -> post.author.userId,
         "content" -> post.content,
         "raw_text" -> post.raw_text,
         "create_at" -> post.create_at,

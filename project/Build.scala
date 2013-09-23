@@ -11,14 +11,14 @@ object ApplicationBuild extends Build {
     // Add your project dependencies here,
      "org.mindrot" % "jbcrypt" % "0.3m",
     "securesocial" %% "securesocial" % "master-SNAPSHOT",
-    "se.radley" %% "play-plugins-salat" % "1.2",
-    "com.clever-age" % "play2-elasticsearch" % "0.5-SNAPSHOT",
-    "com.feth" %% "play-easymail" % "0.2-SNAPSHOT"
+    "se.radley" %% "play-plugins-salat" % "1.3.0",
+    "com.clever-age" % "play2-elasticsearch" % "0.7-SNAPSHOT",
+    "com.feth" %% "play-easymail" % "0.3-SNAPSHOT"
   )
 
 
   val main = play.Project(appName, appVersion, appDependencies).settings(
-    // Add your own project settings here  
+    // Add your own project settings here
       resolvers += "jbcrypt repo" at "http://mvnrepository.com/",
       resolvers += Resolver.url("sbt-plugin-snapshots", new URL("http://repo.scala-sbt.org/scalasbt/sbt-plugin-snapshots/"))(Resolver.ivyStylePatterns),
       routesImport += "se.radley.plugin.salat.Binders._",

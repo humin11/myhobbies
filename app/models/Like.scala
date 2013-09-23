@@ -17,7 +17,7 @@ import org.joda.time.DateTime
 
 case class Like(
   id: ObjectId = new ObjectId,
-  author: UserId,
+  author: IdentityId,
   source_id: ObjectId,
   source_type: String = "POST",
   create_at: DateTime,
@@ -32,7 +32,7 @@ object Like extends ModelCompanion[Like, ObjectId]{
   def counts(postId:ObjectId,sourceType:String = "POST") = count(MongoDBObject("source_id" -> postId, "source_type" -> sourceType))
 
   def findBySource(sourceId:ObjectId,sourceType:String = "POST")(implicit user: Identity) = findOne(
-    MongoDBObject("source_id" -> sourceId, "source_type" -> sourceType, "author" -> user.id)
+    MongoDBObject("source_id" -> sourceId, "source_type" -> sourceType, "author" -> user.identityId)
   )
 
   def exists(sourceId:ObjectId,sourceType:String = "POST")(implicit user: Identity) = findBySource(sourceId,sourceType) match {

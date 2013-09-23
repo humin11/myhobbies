@@ -15,7 +15,7 @@ case class Comment(
   id: ObjectId = new ObjectId,
   source_id: ObjectId,
   source_type: String = "POST",
-  author: UserId,
+  author: IdentityId,
   content: String,
   status: String = "NEW",
   create_at: DateTime,

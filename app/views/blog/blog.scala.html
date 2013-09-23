@@ -74,7 +74,7 @@
             @commentItems(Comment.findBySource(blog.id).sortBy(_.create_at).takeRight(3))
             </div>
             <div class="comments-newinput-section hide">
-                <div class="comment-avatar">@views.html.post.avatar(user.id,"images/avatar_mini.png")</div>
+                <div class="comment-avatar">@views.html.post.avatar(user.identityId,"images/avatar_mini.png")</div>
                 <div class="comments-newinput">
                     <div>
                         <div class="comments-newinput-text" contenteditable="plaintext-only"></div>
