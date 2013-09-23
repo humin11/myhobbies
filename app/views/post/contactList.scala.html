@@ -8,7 +8,7 @@
     <div class="listpanel-avatars">
         @for(i <- 0 until displays.size){
             <div class="listpanel-avatar" colindex="@i">
-                @views.html.post.avatar(displays(i).id)
+                @views.html.post.avatar(displays(i).identityId)
             </div>
         }
     </div>

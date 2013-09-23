@@ -14,6 +14,7 @@ class UserService(application: Application) extends UserServicePlugin(applicatio
    * @return an optional user
    */
   def find(id: IdentityId):Option[Identity] = {
+	  println(User.findOneBySocialId(id))
     User.findOneBySocialId(id)
   }
 

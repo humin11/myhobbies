@@ -10,13 +10,6 @@ import com.mongodb.casbah.Imports._
 import java.util.{Date}
 import views._
 import views.html.court._
-import indexing.{IndexCourtsManager, IndexCourts}
-import org.elasticsearch.index.query.QueryBuilders
-import com.github.cleverage.elasticsearch.ScalaHelpers._
-import play.api.libs.concurrent.Execution.Implicits._
-import com.github.cleverage.elasticsearch.ScalaHelpers.IndexQuery
-import play.api.libs.iteratee.Enumerator
-import indexing.{IndexCourtsManager, IndexCourts}
 import concurrent.Future
 
 object Courts extends Controller with securesocial.core.SecureSocial {
@@ -94,20 +87,5 @@ object Courts extends Controller with securesocial.core.SecureSocial {
 
 	def upload = TODO
 	
-	def search = Action {
-		//val indexQuery = IndexQuery[IndexCourts]().withBuilder(QueryBuilders.matchQuery("name", "test1234"))
-
-		val indexQuery = IndexCourtsManager.query.withBuilder(QueryBuilders.matchQuery("name", "test1234"))
-
-    	val results: Future[(IndexResults[IndexCourts])] = IndexCourtsManager.searchAsync(indexQuery)
-
-    	 Logger.info("IndexTestManager.search()" + results)
-    	Async {
-    	results.map { case (r1) =>
-        Ok("IndexTestManager.search()" + r1.totalCount)
-    }
-      }
-
-      	
-	}
+	def search = TODO
 }

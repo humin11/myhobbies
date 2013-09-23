@@ -10,11 +10,6 @@ import java.util.{Date}
 import models._
 import views._
 import views.html.court._
-import indexing.{IndexCourtsManager, IndexCourts}
-import org.elasticsearch.index.query.QueryBuilders
-import com.github.cleverage.elasticsearch.ScalaHelpers._
-import play.api.libs.concurrent.Execution.Implicits._
-import com.github.cleverage.elasticsearch.ScalaHelpers.IndexQuery
 import play.api.libs.iteratee.Enumerator
 import se.radley.plugin.salat._
 import se.radley.plugin.salat.Binders._

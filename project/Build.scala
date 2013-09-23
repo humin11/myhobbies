@@ -12,7 +12,7 @@ object ApplicationBuild extends Build {
      "org.mindrot" % "jbcrypt" % "0.3m",
     "securesocial" %% "securesocial" % "master-SNAPSHOT",
     "se.radley" %% "play-plugins-salat" % "1.3.0",
-    "com.clever-age" % "play2-elasticsearch" % "0.7-SNAPSHOT",
+//    "com.clever-age" % "play2-elasticsearch" % "0.7-SNAPSHOT",
     "com.feth" %% "play-easymail" % "0.3-SNAPSHOT"
   )
 
